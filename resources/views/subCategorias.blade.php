@@ -477,8 +477,8 @@ ul li a:hover {
 }
 
 .card img {
-    width: 100%;
-    height: auto; /* Ajustar la altura automáticamente */
+    width: 160px;
+    height: 160px; /* Ajustar la altura automáticamente */
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
