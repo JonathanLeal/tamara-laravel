@@ -8,11 +8,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Montserrat', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f8f8f8;
-        }
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
 
         header {
     background-color: #333;
@@ -782,23 +782,23 @@ ul li a:hover {
     </header>
     <nav>
         <ul>
-            <li><a href="#">Inicio</a></li>
+            <li><a href="{{ route('inicio') }}">Inicio</a></li>
             <li class="dropdown-parent">
                 <a href="#">Hombres <i class="fas fa-chevron-down"></i></a>
                 <ul class="dropdown">
                     <li class="dropdown-submenu">
                         <a href="#">Camisa <i class="fas fa-chevron-right"></i></a>
                         <ul class="sub-dropdown">
-                            <li><a href="#">Camisa Polo</a></li>
-                            <li><a href="#">Camisa Casual</a></li>
-                            <li><a href="#">Camiseta</a></li>
+                            <li><a id="hombres-camisaPolo" href="{{ route('subCtegoriasView') }}?cat=2&subCat=1">Camisa Polo</a></li>
+                            <li><a id="hombres-camisaCasual" href="{{ route('subCtegoriasView') }}?cat=2&subCat=2">Camisa Casual</a></li>
+                            <li><a id="hombres-camiseta" href="{{ route('subCtegoriasView') }}?cat=2&subCat=3">Camiseta</a></li>
                         </ul>
                     </li>
                     <li class="dropdown-submenu">
                         <a href="#">Pantalones <i class="fas fa-chevron-right"></i></a>
                         <ul class="sub-dropdown">
-                            <li><a href="#">Pantalón Formal</a></li>
-                            <li><a href="#">Pantalón Deportivo</a></li>
+                            <li><a id="hombres-pantalonDeportivo" href="{{ route('subCtegoriasView') }}?cat=2&subCat=4">Pantalón Deportivo</a></li>
+                            <li><a id="hombres-pantalonFormal" href="{{ route('subCtegoriasView') }}?cat=2&subCat=5">Pantalón Formal</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -809,16 +809,16 @@ ul li a:hover {
                     <li class="dropdown-submenu">
                         <a href="#">Camisa <i class="fas fa-chevron-right"></i></a>
                         <ul class="sub-dropdown">
-                            <li><a href="#">Camisa Polo</a></li>
-                            <li><a href="#">Camisa Casual</a></li>
-                            <li><a href="#">Camiseta</a></li>
+                            <li><a id="mujeres-camisaPolo" href="{{ route('subCtegoriasView') }}?cat=1&subCat=1">Camisa Polo</a></li>
+                            <li><a id="mujeres-camisaCasual" href="{{ route('subCtegoriasView') }}?cat=1&subCat=2">Camisa Casual</a></li>
+                            <li><a id="mujeres-camiseta" href="{{ route('subCtegoriasView') }}?cat=1&subCat=3">Camiseta</a></li>
                         </ul>
                     </li>
                     <li class="dropdown-submenu">
                         <a href="#">Pantalones <i class="fas fa-chevron-right"></i></a>
                         <ul class="sub-dropdown">
-                            <li><a href="#">Pantalón Formal</a></li>
-                            <li><a href="#">Pantalón Deportivo</a></li>
+                            <li><a id="mujeres-pantalonDeportivo" href="{{ route('subCtegoriasView') }}?cat=1&subCat=4">Pantalón Deportivo</a></li>
+                            <li><a id="mujeres-pantalonFormal" href="{{ route('subCtegoriasView') }}?cat=1&subCat=5">Pantalón Formal</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -829,16 +829,16 @@ ul li a:hover {
                     <li class="dropdown-submenu">
                         <a href="#">Camisa <i class="fas fa-chevron-right"></i></a>
                         <ul class="sub-dropdown">
-                            <li><a href="#">Camisa Polo</a></li>
-                            <li><a href="#">Camisa Casual</a></li>
-                            <li><a href="#">Camiseta</a></li>
+                            <li><a id="niños-camisaPolo" href="{{ route('subCtegoriasView') }}?cat=3&subCat=1">Camisa Polo</a></li>
+                            <li><a id="niños-camisaCasual" href="{{ route('subCtegoriasView') }}?cat=3&subCat=3">Camisa Casual</a></li>
+                            <li><a id="niños-camiseta" href="{{ route('subCtegoriasView') }}?cat=3&subCat=3">Camiseta</a></li>
                         </ul>
                     </li>
                     <li class="dropdown-submenu">
                         <a href="#">Pantalones <i class="fas fa-chevron-right"></i></a>
                         <ul class="sub-dropdown">
-                            <li><a href="#">Pantalón Formal</a></li>
-                            <li><a href="#">Pantalón Deportivo</a></li>
+                            <li><a id="niños-pantalonDeportivo" href="{{ route('subCtegoriasView') }}?cat=3&subCat=4">Pantalón Deportivo</a></li>
+                            <li><a id="niños-pantalonFormal" href="{{ route('subCtegoriasView') }}?cat=3&subCat=5">Pantalón Formal</a></li>
                         </ul>
                     </li>
                 </ul>

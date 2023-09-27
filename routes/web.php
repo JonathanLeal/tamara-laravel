@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\SubCategoriasController;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,8 @@ Route::get('/registrarse', [LoginController::class, 'registrarseView'])->name('r
 Route::get('/categorias', [WelcomeController::class, 'categoriasView'])->name('categorias');
 Route::get('/productosPorCategoria/{categoria}', [SubCategoriasController::class, 'mostrarProductoPorCategoriaSeleccionada']);
 
+//productos
 Route::get('/producto', function () {
     return view('producto');
 });
+Route::get('/infoProducto/{id}', [ProductoController::class, 'obteniendoInfoProducto']);
