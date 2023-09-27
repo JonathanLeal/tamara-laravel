@@ -10,4 +10,9 @@ class WelcomeController extends Controller
     {
         return View('categorias.categorias');
     }
+
+    public function inicioView()
+    {
+        return View('welcome');
+    }
 }

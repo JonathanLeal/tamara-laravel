@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/inicio', [WelcomeController::class, 'inicioView'])->name('inicio');
 Route::get('/subCategoriasView', [SubCategoriasController::class, 'irVistaSubCategorias'])->name('subCtegoriasView');
 Route::get('/subCategoriasProductos/{categoria}/{sub_categoria}', [SubCategoriasController::class, 'mostrarProductoSubCategoria'])->name('subCtegoriasProductos');
 Route::get('/iniciar-sesion', [LoginController::class, 'loginView'])->name('login');

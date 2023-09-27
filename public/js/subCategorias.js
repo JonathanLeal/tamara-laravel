@@ -30,7 +30,7 @@ function cargarProductosSubCategorias(cat, subCat) {
                                         <h4 class="card-title">${producto.nombre_producto}</h4>
                                         <p class="card-text">${producto.detalles}</p>
                                         <p class="card-text">Existencia: ${producto.existencia}</p>
-                                        <p class="card-text">Precio 1: $${producto.precio_1}</p>
+                                        <p class="product-price">Precio 1: $${producto.precio_1}</p>
                                         <button class="add-to-cart-button add-to-cart-button-hidden" data-product-id="${producto.id}">Agregar al carrito</button>
                                     </div>
                                 </div>
@@ -47,8 +47,14 @@ function cargarProductosSubCategorias(cat, subCat) {
                     });
                 }
             },
-            error: function(xhr, status, error) {
-                console.log(xhr.responseText);
+            error: function(xhr) {
+                if (xhr.status === 404) {
+                    Swal.fire(
+                        'Oopss...',
+                        'Lo sentimos mucho esta seccion aun no tiene productos, sigue buscando por favor',
+                        'success'
+                    )
+                }
             }
         });
     });

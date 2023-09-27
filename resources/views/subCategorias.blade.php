@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="full-height">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +9,15 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Camisas</title>
     <style>
+        html.full-height {
+    height: 100%;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    margin: 0;
+}
         header {
     background-color: #333;
     color: #fff;
@@ -443,8 +452,7 @@ ul li a:hover {
 }
 
 .product-container {
-    padding: 20px; /* Espaciado alrededor de los productos */
-    overflow-x: auto; /* Permite desplazamiento horizontal si los productos no caben */
+    flex-grow: 1;
 }
 
 .product-row {
@@ -453,44 +461,98 @@ ul li a:hover {
 
 /* Estilos para cada tarjeta de producto */
 .card {
-    flex: 0 0 auto; /* Evita que las tarjetas se estiren */
-    width: 300px; /* Ancho fijo para cada tarjeta */
-    margin-right: 20px; /* Espacio entre las tarjetas */
-    border: 1px solid #ccc;
-    border-radius: 8px;
+    width: 200px; /* Establece el ancho fijo de las tarjetas */
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: left; /* Alineación del texto */
+    text-align: center;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    overflow: hidden;
+    margin: 20px;
 }
 
 .card:hover {
-  transform: scale(1.05);
+    transform: scale(1.05);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
 }
 
 .card img {
-    width: 100%; /* Asegura que la imagen se ajuste correctamente */
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+    width: 100%;
+    height: auto; /* Ajustar la altura automáticamente */
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
 .card-body {
-    padding: 15px;
+    padding: 10px;
 }
 
 .card-title {
-    font-size: 1.25rem;
+    font-size: 1rem; /* Tamaño de fuente más pequeño */
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+    color: #333;
 }
 
 .card-text {
-    font-size: 1rem;
+    font-size: 0.9rem; /* Tamaño de fuente más pequeño */
     margin-bottom: 5px;
+    color: #666;
+}
+
+.product-price {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ff4500;
+    margin-top: 10px;
 }
 
 .card-text:last-child {
     margin-bottom: 0;
 }
 
+.add-to-cart-button {
+    background-color: #ff4500;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 8px 16px;
+    border-radius: 5px;
+    border: none;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    margin-top: 10px;
+}
+
+.add-to-cart-button:hover {
+    background-color: #ff3300;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.product-price {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ff4500;
+    margin-top: 10px;
+}
+
+.added-to-cart {
+    background-color: #4CAF50;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 10px;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.added-to-cart.show {
+    opacity: 1;
+    transform: scale(1);
+}
 .animated-row .card:hover {
   animation: scale 0.3s ease-in-out;
 }
@@ -531,7 +593,7 @@ ul li a:hover {
     </header>
     <nav>
         <ul>
-            <li><a href="#">Inicio</a></li>
+            <li><a href="{{ route('inicio') }}">Inicio</a></li>
             <li class="dropdown-parent">
                 <a href="#">Hombres <i class="fas fa-chevron-down"></i></a>
                 <ul class="dropdown">

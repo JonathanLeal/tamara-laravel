@@ -583,7 +583,7 @@ ul li a:hover {
     </header>
     <nav>
         <ul>
-            <li><a href="#">Inicio</a></li>
+            <li><a href="{{ route('inicio') }}">Inicio</a></li>
             <li class="dropdown-parent">
                 <a href="#">Hombres <i class="fas fa-chevron-down"></i></a>
                 <ul class="dropdown">
