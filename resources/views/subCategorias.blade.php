@@ -538,16 +538,16 @@ ul li a:hover {
                     <li class="dropdown-submenu">
                         <a href="#">Camisa <i class="fas fa-chevron-right"></i></a>
                         <ul class="sub-dropdown">
-                            <li><a href="{{ route('subCtegoriasProductos', ['categoria' => 2, 'sub_categoria' => 1]) }}">Camisa Polo</a></li>
-                            <li><a href="{{ route('subCtegoriasProductos', ['categoria' => 2, 'sub_categoria' => 2]) }}">Camisa Casual</a></li>
-                            <li><a href="{{ route('subCtegoriasProductos', ['categoria' => 2, 'sub_categoria' => 3]) }}">Camiseta</a></li>
+                            <li><a href="#" class="subcat-link" data-cat="2" data-subcat="1">Camisa Polo</a></li>
+                            <li><a href="#" class="subcat-link" data-cat="2" data-subcat="2">Camisa Casual</a></li>
+                            <li><a href="#" class="subcat-link" data-cat="2" data-subcat="3">Camiseta</a></li>
                         </ul>
                     </li>
                     <li class="dropdown-submenu">
                         <a href="#">Pantalones <i class="fas fa-chevron-right"></i></a>
                         <ul class="sub-dropdown">
-                            <li><a href="{{ route('subCtegoriasProductos', ['categoria' => 2, 'sub_categoria' => 4]) }}">Pantalón Deportivo</a></li>
-                            <li><a href="{{ route('subCtegoriasProductos', ['categoria' => 2, 'sub_categoria' => 5]) }}">Pantalón Formal</a></li>
+                            <li><a href="#" class="subcat-link" data-cat="2" data-subcat="4">Pantalón Deportivo</a></li>
+                            <li><a href="#" class="subcat-link" data-cat="2" data-subcat="5">Pantalón Formal</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -558,16 +558,16 @@ ul li a:hover {
                     <li class="dropdown-submenu">
                         <a href="#">Camisa <i class="fas fa-chevron-right"></i></a>
                         <ul class="sub-dropdown">
-                            <li><a href="{{ route('subCtegoriasProductos', ['categoria' => 1, 'sub_categoria' => 1]) }}">Camisa Polo</a></li>
-                            <li><a href="{{ route('subCtegoriasProductos', ['categoria' => 1, 'sub_categoria' => 2]) }}">Camisa Casual</a></li>
-                            <li><a href="{{ route('subCtegoriasProductos', ['categoria' => 1, 'sub_categoria' => 3]) }}">Camiseta</a></li>
+                            <li><a href="#" class="subcat-link" data-cat="1" data-subcat="1">Camisa Polo</a></li>
+                            <li><a href="#" class="subcat-link" data-cat="1" data-subcat="2">Camisa Casual</a></li>
+                            <li><a href="#" class="subcat-link" data-cat="1" data-subcat="3">Camiseta</a></li>
                         </ul>
                     </li>
                     <li class="dropdown-submenu">
                         <a href="#">Pantalones <i class="fas fa-chevron-right"></i></a>
                         <ul class="sub-dropdown">
-                            <li><a href="{{ route('subCtegoriasProductos', ['categoria' => 1, 'sub_categoria' => 4]) }}">Pantalón Deportivo</a></li>
-                            <li><a href="{{ route('subCtegoriasProductos', ['categoria' => 1, 'sub_categoria' => 5]) }}">Pantalón Formal</a></li>
+                            <li><a href="#" class="subcat-link" data-cat="1" data-subcat="4">Pantalón Deportivo</a></li>
+                            <li><a href="#" class="subcat-link" data-cat="1" data-subcat="5">Pantalón Formal</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -578,16 +578,16 @@ ul li a:hover {
                     <li class="dropdown-submenu">
                         <a href="#">Camisa <i class="fas fa-chevron-right"></i></a>
                         <ul class="sub-dropdown">
-                            <li><a href="{{ route('subCtegoriasProductos', ['categoria' => 3, 'sub_categoria' => 1]) }}">Camisa Polo</a></li>
-                            <li><a href="{{ route('subCtegoriasProductos', ['categoria' => 3, 'sub_categoria' => 2]) }}">Camisa Casual</a></li>
-                            <li><a href="{{ route('subCtegoriasProductos', ['categoria' => 3, 'sub_categoria' => 3]) }}">Camiseta</a></li>
+                            <li><a href="#" class="subcat-link" data-cat="3" data-subcat="1">Camisa Polo</a></li>
+                            <li><a href="#" class="subcat-link" data-cat="3" data-subcat="2">Camisa Casual</a></li>
+                            <li><a href="#" class="subcat-link" data-cat="3" data-subcat="3">Camiseta</a></li>
                         </ul>
                     </li>
                     <li class="dropdown-submenu">
                         <a href="#">Pantalones <i class="fas fa-chevron-right"></i></a>
                         <ul class="sub-dropdown">
-                            <li><a href="{{ route('subCtegoriasProductos', ['categoria' => 3, 'sub_categoria' => 4]) }}">Pantalón Deportivo</a></li>
-                            <li><a href="{{ route('subCtegoriasProductos', ['categoria' => 3, 'sub_categoria' => 5]) }}">Pantalón Formal</a></li>
+                            <li><a href="#" class="subcat-link" data-cat="3" data-subcat="4">Pantalón Deportivo</a></li>
+                            <li><a href="#" class="subcat-link" data-cat="3" data-subcat="5">Pantalón Formal</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -638,6 +638,6 @@ ul li a:hover {
         </div>
     </footer>
 
-    <script src="{{ asset('js/SubCategoria.js') }}"></script>
+    <script src="{{ asset('js/subCategorias.js') }}"></script>
 </body>
 </html>
