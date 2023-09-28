@@ -1,5 +1,9 @@
 $(document).ready(function() {
-    obtenerInfoProductos(1);
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('id');
+
+    // Llamar a la función para obtener la información del producto con el ID obtenido
+    obtenerInfoProductos(productId);
     // Controlador de eventos para cambiar la imagen principal al colocar el puntero sobre miniaturas
     $(document).on("mouseover", ".product-thumbnails img", function() {
         var newImageSrc = $(this).attr("src");
