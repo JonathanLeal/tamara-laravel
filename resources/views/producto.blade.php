@@ -47,13 +47,15 @@ nav {
 .search-box {
     display: flex;
     align-items: center;
+    margin-left: auto;
 }
 
 #search-bar {
-    padding: 5px;
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    margin-right: 10px;
+    margin-right: 20px;
+    font-size: 16px;
 }
 
 #search-button {
@@ -61,7 +63,7 @@ nav {
     color: #fff;
     text-decoration: none;
     font-weight: bold;
-    padding: 5px 10px;
+    padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -75,7 +77,8 @@ nav ul {
     list-style-type: none;
     padding: 0;
     display: flex;
-    justify-content: center; /* Centra los elementos horizontalmente */
+    justify-content: center;
+    align-items: center;
 }
 
 nav li {
@@ -94,6 +97,30 @@ nav a:hover {
     color: #ff6600; /* Cambia el color al pasar el mouse sobre los enlaces */
 }
 
+.cart {
+    display: flex;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    margin-right: 30px; /* Espacio entre el carrito y la barra de búsqueda */
+}
+
+.cart i {
+    font-size: 24px;
+    margin-right: 10px;
+    color: #ff4500; /* Color personalizado para el icono */
+}
+
+.cart-count {
+    background-color: #1693D2;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 50%;
+    padding: 6px 10px;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+}
 .search-box {
     display: flex;
     align-items: center;
@@ -959,6 +986,10 @@ ul li a:hover {
             </li>
         </ul>
         <div class="search-box">
+            <div class="cart">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
+            </div>
             <input type="text" placeholder="Buscar..." id="search-bar">
             <button type="submit" id="search-button"><i class="fas fa-search"></i></button>
         </div>
@@ -1067,6 +1098,17 @@ ul li a:hover {
         </footer>
 
     <script>
+
+        let cartCount = 0;
+
+        // Función para actualizar el contador del carrito
+        function updateCartCount() {
+            const cartCountElement = document.querySelector('.cart-count');
+            cartCountElement.textContent = cartCount.toString();
+        }
+
+        // Llamada inicial para establecer el contador
+        updateCartCount();
         // Obtener los elementos del DOM
         const decrementButton = document.getElementById("decrement-button");
         const incrementButton = document.getElementById("increment-button");

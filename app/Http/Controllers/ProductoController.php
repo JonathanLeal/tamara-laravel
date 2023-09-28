@@ -12,7 +12,11 @@ class ProductoController extends Controller
 {
     public function obteniendoInfoProducto($id)
     {
-        $imagenes = ProductoImagenes::where('producto_id', $id)->get();
+        $imagenes = DB::table('producto_imagenes AS pi')
+                    ->join('productos AS p', 'pi.producto_id', '=', 'p.id')
+                    ->select('pi.id', 'pi.imagen', 'p.imagen AS imagenP')
+                    ->where('pi.producto_id', $id)
+                    ->get();
 
         $miniDetalles = DB::table('productos AS p')
                         ->select('p.id', 'p.nombre_producto', 'p.detalles', 'p.precio_1', 'p.imagen', 'p.sku', 'p.existencia')

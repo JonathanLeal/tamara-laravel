@@ -1,5 +1,10 @@
 $(document).ready(function() {
     obtenerInfoProductos(1);
+    // Controlador de eventos para cambiar la imagen principal al colocar el puntero sobre miniaturas
+    $(document).on("mouseover", ".product-thumbnails img", function() {
+        var newImageSrc = $(this).attr("src");
+        $("#imagenProducto img").attr("src", newImageSrc);
+    });
 });
 
 function obtenerInfoProductos(id) {
@@ -15,6 +20,9 @@ function obtenerInfoProductos(id) {
                 var tallas = response.datos.tallas;
                 var producto = response.datos.producto;
                 var dimensiones = response.datos.dimensiones;
+
+                var imagenProducto = imagenes[0].imagenP; // Elige el primer elemento del array si solo esperas un elemento
+                $("#imagenesProductos").html(`<img src="${imagenProducto}" alt="Thumbnail">`);
 
                 $.each(imagenes, function(index, imagen){
                     var img = `<img src="${imagen.imagen}" alt="Thumbnail">`;
