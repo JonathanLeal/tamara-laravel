@@ -1,12 +1,16 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="full-height">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Detalles del Producto - Camisa Polo</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        html.full-height {
+    height: 100%;
+}
         body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
@@ -333,67 +337,96 @@ nav a:hover {
     color: #fff;
 }
 
-        .product-container {
-            display: flex;
-            max-width: 1200px;
-            margin: 0 auto;
-            background-color: #fff;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            border-radius: 15px;
-            overflow: hidden;
-            margin-top: 7px;
-            margin-bottom: 7px;
-        }
+.product-container {
+    display: flex;
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: #ffffff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    overflow: hidden;
+}
 
-        .product-thumbnails {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-        }
+.product-thumbnails {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
 
-        .product-thumbnails img {
-            width: 80px;
-            height: auto;
-            margin-bottom: 10px;
-            border: 2px solid transparent;
-            cursor: pointer;
-            transition: border-color 0.3s ease;
-        }
+.product-thumbnails img {
+    width: 80px;
+    height: auto;
+    margin-bottom: 10px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
 
-        .product-thumbnails img:hover {
-            border-color: #009688;
-        }
+.product-thumbnails {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-        .product-image {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+.product-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
 
-        .product-image img {
-            max-width: 100%;
-            height: auto;
-            border: none;
-        }
+.product-image img {
+    max-width: 100%;
+    height: auto;
+    border: none;
+}
 
-        .product-details {
-            flex: 1;
-            padding: 20px;
-            box-sizing: border-box;
-        }
+.product-details {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+}
 
-        .product-title {
-            font-size: 32px;
-            margin-bottom: 15px;
-            color: #333;
-        }
+.product-title {
+    font-size: 32px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.action-button {
+    padding: 15px 30px;
+    background-color: #009688;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 48%;
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.action-button:hover {
+    background-color: #007272;
+    transform: scale(1.05);
+}
+
+.action-button:active {
+    transform: scale(0.95);
+}
 
         .product-price {
             font-size: 24px;
             margin-bottom: 20px;
             color: #009688;
         }
+
+.product-info {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
 
         .color-options {
             margin-bottom: 20px;
@@ -525,54 +558,135 @@ nav a:hover {
             width: 100%;
         }
 
-        .accordion-button {
-            background-color: white;
-            color: #009688;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 18px;
-            width: 100%;
-            text-align: left;
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
+.accordion-button {
+    background-color: #f5f5f5;
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    width: 100%;
+    text-align: left;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease;
+    margin-bottom: 10px;
+    position: relative;
+}
 
-        .accordion-content {
-            display: none;
-            padding: 10px;
-            color: #333;
-            font-size: 16px;
-        }
+.accordion-content {
+    display: none;
+    padding: 15px;
+    color: #333;
+    font-size: 16px;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
+    transition: opacity 0.3s ease, max-height 0.3s ease;
+    max-height: 0;
+    overflow: hidden;
+}
 
-        .accordion.active .accordion-content {
-            display: block;
-        }
+.accordion.active .accordion-content {
+    display: block;
+    max-height: 500px; /* Ajusta esto según el contenido real */
+    opacity: 1;
+}
 
-        .accordion.active .accordion-button {
-            background-color: #007272;
-        }
+.accordion.active .accordion-button {
+    background-color: #009688;
+    color: white;
+}
 
-        .accordion-button::after {
-            content: '+';
-            font-size: 20px;
-            font-weight: bold;
-            transform: translateY(3px);
-            transition: transform 0.3s ease;
-        }
+.accordion-button::after {
+    content: '+';
+    font-size: 20px;
+    font-weight: bold;
+    transform: translateY(3px);
+    transition: transform 0.3s ease;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+}
 
-        .accordion.active .accordion-button::after {
-            content: '-';
-            transform: translateY(-2px);
-        }
+.accordion-button::after {
+    content: '\25B6'; /* Icono de flecha derecha */
+    font-size: 20px;
+    font-weight: bold;
+    transform: translateY(3px);
+    transition: transform 0.3s ease;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.accordion.active .accordion-button::after {
+    content: '\25BC'; /* Icono de flecha abajo */
+    transform: translateY(-2px);
+}
 
         .accordion-button:hover {
             background-color: #007272;
             color: white;
         }
+
+.accordion-button, .accordion-content {
+    transition: all 0.3s ease;
+}
+.accordion:first-child .accordion-button {
+    margin-top: 0;
+}
+/* Estilos para el acordeón "Detalles" */
+#acordeon_producto {
+    padding: 15px;
+    margin: 10px 0;
+    color: #333;
+    font-size: 16px;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    max-height: 0;
+}
+
+.accordion.active #acordeon_producto {
+    max-height: 1000px; /* Ajusta esto según el contenido real */
+}
+
+/* Estilos para los párrafos dentro del acordeón "Detalles" */
+#acordeon_producto p {
+    margin: 10px 0; /* Agregar espacio entre párrafos */
+    padding: 0;
+    line-height: 1.6;
+}
+
+#tablaMedidas {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#tablaMedidas th, #tablaMedidas td {
+    padding: 8px 15px;
+    text-align: center;
+}
+
+#tablaMedidas th {
+    background-color: #009688;
+    color: white;
+}
+
+#tablaMedidas td {
+    background-color: #f4f4f4;
+}
 
         footer {
     background-color: #333;
@@ -850,53 +964,68 @@ ul li a:hover {
         </div>
     </nav>
     <div class="product-container">
-        <div class="product-thumbnails">
-    <img src="imagenes/camisa.jpg" alt="Thumbnail 1" data-src="imagenes/camisa4.jpg">
-    <img src="imagenes/camisa3.jpg" alt="Thumbnail 2" data-src="imagenes/camisa5.jpg">
-    <img src="imagenes/camisa2.jpg" alt="Thumbnail 3" data-src="imagenes/camisa6.jpg">
-</div>
-<div class="product-image">
-    <img id="main-image" src="imagenes/camisa4.jpg" alt="Producto">
+        <div id="imagenesProductos" class="product-thumbnails">
+
+        </div>
+<div id="imagenProducto" class="product-image">
+
 </div>
         <div class="product-details">
-            <h1 class="product-title">Camisa Polo</h1>
+            <h1 id="nombre_producto" class="product-title"></h1>
+            <p class="product-info" id="sku"></p>
             <div class="product-description">
-                <p>Esta camisa polo de alta calidad está hecha con materiales suaves y cómodos. Ideal para cualquier ocasión.</p>
+                <p id="descripcion"></p>
             </div>
-            <p class="product-price">Precio: $99.99</p>
-            <div class="color-options">
-                <span class="color-option" style="background-color: red;"></span>
-                <span class="color-option" style="background-color: blue;"></span>
-                <span class="color-option" style="background-color: green;"></span>
-                <span class="color-option" style="background-color: black;"></span>
+            <p id="precio" class="product-price"></p>
+            <p class="product-info" id="existencia"></p>
+            <div id="coloresDisponibles" class="color-options">
+                <h4>Colores disponibles</h4>
             </div>
-            <div class="product-sizes">
-                <span class="product-size">S</span>
-                <span class="product-size">M</span>
-                <span class="product-size">L</span>
-                <span class="product-size">XL</span>
+            <div id="tallas_disponibles" class="product-sizes">
+                <h4>Tallas disponibles</h4>
             </div>
-            <p class="product-availability">Disponibilidad: En Stock</p>
+            <p class="product-availability"></p>
             <div class="quantity-container">
-                <span class="quantity-label">Cantidad:</span>
+                <span id="cantidad" class="quantity-label"></span>
                 <button class="quantity-button" id="decrement-button">-</button>
                 <input class="quantity-input" type="number" id="quantity" value="1" min="1" max="5">
                 <button class="quantity-button" id="increment-button">+</button>
             </div>
             <div class="product-actions">
-                <button>Agregar al Carrito</button>
-                <button>Comprar ahora</button>
+                <button class="action-button">Agregar al Carrito</button>
+                <button class="action-button">Comprar ahora</button>
             </div>
             <div class="accordion">
                 <button class="accordion-button">Detalles</button>
-                <div class="accordion-content">
-                    <p>Aquí puedes agregar información detallada sobre el producto, como características, materiales, etc.</p>
+                <div id="acordeon_producto" class="accordion-content">
+
                 </div>
             </div>
             <div class="accordion">
                 <button class="accordion-button">Tallas y Dimensiones</button>
-                <div class="accordion-content">
-                    <p>Aquí puedes proporcionar información sobre las tallas disponibles y las dimensiones del producto.</p>
+                <div id="acordeon_dimensiones" class="accordion-content">
+                    <table id="tablaMedidas" border="1">
+                        <thead>
+                            <tr>
+                                <th>Medidas</th>
+                                <!-- Aquí se llenarán las tallas dinámicamente -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Pecho</td>
+                                <!-- Aquí se llenarán las medidas de pecho dinámicamente -->
+                            </tr>
+                            <tr>
+                                <td>Largo</td>
+                                <!-- Aquí se llenarán las medidas de largo dinámicamente -->
+                            </tr>
+                            <tr>
+                                <td>Hombro</td>
+                                <!-- Aquí se llenarán las medidas de hombro dinámicamente -->
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -980,5 +1109,6 @@ ul li a:hover {
         });
     });
     </script>
+    <script src="js/producto.js"></script>
 </body>
 </html>

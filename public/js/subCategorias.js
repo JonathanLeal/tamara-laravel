@@ -67,6 +67,14 @@ $(document).ready(function () {
     // Llama a la función para cargar productos con los parámetros obtenidos
     cargarProductos(cat, subCat);
 
+    $(document).on('click', '.add-to-cart-button', function () {
+        // Obtenemos el id del producto desde el atributo data-product-id
+        const productId = $(this).data('product-id');
+
+        // Redireccionamos a la vista de producto con el id del producto
+        window.location.href = `http://127.0.0.1:8000/producto?id=${productId}`;
+    });
+
     // Manejar el evento de clic en los enlaces de la categoría
     $(".dropdown a").on("click", function () {
         cat = $(this).data("cat");
