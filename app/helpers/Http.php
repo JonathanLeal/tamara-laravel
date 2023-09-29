@@ -6,10 +6,13 @@ use Illuminate\Support\Facades\DB;
 class Http
 {
 
-    const retOK       = 'OK';
-    const retError    = "ERROR";
-    const retDenyBot  = "NOTAUTH";
-    const retNotFound = "NOTFOUND";
+    const retOK            = 'OK';
+    const retError         = "ERROR";
+    const retDenyBot       = "NOTAUTH";
+    const retNotFound      = "NOTFOUND";
+    const retBadRequest    = "BADREQUEST";
+    const retUnprocessable = "UNPROCESSABLECONTENT";
+    const retUnauthorized  = "UNAUTHORIZED";
 
     public static function respuesta($resultado, $datos, $cache = false): \Illuminate\Http\JsonResponse
     {
@@ -30,6 +33,15 @@ class Http
                 break;
             case self::retNotFound:
                 $codigo = 404;
+                break;
+            case self::retBadRequest:
+                $codigo = 400;
+                break;
+            case self::retUnprocessable:
+                $codigo = 422;
+                break;
+            case self::retUnauthorized:
+                $codigo = 401;
                 break;
         }
 

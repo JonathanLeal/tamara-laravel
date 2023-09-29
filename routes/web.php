@@ -25,3 +25,6 @@ Route::get('/producto', function () {
     return view('producto');
 });
 Route::get('/infoProducto/{id}', [ProductoController::class, 'obteniendoInfoProducto']);
+
+//registros
+Route::post('/registroNewUser', [LoginController::class, 'registrarUsuario']);

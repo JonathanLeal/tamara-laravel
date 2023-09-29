@@ -12,7 +12,7 @@ $(document).ready(function () {
         $('.add-to-cart-button').addClass('add-to-cart-button-hidden');
 
         $.ajax({
-            url: `http://127.0.0.1:8000/subCategoriasProductos/${cat}/${subCat}`,
+            url: `/subCategoriasProductos/${cat}/${subCat}`,
             type: 'GET',
             dataType: 'json',
             success: function (response) {
@@ -49,7 +49,7 @@ $(document).ready(function () {
                 if (xhr.status === 404) {
                     Swal.fire({
                         title: 'Oopss...',
-                        text: "Lo sentimos mucho, de momento no hay productos para esa seccion.",
+                        text: "Lo sentimos mucho, por el momento no hay productos para esa seccion, te mostraremos los disponibles.",
                         icon: 'warning',
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33',
@@ -72,7 +72,7 @@ $(document).ready(function () {
         const productId = $(this).data('product-id');
 
         // Redireccionamos a la vista de producto con el id del producto
-        window.location.href = `http://127.0.0.1:8000/producto?id=${productId}`;
+        window.location.href = `/producto?id=${productId}`;
     });
 
     // Manejar el evento de clic en los enlaces de la categoría
@@ -125,7 +125,7 @@ function obtenerTodosProductosCategoria(cat) {
             if (error.status === 404) {
                 Swal.fire({
                     title: 'Lo sentimos tanto',
-                    text: "No de momento no tenemos productos para esta categoria, puedes buscar otras.",
+                    text: "De momento no tenemos productos para esta categoria, puedes buscar otras.",
                     icon: 'warning',
                     confirmButtonColor: '#3085d6',
                     confirmButtonText: 'Regresar'

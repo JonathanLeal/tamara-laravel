@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>Registro</title>
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
@@ -207,6 +210,12 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+@media (max-width: 768px) {
+    footer {
+        text-align: center;
+    }
+}
     </style>
 </head>
 <body>
@@ -216,19 +225,30 @@
             <form>
                 <div class="input-container">
                     <i class="fa-solid fa-envelope"></i>
-                    <input type="email" placeholder="Correo" required>
+                    <input id="correo" name="correo" type="email" placeholder="Correo">
                 </div>
                 <div class="input-container">
                     <i class="fas fa-user"></i>
-                    <input type="text" placeholder="Usuario" required>
+                    <input id="nombres" name="nombres" type="text" placeholder="Nombres">
+                </div>
+                <div class="input-container">
+                    <i class="fas fa-user"></i>
+                    <input id="apellidos" name="apellidos" type="text" placeholder="Apellidos">
                 </div>
                 <div class="input-container">
                     <i class="fas fa-lock"></i>
-                    <input type="password" id="password" placeholder="Contraseña" required>
+                    <input id="contra" name="contra" type="password" id="password" placeholder="Contraseña">
                 </div>
                 <div class="input-container">
                     <i class="fas fa-lock"></i>
-                    <input type="password" placeholder="Confirme contraseña" required>
+                    <input id="contraConfirm" name="contraConfirm" type="password" placeholder="Confirme contraseña">
+                </div>
+                <div class="gender-container">
+                    <label for="masculino">Masculino</label>
+                    <input id="masculino" name="gender" type="radio" value="M">
+
+                    <label for="femenimo">Femenino</label>
+                    <input id="femenimo" type="radio" name="gender" value="F">
                 </div>
                 <button type="submit" class="login-button" id="loginButton">
                     <span id="spinner" class="spinner"></span>
@@ -240,17 +260,22 @@
             <div class="footer-container">
                 <div class="footer-column">
                     <h3>Acerca de nosotros</h3>
-                    <p>Somos Tienda Tamara, tu destino para encontrar la moda más elegante y exclusiva para todas las ocasiones. Nuestra pasión es proporcionarte la mejor selección de ropa y accesorios para que te veas y te sientas increíble en cualquier momento.</p>
+                    <p>Quienes somos.</p>
                 </div>
                 <div class="footer-column">
-                    <h3>Enlaces rápidos</h3>
+                    <h3>Servicio al cliente</h3>
                     <ul>
-                        <li><a href="#">Inicio</a></li>
-                        <li><a href="#">Productos</a></li>
-                        <li><a href="#">Categorías</a></li>
-                        <li><a href="#">Hombres</a></li>
-                        <li><a href="#">Mujeres</a></li>
-                        <li><a href="#">Deportes</a></li>
+                        <li><a href="#">Contáctanos</a></li>
+                        <li><a href="#">Politica de devolución</a></li>
+                        <li><a href="#">Quines somos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Ayuda</h3>
+                    <ul>
+                        <li><a href="#">Términos y condiciones</a></li>
+                        <li><a href="#">Guía de tallas</a></li>
+                        <li><a href="#">Cómo realizar el pedido</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">

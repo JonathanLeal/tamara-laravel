@@ -53,4 +53,5 @@ class ProductoController extends Controller
                                             'producto' => $productos,
                                             'dimensiones' => $dimensiones]);
     }
+
 }

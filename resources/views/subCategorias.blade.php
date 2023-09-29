@@ -44,6 +44,91 @@ nav {
     padding: 1px 0;
 }
 
+.cart {
+    display: flex;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    margin-right: 30px; /* Espacio entre el carrito y la barra de búsqueda */
+}
+
+.cart i {
+    font-size: 24px;
+    margin-right: 10px;
+    color: #ff4500; /* Color personalizado para el icono */
+}
+
+.cart-count {
+    background-color: #1693D2;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 50%;
+    padding: 6px 10px;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    position: relative;
+}
+
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* Estilo del carrito de compras */
+#cart-icon {
+    cursor: pointer;
+}
+
+/* Agrega animación para mostrar el modal */
+.modal.show-modal {
+    display: flex;
+}
+
+/* Estilo del pie de página del modal */
+.modal-footer {
+    margin-top: 20px;
+}
+
+/* Estilo para los botones del modal */
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 10px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
 .search-box {
     display: flex;
     align-items: center;
@@ -656,6 +741,10 @@ ul li a:hover {
             </li>
         </ul>
         <div class="search-box">
+            <div class="cart" id="cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
+            </div>
             <input type="text" placeholder="Buscar..." id="search-bar">
             <button type="submit" id="search-button"><i class="fas fa-search"></i></button>
         </div>
@@ -663,6 +752,24 @@ ul li a:hover {
 
     <div class="product-container">
         <div class="product-row" id="productos"></div>
+    </div>
+
+    <div class="modal" id="cart-modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-cart-modal">&times;</span>
+            <h2>Tu carrito de compras</h2>
+            <div class="modal-body">
+                <ul>
+                    <li>Producto 1 - $20.00</li>
+                    <li>Producto 2 - $15.00</li>
+                    <li>Producto 3 - $10.00</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button id="buy-now-button">Comprar Ahora</button>
+                <button id="close-button">Cerrar</button>
+            </div>
+        </div>
     </div>
 
     <footer>
@@ -699,7 +806,38 @@ ul li a:hover {
             <p>&copy; 2023 Tienda Tamara</p>
         </div>
     </footer>
+    <script>
+        let cartCount = 0;
 
+        // Función para actualizar el contador del carrito
+        function updateCartCount() {
+            const cartCountElement = document.querySelector('.cart-count');
+            cartCountElement.textContent = cartCount.toString();
+        }
+
+        // Llamada inicial para establecer el contador
+        updateCartCount();
+
+        const cartIcon = document.getElementById("cart-icon");
+        const cartModal = document.getElementById("cart-modal");
+        const closeCartModal = document.getElementById("close-cart-modal");
+        const closeButton = document.getElementById("close-button");
+
+        // Agregar evento de clic para abrir el modal
+        cartIcon.addEventListener("click", () => {
+            cartModal.classList.add("show-modal");
+        });
+
+        // Agregar evento de clic para cerrar el modal (botón "Cerrar")
+        closeButton.addEventListener("click", () => {
+            cartModal.classList.remove("show-modal");
+        });
+
+        // Agregar evento de clic para cerrar el modal (botón "X")
+        closeCartModal.addEventListener("click", () => {
+            cartModal.classList.remove("show-modal");
+        });
+    </script>
     <script src="{{ asset('js/subCategorias.js') }}"></script>
 </body>
 </html>
