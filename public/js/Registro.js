@@ -55,7 +55,7 @@ $("#loginButton").on("click", function() {
         success: function(response){
             if (response.resultado === 'OK') {
                 Swal.fire({
-                    title: '¡Bienvenido!',
+                    title: '¡Registrado con éxito!',
                     text: "Nos alegra que te hallas registrado, inicia sesión para disfrutar de nuestra tienda en linea",
                     icon: 'success',
                     confirmButtonColor: '#3085d6',
