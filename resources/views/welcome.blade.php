@@ -660,9 +660,17 @@ ul li a:hover {
         <h1>TAMARA</h1>
         <div class="dropdown-parent-user">
             <button id="user-button"><i class="fas fa-user"></i></button>
+            @auth
+            <span id="user-nombre">{{ Auth::user()->name }}</span>
+            @endauth
             <ul class="dropdown-user">
+                @auth
+                <li><a href="#">Mi Perfil</a></li>
+                <li><a href="#">Cerrar Sesión</a></li>
+                @else
                 <li><a href="{{ route('registrarse') }}">Registrarse</a></li>
                 <li><a href="{{ route('login') }}">Iniciar Sesión</a></li>
+                @endauth
             </ul>
         </div>
     </header>
@@ -713,7 +721,7 @@ ul li a:hover {
                 <a href="#">Niños <i class="fas fa-chevron-down"></i></a>
                 <ul class="dropdown">
                     <li class="dropdown-submenu">
-                        <a href="#">Camisa <i class="fas fa-chevron-right"></i></a>
+                        <a id="clicl" href="#">Camisa <i class="fas fa-chevron-right"></i></a>
                         <ul class="sub-dropdown">
                             <li><a id="niños-camisaPolo" href="{{ route('subCtegoriasView') }}?cat=3&subCat=1">Camisa Polo</a></li>
                             <li><a id="niños-camisaCasual" href="{{ route('subCtegoriasView') }}?cat=3&subCat=3">Camisa Casual</a></li>
@@ -862,6 +870,66 @@ ul li a:hover {
         closeCartModal.addEventListener("click", () => {
             cartModal.classList.remove("show-modal");
         });
+
+        function obtenerInformacionUsuario() {
+            $.ajax({
+                url: '/api/auth/me', // Endpoint para obtener la información del usuario autenticado
+                type: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                },
+                success: function (response) {
+                    // Actualiza el encabezado con el nombre del usuario y los enlaces
+                    $("#user-nombre").text(response.datos.name);
+                    $(".dropdown-user").html('<li><a href="#">Mi Perfil</a></li><li><a href="#" id="btnCerrarSesion">Cerrar Sesión</a></li>');
+
+                    // Adjunta el evento click al botón "Cerrar Sesión" después de crearlo
+                    $("#btnCerrarSesion").on("click", function () {
+                        $.ajax({
+                            url: '/api/auth/logout',
+                            type: 'POST',
+                            headers: {
+                                'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                            },
+                            success: function(response){
+                                Swal.fire({
+                                    title: '¿Estas seguro que deseas cerrar sesión?',
+                                    text: "Nos encanta tenerte con nosotros",
+                                    icon: 'warning',
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#3085d6',
+                                    cancelButtonColor: '#d33',
+                                    confirmButtonText: 'Si, cerrar',
+                                    cancelButtonText: 'No, no cerrar'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        Swal.fire(
+                                            '¡Sesión cerrada!',
+                                            'Gracias por preferirnos, ¡vuelve pronto!.',
+                                            'success'
+                                        ).then(() => {
+                                            window.location.href = '/iniciar-sesion';
+                                        })
+                                    }
+                                })
+                            },
+                            error: function(error){
+                                Swal.fire(
+                                    '¡Oopss...!',
+                                    'Hay un error en tu cierre de sesión, por favor intenta mas tarde.',
+                                    'error'
+                                )
+                            }
+                        });
+                    });
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+}
+
+obtenerInformacionUsuario();
     </script>
     <script src="{{ asset('js/welcome.js') }}"></script>
 </body>

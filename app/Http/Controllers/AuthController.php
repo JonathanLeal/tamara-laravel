@@ -55,7 +55,7 @@ class AuthController extends Controller
      */
     public function me()
     {
-        return response()->json(auth()->user());
+        return http::respuesta(http::retOK, auth()->user());
     }
 
     /**
@@ -67,7 +67,7 @@ class AuthController extends Controller
     {
         auth()->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return http::respuesta(http::retOK, "Sesion cerrada con exito");
     }
 
     /**

@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", function () {
     const slider = document.querySelector(".slider-wrapper");
     const prevButton = document.querySelector("#prev-button");
@@ -67,4 +68,3 @@ document.getElementById('menu-toggle').addEventListener('click', function() {
     var nav = document.querySelector('nav ul');
     nav.classList.toggle('active');
 });
-
