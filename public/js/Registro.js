@@ -70,7 +70,7 @@ $("#loginButton").on("click", function() {
         error: function(error){
             if (error.status === 401) {
                 Swal.fire({
-                    title: 'Problema detectado',
+                    title: 'Notificación',
                     text: 'Detectamos que las contraseñas no son las mismas, por favor procura que sean las mismas.',
                     icon: 'warning',
                     confirmButtonColor: '#3085d6',
@@ -83,8 +83,8 @@ $("#loginButton").on("click", function() {
             } else {
                 if (error.status === 400) {
                     Swal.fire({
-                        title: 'Problema detectado',
-                        text: 'Detectamos que el correo que intentas introducir ya esta registrado, por favor intenta con otro.',
+                        title: 'Notificación',
+                        text: 'No se puede registrar este usuario, por favor contactese con servicio al cliente.',
                         icon: 'warning',
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: '¡Entendido!'

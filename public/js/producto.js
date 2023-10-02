@@ -96,3 +96,112 @@ function obtenerInfoProductos(id) {
         }
     });
 }
+
+function obtenerInformacionUsuario() {
+    $.ajax({
+        url: '/api/auth/me', // Endpoint para obtener la información del usuario autenticado
+        type: 'POST',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        },
+        success: function (response) {
+            // Actualiza el encabezado con el nombre del usuario y los enlaces
+            $("#user-nombre").text(response.datos.name);
+            $(".dropdown-user").html('<li><a href="#">Mi Perfil</a></li><li><a href="#" id="btnCerrarSesion">Cerrar Sesión</a></li>');
+
+            // Adjunta el evento click al botón "Cerrar Sesión" después de crearlo
+            $("#btnCerrarSesion").on("click", function () {
+                $.ajax({
+                    url: '/api/auth/logout',
+                    type: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                    },
+                    success: function(response){
+                        Swal.fire({
+                            title: '¿Estas seguro que deseas cerrar sesión?',
+                            text: "Nos encanta tenerte con nosotros",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Si, cerrar',
+                            cancelButtonText: 'No, no cerrar'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                Swal.fire(
+                                    '¡Sesión cerrada!',
+                                    'Gracias por preferirnos, ¡vuelve pronto!.',
+                                    'success'
+                                ).then(() => {
+                                    window.location.href = '/iniciar-sesion';
+                                })
+                            }
+                        })
+                    },
+                    error: function(error){
+                        Swal.fire(
+                            '¡Oopss...!',
+                            'Hay un error en tu cierre de sesión, por favor intenta mas tarde.',
+                            'error'
+                        )
+                    }
+                });
+            });
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
+
+obtenerInformacionUsuario();
+
+function showModal() {
+    var modal = document.getElementById("carritoModal");
+    modal.style.display = "block";
+}
+
+$("#btnAgregarCarrito").on("click", function() {
+    $.ajax({
+        url: '/api/auth/infoProductoCarrito/'+1,
+        type: 'GET',
+        dataType: 'JSON',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        },
+        success: function(response) {
+            // Verificar si la respuesta contiene datos válidos
+            if (response.resultado === "OK") {
+                // Construir los select de colores y tallas
+                var selectColores = '<select id="selectColores">';
+                response.datos.colores.forEach(function(color) {
+                    selectColores += '<option value="' + color.id + '">' + color.nombre_color + '</option>';
+                });
+                selectColores += '</select>';
+
+                var selectTallas = '<select id="selectTallas">';
+                response.datos.tallas.forEach(function(talla) {
+                    selectTallas += '<option value="' + talla.id + '">' + talla.nombre_talla + '</option>';
+                });
+                selectTallas += '</select>';
+
+                // Insertar los select en el modal
+                $("#select").html(selectColores + selectTallas);
+
+                // Mostrar el modal
+                $("#carritoModal").show();
+            } else {
+                console.log("No se pudo obtener la información del producto.");
+            }
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+});
+
+// Función para cerrar el modal
+function closeModal() {
+    $("#carritoModal").hide();
+}

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Detalles del Producto - Camisa Polo</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -969,6 +970,42 @@ ul li a:hover {
         flex: 1 1 100%; /* Cambiar el ancho de las columnas en el pie de página */
     }
 }
+
+.modalCarrito {
+  display: none; /* Ocultar el modal por defecto */
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+  padding-top: 60px;
+}
+
+.modal-content-carrito {
+  background-color: #fefefe;
+  margin: 5% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
     </style>
 </head>
 <body>
@@ -976,9 +1013,17 @@ ul li a:hover {
         <h1>TAMARA</h1>
         <div class="dropdown-parent-user">
             <button id="user-button"><i class="fas fa-user"></i></button>
+            @auth
+            <span id="user-nombre">{{ Auth::user()->name }}</span>
+            @endauth
             <ul class="dropdown-user">
+                @auth
+                <li><a href="#">Mi Perfil</a></li>
+                <li><a href="#">Cerrar Sesión</a></li>
+                @else
                 <li><a href="{{ route('registrarse') }}">Registrarse</a></li>
                 <li><a href="{{ route('login') }}">Iniciar Sesión</a></li>
+                @endauth
             </ul>
         </div>
     </header>
@@ -1084,8 +1129,8 @@ ul li a:hover {
                 <button class="quantity-button" id="increment-button">+</button>
             </div>
             <div class="product-actions">
-                <button class="action-button">Agregar al Carrito</button>
-                <button class="action-button">Comprar ahora</button>
+                <button class="action-button" onclick="showModal()" id="btnAgregarCarrito">Agregar al Carrito</button>
+                <button class="action-button" id="btnComprarAhora">Comprar ahora</button>
             </div>
             <div class="accordion">
                 <button class="accordion-button">Detalles</button>
@@ -1140,6 +1185,15 @@ ul li a:hover {
                 </div>
             </div>
         </div>
+
+        <div id="carritoModal" class="modalCarrito">
+            <div class="modal-content-carrito">
+              <span class="close" onclick="closeModal()">&times;</span>
+              <div id="select">
+
+              </div>
+            </div>
+          </div>
 
         <footer>
             <div class="footer-container">

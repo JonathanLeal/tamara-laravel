@@ -138,3 +138,63 @@ function obtenerTodosProductosCategoria(cat) {
         }
     });
 }
+
+function obtenerInformacionUsuario() {
+    $.ajax({
+        url: '/api/auth/me', // Endpoint para obtener la información del usuario autenticado
+        type: 'POST',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        },
+        success: function (response) {
+            // Actualiza el encabezado con el nombre del usuario y los enlaces
+            $("#user-nombre").text(response.datos.name);
+            $(".dropdown-user").html('<li><a href="#">Mi Perfil</a></li><li><a href="#" id="btnCerrarSesion">Cerrar Sesión</a></li>');
+
+            // Adjunta el evento click al botón "Cerrar Sesión" después de crearlo
+            $("#btnCerrarSesion").on("click", function () {
+                $.ajax({
+                    url: '/api/auth/logout',
+                    type: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                    },
+                    success: function(response){
+                        Swal.fire({
+                            title: '¿Estas seguro que deseas cerrar sesión?',
+                            text: "Nos encanta tenerte con nosotros",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Si, cerrar',
+                            cancelButtonText: 'No, no cerrar'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                Swal.fire(
+                                    '¡Sesión cerrada!',
+                                    'Gracias por preferirnos, ¡vuelve pronto!.',
+                                    'success'
+                                ).then(() => {
+                                    window.location.href = '/iniciar-sesion';
+                                })
+                            }
+                        })
+                    },
+                    error: function(error){
+                        Swal.fire(
+                            '¡Oopss...!',
+                            'Hay un error en tu cierre de sesión, por favor intenta mas tarde.',
+                            'error'
+                        )
+                    }
+                });
+            });
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
+
+obtenerInformacionUsuario();

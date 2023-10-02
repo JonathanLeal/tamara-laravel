@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -670,9 +669,17 @@ ul li a:hover {
         <h1>TAMARA</h1>
         <div class="dropdown-parent-user">
             <button id="user-button"><i class="fas fa-user"></i></button>
+            @auth
+            <span id="user-nombre">{{ Auth::user()->name }}</span>
+            @endauth
             <ul class="dropdown-user">
+                @auth
+                <li><a href="#">Mi Perfil</a></li>
+                <li><a href="#">Cerrar Sesión</a></li>
+                @else
                 <li><a href="{{ route('registrarse') }}">Registrarse</a></li>
                 <li><a href="{{ route('login') }}">Iniciar Sesión</a></li>
+                @endauth
             </ul>
         </div>
     </header>
@@ -837,6 +844,7 @@ ul li a:hover {
         closeCartModal.addEventListener("click", () => {
             cartModal.classList.remove("show-modal");
         });
+
     </script>
     <script src="{{ asset('js/subCategorias.js') }}"></script>
 </body>

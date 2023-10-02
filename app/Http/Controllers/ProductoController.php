@@ -6,7 +6,9 @@ use App\Helpers\Http;
 use App\Models\Producto;
 use App\Models\ProductoImagenes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class ProductoController extends Controller
 {
@@ -52,6 +54,53 @@ class ProductoController extends Controller
                                             'tallas' => $tallas,
                                             'producto' => $productos,
                                             'dimensiones' => $dimensiones]);
+    }
+
+    public function mostrarParaCarrito($id)
+    {
+        if (Auth::check()) {
+            $colores = DB::table('producto_colores AS pc')
+                   ->join('colores AS c', 'pc.colores_id', '=', 'c.id')
+                   ->select('pc.id', 'c.nombre_color')
+                   ->where('pc.producto_id', $id)
+                   ->get();
+
+            $tallas = DB::table('productos_tallas AS pt')
+                        ->join('tallas AS t', 'pt.tallas_id', '=', 't.id')
+                        ->select('pt.id', 't.nombre_talla')
+                        ->where('pt.producto_id', $id)
+                        ->get();
+
+            return http::respuesta(http::retOK, ['colores' => $colores,
+                                                'tallas'   => $tallas]);
+            } else {
+                return http::respuesta(http::retUnauthorized, "Debe autorizarse");
+            }
+    }
+
+    public function agregarAlCarrito(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'producto' => 'required|int',
+            'talla' => 'required|int',
+            'color' => 'required|int',
+            'existencia' => 'required|int',
+            'user' => 'required|int'
+        ]);
+
+        if ($validator->fails()) {
+            return http::respuesta(http::retUnprocessable, $validator->errors());
+        }
+
+        DB::beginTransaction();
+        try {
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return http::respuesta(http::retError, $th->getMessage());
+        }
+        DB::commit();
+        return http::respuesta(http::retOK, "Añadido al carrito correctamente");
     }
 
 }
