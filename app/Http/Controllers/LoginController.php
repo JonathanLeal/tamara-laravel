@@ -25,38 +25,37 @@ class LoginController extends Controller
     public function registrarUsuario(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'correo'        => 'required|email',
-            'nombres'       => 'required|string',
+            'email'         => 'required|email',
+            'name'          => 'required|string',
+            'password'      => 'required|string',
+            'contraConfirm' => 'required|string',
             'apellidos'     => 'required|string',
-            'contra'        => 'required|string',
-            'contraConfirm' => 'required|string'
+            'sexo'          => 'required|string'
         ]);
 
         if ($validator->fails()){
             return Http::respuesta(http::retUnprocessable, $validator->errors());
         }
 
-        $correoEncontrado = User::where('correo', $request->correo)->first();
+        $correoEncontrado = User::where('email', $request->email)->first();
         if ($correoEncontrado){
             return http::respuesta(http::retBadRequest, "El correo electronico ya esta registrado");
         }
 
-        if($request->contraConfirm != $request->contra){
+        if($request->contraConfirm != $request->password){
             return http::respuesta(http::retUnauthorized, "Las contraseñas no coinciden");
         }
 
         DB::beginTransaction();
         try {
-            $ultimoId = User::max('id');
-
+           // $ultimoId = User::max('id');
             $user = new User();
-            $user->id         = $ultimoId + 1;
-            $user->correo     = $request->correo;
-            $user->nombres    = $request->nombres;
-            $user->apellidos  = $request->apellidos;
-            $user->password   = Hash::make($request->password);
-            $user->sexo       = $request->sexo;
-            $user->id_rol     = 4;
+            $user->name      = $request->name;
+            $user->email     = $request->email;
+            $user->password  = Hash::make($request->password);
+            $user->apellidos = $request->apellidos;
+            $user->sexo      = $request->sexo;
+            $user->rol_id    = 4;
             $user->save();
         } catch (\Throwable $th) {
             DB::rollBack();

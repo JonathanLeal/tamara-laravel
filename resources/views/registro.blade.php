@@ -225,11 +225,11 @@
             <form>
                 <div class="input-container">
                     <i class="fa-solid fa-envelope"></i>
-                    <input id="correo" name="correo" type="email" placeholder="Correo">
+                    <input id="email" name="email" type="email" placeholder="Correo">
                 </div>
                 <div class="input-container">
                     <i class="fas fa-user"></i>
-                    <input id="nombres" name="nombres" type="text" placeholder="Nombres">
+                    <input id="name" name="name" type="text" placeholder="Nombres">
                 </div>
                 <div class="input-container">
                     <i class="fas fa-user"></i>
@@ -237,7 +237,7 @@
                 </div>
                 <div class="input-container">
                     <i class="fas fa-lock"></i>
-                    <input id="contra" name="contra" type="password" id="password" placeholder="Contraseña">
+                    <input type="password" id="password" name="password" placeholder="Contraseña">
                 </div>
                 <div class="input-container">
                     <i class="fas fa-lock"></i>

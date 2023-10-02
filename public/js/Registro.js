@@ -32,18 +32,18 @@ radioButtons.forEach(radioButton => {
 });
 
 $("#loginButton").on("click", function() {
-    var correo = $("#correo").val();
-    var nombres = $("#nombres").val();
+    var email = $("#email").val();
+    var name = $("#name").val();
     var apellidos = $("#apellidos").val();
-    var contra = $("#contra").val();
+    var password = $("#password").val();
     var contraConfirm = $("#contraConfirm").val();
     var sexo = $("input[name='gender']:checked").val();
 
     var nuevoUsuario = {
-        correo: correo,
-        nombres: nombres,
+        email: email,
+        name: name,
         apellidos: apellidos,
-        contra: contra,
+        password: password,
         contraConfirm: contraConfirm,
         sexo: sexo
     }
@@ -90,7 +90,7 @@ $("#loginButton").on("click", function() {
                         confirmButtonText: '¡Entendido!'
                       }).then((result) => {
                         if (result.isConfirmed) {
-                            $("#correo").val("");
+                            $("#email").val("");
                         }
                     })
                 } else {
