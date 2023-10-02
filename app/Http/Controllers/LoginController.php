@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Http;
 use App\Models\User;
+use App\Models\Usuario;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -37,7 +38,7 @@ class LoginController extends Controller
             return Http::respuesta(http::retUnprocessable, $validator->errors());
         }
 
-        $correoEncontrado = User::where('email', $request->email)->first();
+        $correoEncontrado = Usuario::where('correo', $request->email)->first();
         if ($correoEncontrado){
             return http::respuesta(http::retBadRequest, "El correo electronico ya esta registrado");
         }
@@ -48,14 +49,23 @@ class LoginController extends Controller
 
         DB::beginTransaction();
         try {
-           // $ultimoId = User::max('id');
+            $ultimoId = Usuario::max('id');
+            $id = $ultimoId + 1;
+
+            $usuario = new Usuario();
+            $usuario->id        = $id;
+            $usuario->nombres   = $request->name;
+            $usuario->correo    = $request->email;
+            $usuario->password  = Hash::make($request->password);
+            $usuario->apellidos = $request->apellidos;
+            $usuario->sexo      = $request->sexo;
+            $usuario->id_rol    = 4;
+            $usuario->save();
+
             $user = new User();
-            $user->name      = $request->name;
-            $user->email     = $request->email;
-            $user->password  = Hash::make($request->password);
-            $user->apellidos = $request->apellidos;
-            $user->sexo      = $request->sexo;
-            $user->rol_id    = 4;
+            $user->name      = $usuario->nombres;
+            $user->email    = $usuario->correo;
+            $user->password  = $usuario->password;
             $user->save();
         } catch (\Throwable $th) {
             DB::rollBack();
