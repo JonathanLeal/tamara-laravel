@@ -96,7 +96,7 @@ $("#loginButton").on("click", function() {
                 } else {
                     if (error.status === 422) {
                         Swal.fire(
-                            'Problema detectado',
+                            'Notificación',
                             'Recuerda que debes de completar todos los campos por favor.',
                             'warning'
                           )

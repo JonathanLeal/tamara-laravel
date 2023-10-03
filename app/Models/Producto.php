@@ -10,7 +10,7 @@ class Producto extends Model
     use HasFactory;
     protected $table = "productos";
     protected $primaryKey = "id";
-    public $timestamps = true;
+    public $timestamps = false;
 
     protected $fillable = [
         'id',
@@ -31,7 +31,9 @@ class Producto extends Model
         'categoria_id',
         'sub_categoria_id',
         'user_id',
-        'imagen'
+        'imagen',
+        'created_at',
+        'updated_at'
     ];
 
     public function categorias()

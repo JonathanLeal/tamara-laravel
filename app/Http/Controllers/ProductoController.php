@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Http;
+use App\Models\Carrito;
 use App\Models\Producto;
 use App\Models\ProductoImagenes;
 use Illuminate\Http\Request;
@@ -71,8 +72,14 @@ class ProductoController extends Controller
                         ->where('pt.producto_id', $id)
                         ->get();
 
+            $miniDetalles = DB::table('productos AS p')
+                            ->select('p.id', 'p.nombre_producto', 'p.detalles', 'p.precio_1', 'p.imagen', 'p.sku', 'p.existencia')
+                            ->where('p.id', $id)
+                            ->get();
+
             return http::respuesta(http::retOK, ['colores' => $colores,
-                                                'tallas'   => $tallas]);
+                                                'tallas'   => $tallas,
+                                                'producto' => $miniDetalles]);
             } else {
                 return http::respuesta(http::retUnauthorized, "Debe autorizarse");
             }
@@ -80,21 +87,42 @@ class ProductoController extends Controller
 
     public function agregarAlCarrito(Request $request)
     {
+        $user = Auth::user();
+
         $validator = Validator::make($request->all(), [
             'producto' => 'required|int',
             'talla' => 'required|int',
             'color' => 'required|int',
-            'existencia' => 'required|int',
-            'user' => 'required|int'
+            'cantidad' => 'required|int',
         ]);
 
         if ($validator->fails()) {
             return http::respuesta(http::retUnprocessable, $validator->errors());
         }
 
+        $producto = Producto::where('id', $request->producto)->first();
+
+        if ($request->cantidad > $producto->existencia) {
+            return http::respuesta(http::retBadRequest, "No puede comprar una cantidad mayor a la existencia actual del producto");
+        }
+
+        $ultimoId = Carrito::max('id');
+        $id = $ultimoId + 1;
+
         DB::beginTransaction();
         try {
+            $carrito = new Carrito();
+            $carrito->id          = $id;
+            $carrito->producto_id = $request->producto;
+            $carrito->talla_id    = $request->talla;
+            $carrito->color_id    = $request->color;
+            $carrito->cantidad    = $request->cantidad;
+            $carrito->total       = $producto->precio_1 * $request->cantidad;
+            $carrito->user_id     = $user->usuario_id;
+            $carrito->save();
 
+            $producto->existencia = $producto->existencia - $request->cantidad;
+            $producto->save();
         } catch (\Throwable $th) {
             DB::rollBack();
             return http::respuesta(http::retError, $th->getMessage());
@@ -103,4 +131,22 @@ class ProductoController extends Controller
         return http::respuesta(http::retOK, "Añadido al carrito correctamente");
     }
 
+    public function mostrarProductosEnCarrito($id)
+    {
+        if (Auth::check()) {
+            $carrito = DB::table('carrito AS ct')
+                       ->join('colores AS c', 'ct.color_id', '=', 'c.id')
+                       ->join('productos AS p', 'ct.producto_id', '=', 'p.id')
+                       ->join('tallas AS t', 'ct.talla_id', '=', 't.id')
+                       ->select('ct.id', 'p.nombre_producto', 'p.imagen', 'ct.cantidad', 't.nombre_talla', 'c.nombre_color', 'ct.total')
+                       ->where('ct.user_id', $id)
+                       ->get();
+            if ($carrito->isEmpty()) {
+                return http::respuesta(http::retNotFound, "No tiene productos comprados");
+            }
+            return http::respuesta(http::retOK, $carrito);
+        } else {
+            return http::respuesta(http::retUnauthorized, "debe autorizarse");
+        }
+    }
 }

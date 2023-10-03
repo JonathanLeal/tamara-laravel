@@ -971,40 +971,111 @@ ul li a:hover {
     }
 }
 
-.modalCarrito {
-  display: none; /* Ocultar el modal por defecto */
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgb(0, 0, 0);
-  background-color: rgba(0, 0, 0, 0.4);
-  padding-top: 60px;
+/* Estilos para el modal */
+/* Estilos para el modal */
+#carritoModal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8);
 }
 
-.modal-content-carrito {
-  background-color: #fefefe;
-  margin: 5% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
+#carritoModal .modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border: none;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 400px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    text-align: center;
+    position: relative;
 }
 
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
+/* Estilos para la imagen del producto */
+#productImage {
+    max-width: 50%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 10px;
 }
 
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
+/* Estilos para el título del producto */
+#productName {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+/* Estilos para el SKU y la existencia */
+.product-details p {
+    font-size: 1rem;
+    color: #777;
+    margin: 5px 0;
+}
+
+/* Estilos para los select y la cantidad */
+.select-options {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+#selectColores,
+#selectTallas {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    background-color: #f9f9f9;
+}
+
+.quantity {
+    text-align: left;
+}
+
+#quantity {
+    width: 60px;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 1rem;
+}
+
+/* Estilos para el botón */
+#btnAddToCart {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: background-color 0.3s ease;
+}
+
+#btnAddToCart:hover {
+    background-color: #45a049;
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 768px) {
+    #carritoModal .modal-content {
+        margin: 20px auto;
+        padding: 10px;
+        width: 90%;
+        max-width: 300px;
+    }
+
+    /* Ajusta otros estilos según sea necesario para dispositivos móviles */
 }
     </style>
 </head>
@@ -1122,24 +1193,24 @@ ul li a:hover {
                 <h4>Tallas disponibles</h4>
             </div>
             <p class="product-availability"></p>
-            <div class="quantity-container">
+            {{-- <div class="quantity-container">
                 <span id="cantidad" class="quantity-label"></span>
                 <button class="quantity-button" id="decrement-button">-</button>
                 <input class="quantity-input" type="number" id="quantity" value="1" min="1" max="5">
                 <button class="quantity-button" id="increment-button">+</button>
-            </div>
+            </div> --}}
             <div class="product-actions">
-                <button class="action-button" onclick="showModal()" id="btnAgregarCarrito">Agregar al Carrito</button>
+                <button class="action-button" id="btnAgregarCarrito">Agregar al Carrito</button>
                 <button class="action-button" id="btnComprarAhora">Comprar ahora</button>
             </div>
             <div class="accordion">
-                <button class="accordion-button">Detalles</button>
+                <button class="accordion-button" data-index="0">Detalles</button>
                 <div id="acordeon_producto" class="accordion-content">
 
                 </div>
             </div>
             <div class="accordion">
-                <button class="accordion-button">Tallas y Dimensiones</button>
+                <button class="accordion-button" data-index="1">Tallas y Dimensiones</button>
                 <div id="acordeon_dimensiones" class="accordion-content">
                     <table id="tablaMedidas" border="1">
                         <thead>
@@ -1173,11 +1244,23 @@ ul li a:hover {
                 <span class="close-modal" id="close-cart-modal">&times;</span>
                 <h2>Tu carrito de compras</h2>
                 <div class="modal-body">
-                    <ul>
-                        <li>Producto 1 - $20.00</li>
-                        <li>Producto 2 - $15.00</li>
-                        <li>Producto 3 - $10.00</li>
-                    </ul>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Imagen</th>
+                                <th>Talla</th>
+                                <th>Color</th>
+                                <th>Precio</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cart-items-list">
+                            <!-- Aquí se mostrarán los productos -->
+                        </tbody>
+                    </table>
+                    <div id="total-price">
+                        Total: $<span id="total-amount">0.00</span>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button id="buy-now-button">Comprar Ahora</button>
@@ -1186,14 +1269,31 @@ ul li a:hover {
             </div>
         </div>
 
-        <div id="carritoModal" class="modalCarrito">
-            <div class="modal-content-carrito">
-              <span class="close" onclick="closeModal()">&times;</span>
-              <div id="select">
 
-              </div>
+        <div id="carritoModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <div class="product-info">
+                    <img src="" alt="Producto" id="productImage">
+                    <div class="product-details">
+                        <h3 id="productName"></h3>
+                        <p><strong>SKU:</strong> <span id="productSKU"></span></p>
+                        <p><strong>Existencia:</strong> <span id="productExistence"></span></p>
+                    </div>
+                </div>
+                <div class="select-options">
+                    <label for="selectColores">Color:</label>
+                    <div id="selectColoresContainer"></div>
+                    <label for="selectTallas">Talla:</label>
+                    <div id="selectTallasContainer"></div>
+                </div>
+                <div class="quantity">
+                    <label for="quantity">Cantidad:</label>
+                    <input type="number" id="quantity" min="1" value="1" max="100">
+                </div>
+                <button id="btnAddToCart">Agregar al carrito</button>
             </div>
-          </div>
+        </div>
 
         <footer>
             <div class="footer-container">
@@ -1230,80 +1330,6 @@ ul li a:hover {
             </div>
         </footer>
 
-    <script>
-
-        let cartCount = 0;
-
-        // Función para actualizar el contador del carrito
-        function updateCartCount() {
-            const cartCountElement = document.querySelector('.cart-count');
-            cartCountElement.textContent = cartCount.toString();
-        }
-
-        // Llamada inicial para establecer el contador
-        updateCartCount();
-        // Obtener los elementos del DOM
-        const decrementButton = document.getElementById("decrement-button");
-        const incrementButton = document.getElementById("increment-button");
-        const quantityInput = document.getElementById("quantity");
-
-        // Manejar la lógica de incremento y decremento
-        decrementButton.addEventListener("click", () => {
-            const currentValue = parseInt(quantityInput.value);
-            if (currentValue > 1) {
-                quantityInput.value = (currentValue - 1).toString();
-                decrementButton.classList.add("small"); // Agregar clase de botón pequeño
-                setTimeout(() => {
-                    decrementButton.classList.remove("small"); // Eliminar clase después de la animación
-                }, 200);
-            }
-        });
-
-        incrementButton.addEventListener("click", () => {
-            const currentValue = parseInt(quantityInput.value);
-            if (currentValue < 5) {
-                quantityInput.value = (currentValue + 1).toString();
-                incrementButton.classList.add("small"); // Agregar clase de botón pequeño
-                setTimeout(() => {
-                    incrementButton.classList.remove("small"); // Eliminar clase después de la animación
-                }, 200);
-            }
-        });
-
-        // Función para manejar el click en el botón del acordeón
-    function toggleAccordion(index) {
-        const accordions = document.querySelectorAll('.accordion');
-        accordions[index].classList.toggle('active');
-    }
-
-    // Agregar evento click a los botones del acordeón
-    const accordionButtons = document.querySelectorAll('.accordion-button');
-    accordionButtons.forEach((button, index) => {
-        button.addEventListener('click', () => {
-            toggleAccordion(index);
-        });
-    });
-
-    const cartIcon = document.getElementById("cart-icon");
-    const cartModal = document.getElementById("cart-modal");
-    const closeCartModal = document.getElementById("close-cart-modal");
-    const closeButton = document.getElementById("close-button");
-
-    // Agregar evento de clic para abrir el modal
-    cartIcon.addEventListener("click", () => {
-        cartModal.classList.add("show-modal");
-    });
-
-    // Agregar evento de clic para cerrar el modal (botón "Cerrar")
-    closeButton.addEventListener("click", () => {
-        cartModal.classList.remove("show-modal");
-    });
-
-    // Agregar evento de clic para cerrar el modal (botón "X")
-    closeCartModal.addEventListener("click", () => {
-        cartModal.classList.remove("show-modal");
-    });
-    </script>
     <script src="js/producto.js"></script>
 </body>
 </html>

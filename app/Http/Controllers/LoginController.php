@@ -63,9 +63,10 @@ class LoginController extends Controller
             $usuario->save();
 
             $user = new User();
-            $user->name      = $usuario->nombres;
-            $user->email    = $usuario->correo;
-            $user->password  = $usuario->password;
+            $user->name       = $usuario->nombres . $usuario->apellidos;
+            $user->email      = $usuario->correo;
+            $user->password   = $usuario->password;
+            $user->usuario_id = $id;
             $user->save();
         } catch (\Throwable $th) {
             DB::rollBack();
