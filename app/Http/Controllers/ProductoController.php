@@ -157,4 +157,26 @@ class ProductoController extends Controller
         $productosCarrito = Carrito::where('user_id', $user->usuario_id)->count();
         return http::respuesta(http::retOK, $productosCarrito);
     }
+
+    public function eliminarProductoCarrito($id)
+    {
+        $productosCarrito = Carrito::find($id);
+        if (!$productosCarrito) {
+            return http::respuesta(http::retNotFound, "No se encontro el producto que desea eliminar");
+        }
+
+        DB::beginTransaction();
+        try {
+            $producto = Producto::where('id', $productosCarrito->producto_id)->first();
+            $producto->existencia = $producto->existencia + $productosCarrito->cantidad;
+            $producto->save();
+
+            $productosCarrito->delete();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return http::respuesta(http::retError, $th->getMessage());
+        }
+        DB::commit();
+        return http::respuesta(http::retOK, $producto->id);
+    }
 }

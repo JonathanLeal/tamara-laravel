@@ -1342,6 +1342,7 @@ ul li a:hover {
                                 <th>Talla</th>
                                 <th>Color</th>
                                 <th>Precio</th>
+                                <th>Accion</th>
                             </tr>
                         </thead>
                         <tbody id="cart-items-list">

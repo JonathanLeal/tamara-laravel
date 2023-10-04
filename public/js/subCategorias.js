@@ -151,7 +151,7 @@ function obtenerTodosProductosCategoria(cat) {
                     confirmButtonText: 'Regresar'
                   }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = 'http://127.0.0.1:8000/';
+                        window.location.href = '/';
                     }
                   })
             }
@@ -241,6 +241,7 @@ cartIcon.click(function () {
 
                 // Iterar sobre los datos y construir la tabla de productos
                 response.datos.forEach(function (producto) {
+                    const id = producto.id;
                     const nombreProducto = producto.nombre_producto;
                     const precioTotal = parseFloat(producto.total).toFixed(2);
                     const imagen = `<img src="${producto.imagen}" alt="${nombreProducto}" width="50" height="50">`;
@@ -253,6 +254,7 @@ cartIcon.click(function () {
                             <td>${talla}</td>
                             <td>${color}</td>
                             <td>$${precioTotal}</td>
+                            <td><button id="eliminarCarrito" onclick="eliminarDelCarrito(${id})"><i class="fa fa-trash"></i></button></td>
                         </tr>`;
                     modalBody.append(row);
                     totalPrice += parseFloat(producto.total);
@@ -295,6 +297,50 @@ cartIcon.click(function () {
         }
     });
 });
+
+function eliminarDelCarrito(id) {
+    Swal.fire({
+        title: 'Advertencia',
+        text: "¿Estas seguro de eliminar este producto de tu carrito de compras?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, eliminar',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $.ajax({
+            url:'api/auth/eliminarProductoCarrito/'+id,
+            type: 'POST',
+            dataType: 'JSON',
+            success: function (response){
+                if (response.resultado === 'OK') {
+                    Swal.fire(
+                        'Notificacion',
+                        'Producto eliminado de tu carrito con exito',
+                        'success'
+                    ).then(() => {
+                        const urlParams = new URLSearchParams(window.location.search);
+                        let cat = urlParams.get('cat');
+                        let subCat = urlParams.get('subCat');
+                        window.location.href = '/subCategoriasView?cat='+cat+'&subCat='+subCat;
+                    });
+                }
+            },
+            error: function(error){
+                if (error.status === 500) {
+                    Swal.fire(
+                        'Notificacion',
+                        'Ocurrio un error por favor contactese con nosotros',
+                        'error'
+                    )
+                }
+            }
+        });
+      }
+    })
+}
 
 // Agregar evento de clic para cerrar el modal (botón "Cerrar")
 closeButton.click(function () {

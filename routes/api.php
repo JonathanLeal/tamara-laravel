@@ -23,4 +23,5 @@ Route::group([
     Route::post('/añadirProductoCarrito', [ProductoController::class, 'agregarAlCarrito']);
     Route::get('/productosEnCarrito', [ProductoController::class, 'mostrarProductosEnCarrito']);
     Route::get('/contarProductosEnCarrito', [ProductoController::class, 'contarProductosCarrito']);
+    Route::post('/eliminarProductoCarrito/{id}', [ProductoController::class, 'eliminarProductoCarrito']);
 });
