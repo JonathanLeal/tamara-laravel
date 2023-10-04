@@ -1066,6 +1066,96 @@ ul li a:hover {
     background-color: #45a049;
 }
 
+/* Estilos para el modal */
+/* Estilos para el modal */
+.modalMuestra {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal-content-car {
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        width: 80%;
+        max-width: 600px;
+    }
+
+    /* Estilos para la tabla */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    /* Estilos para botones */
+    .modal-footer {
+        text-align: right;
+        margin-top: 20px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-left: 10px;
+    }
+
+    .btn:hover {
+        background-color: #0056b3;
+    }
+
+    /* Estilos para cerrar el modal */
+    .close-modal-car {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    /* Estilos para la imagen */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Estilos para el total */
+    #total-price {
+        margin-top: 20px;
+        font-weight: bold;
+    }
+
+    /* Estilos para botones en línea */
+    .btn, .btn-inline {
+        display: inline-block;
+    }
+
+    .btn-inline {
+        float: right;
+    }
 /* Estilos para dispositivos móviles */
 @media (max-width: 768px) {
     #carritoModal .modal-content {
@@ -1263,8 +1353,8 @@ ul li a:hover {
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button id="buy-now-button">Comprar Ahora</button>
-                    <button id="close-button">Cerrar</button>
+                    <button class="btn" id="buy-now-button">Comprar Ahora</button>
+                    <button class="btn btn-inline" id="close-button">Cerrar</button>
                 </div>
             </div>
         </div>

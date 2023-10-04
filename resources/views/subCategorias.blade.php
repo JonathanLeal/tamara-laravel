@@ -662,6 +662,201 @@ ul li a:hover {
         text-align: center;
     }
 }
+
+#carritoModal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+#carritoModal .modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border: none;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 400px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    text-align: center;
+    position: relative;
+}
+
+/* Estilos para la imagen del producto */
+#productImage {
+    max-width: 50%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+/* Estilos para el título del producto */
+#productName {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+/* Estilos para el SKU y la existencia */
+.product-details p {
+    font-size: 1rem;
+    color: #777;
+    margin: 5px 0;
+}
+
+/* Estilos para los select y la cantidad */
+.select-options {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+#selectColores,
+#selectTallas {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    background-color: #f9f9f9;
+}
+
+.quantity {
+    text-align: left;
+}
+
+#quantity {
+    width: 60px;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 1rem;
+}
+
+/* Estilos para el botón */
+#btnAddToCart {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: background-color 0.3s ease;
+}
+
+#btnAddToCart:hover {
+    background-color: #45a049;
+}
+
+/* Estilos para el modal */
+/* Estilos para el modal */
+.modalMuestra {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal-content-car {
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        width: 80%;
+        max-width: 600px;
+    }
+
+    /* Estilos para la tabla */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    /* Estilos para botones */
+    .modal-footer {
+        text-align: right;
+        margin-top: 20px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-left: 10px;
+    }
+
+    .btn:hover {
+        background-color: #0056b3;
+    }
+
+    /* Estilos para cerrar el modal */
+    .close-modal-car {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    /* Estilos para la imagen */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Estilos para el total */
+    #total-price {
+        margin-top: 20px;
+        font-weight: bold;
+    }
+
+    /* Estilos para botones en línea */
+    .btn, .btn-inline {
+        display: inline-block;
+    }
+
+    .btn-inline {
+        float: right;
+    }
+/* Estilos para dispositivos móviles */
+@media (max-width: 768px) {
+    #carritoModal .modal-content {
+        margin: 20px auto;
+        padding: 10px;
+        width: 90%;
+        max-width: 300px;
+    }
+
+    /* Ajusta otros estilos según sea necesario para dispositivos móviles */
+}
     </style>
 </head>
 <body>
@@ -766,15 +961,27 @@ ul li a:hover {
             <span class="close-modal" id="close-cart-modal">&times;</span>
             <h2>Tu carrito de compras</h2>
             <div class="modal-body">
-                <ul>
-                    <li>Producto 1 - $20.00</li>
-                    <li>Producto 2 - $15.00</li>
-                    <li>Producto 3 - $10.00</li>
-                </ul>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Imagen</th>
+                            <th>Talla</th>
+                            <th>Color</th>
+                            <th>Precio</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cart-items-list">
+                        <!-- Aquí se mostrarán los productos -->
+                    </tbody>
+                </table>
+                <div id="total-price">
+                    Total: $<span id="total-amount">0.00</span>
+                </div>
             </div>
             <div class="modal-footer">
-                <button id="buy-now-button">Comprar Ahora</button>
-                <button id="close-button">Cerrar</button>
+                <button class="btn" id="buy-now-button">Comprar Ahora</button>
+                <button class="btn btn-inline" id="close-button">Cerrar</button>
             </div>
         </div>
     </div>
@@ -813,39 +1020,6 @@ ul li a:hover {
             <p>&copy; 2023 Tienda Tamara</p>
         </div>
     </footer>
-    <script>
-        let cartCount = 0;
-
-        // Función para actualizar el contador del carrito
-        function updateCartCount() {
-            const cartCountElement = document.querySelector('.cart-count');
-            cartCountElement.textContent = cartCount.toString();
-        }
-
-        // Llamada inicial para establecer el contador
-        updateCartCount();
-
-        const cartIcon = document.getElementById("cart-icon");
-        const cartModal = document.getElementById("cart-modal");
-        const closeCartModal = document.getElementById("close-cart-modal");
-        const closeButton = document.getElementById("close-button");
-
-        // Agregar evento de clic para abrir el modal
-        cartIcon.addEventListener("click", () => {
-            cartModal.classList.add("show-modal");
-        });
-
-        // Agregar evento de clic para cerrar el modal (botón "Cerrar")
-        closeButton.addEventListener("click", () => {
-            cartModal.classList.remove("show-modal");
-        });
-
-        // Agregar evento de clic para cerrar el modal (botón "X")
-        closeCartModal.addEventListener("click", () => {
-            cartModal.classList.remove("show-modal");
-        });
-
-    </script>
     <script src="{{ asset('js/subCategorias.js') }}"></script>
 </body>
 </html>

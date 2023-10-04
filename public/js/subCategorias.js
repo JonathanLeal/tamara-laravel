@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    numeroProductosEnCarrito();
     // Obtén los parámetros de categoría y subcategoría de la URL
     const urlParams = new URLSearchParams(window.location.search);
     let cat = urlParams.get('cat');
@@ -84,6 +85,25 @@ $(document).ready(function () {
         cargarProductos(cat, subCat);
     });
 });
+
+function numeroProductosEnCarrito() {
+    $.ajax({
+        url: 'api/auth/contarProductosEnCarrito',
+        type: 'GET',
+        dataType: 'JSON',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        },
+        success: function(response) {
+            if (response.resultado === 'OK') {
+                $("#cart-icon .cart-count").text(response.datos);
+            }
+        },
+        error: function(error){
+            console.log(error);
+        }
+    })
+}
 
 function obtenerTodosProductosCategoria(cat) {
     $.ajax({
@@ -198,3 +218,90 @@ function obtenerInformacionUsuario() {
 }
 
 obtenerInformacionUsuario();
+
+const cartIcon = $('#cart-icon');
+const cartModal = $('#cart-modal');
+const closeCartModal = $('#close-cart-modal');
+const closeButton = $('#close-button');
+
+// Agregar evento de clic para abrir el modal
+cartIcon.click(function () {
+    $.ajax({
+        url: '/api/auth/productosEnCarrito',
+        type: 'GET',
+        dataType: 'JSON',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        },
+        success: function(response){
+            if (response.resultado === 'OK') {
+                const modalBody = $('#cart-items-list');
+                modalBody.empty();
+                let totalPrice = 0;
+
+                // Iterar sobre los datos y construir la tabla de productos
+                response.datos.forEach(function (producto) {
+                    const nombreProducto = producto.nombre_producto;
+                    const precioTotal = parseFloat(producto.total).toFixed(2);
+                    const imagen = `<img src="${producto.imagen}" alt="${nombreProducto}" width="50" height="50">`;
+                    const talla = producto.nombre_talla;
+                    const color = producto.nombre_color;
+                    const row = `
+                        <tr>
+                            <td>${nombreProducto}</td>
+                            <td>${imagen}</td>
+                            <td>${talla}</td>
+                            <td>${color}</td>
+                            <td>$${precioTotal}</td>
+                        </tr>`;
+                    modalBody.append(row);
+                    totalPrice += parseFloat(producto.total);
+                });
+
+                // Actualizar el total de la sumatoria
+                $('#total-amount').text(totalPrice.toFixed(2));
+
+                cartModal.addClass("show-modal");
+            }
+        },
+        error: function(error){
+            if (error.status === 401) {
+                const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                      confirmButton: 'btn btn-success',
+                      cancelButton: 'btn btn-danger'
+                    },
+                    buttonsStyling: false
+                  })
+
+                  swalWithBootstrapButtons.fire({
+                    title: 'Notificaciòn',
+                    text: "Necesitamos que inicies sesiòn para que goces de todas nuestras opciones",
+                    icon: 'info',
+                    showCancelButton: true,
+                    confirmButtonText: 'Iniciar sesion',
+                    cancelButtonText: 'Registrarme',
+                    reverseButtons: true
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = `/iniciar-sesion`;
+                    } else if (
+                      result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        window.location.href = `/registrarse`;
+                    }
+                  })
+            }
+        }
+    });
+});
+
+// Agregar evento de clic para cerrar el modal (botón "Cerrar")
+closeButton.click(function () {
+    cartModal.removeClass("show-modal");
+});
+
+// Agregar evento de clic para cerrar el modal (botón "X")
+closeCartModal.click(function () {
+    cartModal.removeClass("show-modal");
+});

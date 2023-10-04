@@ -21,5 +21,6 @@ Route::group([
     Route::post('register', [AuthController::class, 'register']);
     Route::get('/infoProductoCarrito/{id}', [ProductoController::class, 'mostrarParaCarrito']);
     Route::post('/añadirProductoCarrito', [ProductoController::class, 'agregarAlCarrito']);
-    Route::get('/productosEnCarrito/{id}', [ProductoController::class, 'mostrarProductosEnCarrito']);
+    Route::get('/productosEnCarrito', [ProductoController::class, 'mostrarProductosEnCarrito']);
+    Route::get('/contarProductosEnCarrito', [ProductoController::class, 'contarProductosCarrito']);
 });

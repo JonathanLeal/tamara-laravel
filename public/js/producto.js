@@ -4,6 +4,7 @@ $(document).ready(function() {
 
     obtenerInfoProductos(productId);
     guardarAlCarrito(productId);
+    numeroProductosEnCarrito();
 
     // Controlador de eventos para cambiar la imagen principal al colocar el puntero sobre miniaturas
     $(document).on("mouseover", ".product-thumbnails img", function() {
@@ -12,16 +13,24 @@ $(document).ready(function() {
     });
 });
 
-let cartCount = 0;
-
-// Función para actualizar el contador del carrito
-function updateCartCount() {
-    const cartCountElement = $('.cart-count');
-    cartCountElement.text(cartCount.toString());
+function numeroProductosEnCarrito() {
+    $.ajax({
+        url: 'api/auth/contarProductosEnCarrito',
+        type: 'GET',
+        dataType: 'JSON',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        },
+        success: function(response) {
+            if (response.resultado === 'OK') {
+                $("#cart-icon .cart-count").text(response.datos);
+            }
+        },
+        error: function(error){
+            console.log(error);
+        }
+    })
 }
-
-// Llamada inicial para establecer el contador
-updateCartCount();
 
 
 // Función para manejar el click en el botón del acordeón
@@ -44,7 +53,7 @@ const closeButton = $('#close-button');
 // Agregar evento de clic para abrir el modal
 cartIcon.click(function () {
     $.ajax({
-        url: '/api/auth/productosEnCarrito/'+5,
+        url: '/api/auth/productosEnCarrito',
         type: 'GET',
         dataType: 'JSON',
         headers: {

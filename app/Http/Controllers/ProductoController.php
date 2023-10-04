@@ -131,15 +131,16 @@ class ProductoController extends Controller
         return http::respuesta(http::retOK, "Añadido al carrito correctamente");
     }
 
-    public function mostrarProductosEnCarrito($id)
+    public function mostrarProductosEnCarrito()
     {
+        $user = Auth::user();
         if (Auth::check()) {
             $carrito = DB::table('carrito AS ct')
                        ->join('colores AS c', 'ct.color_id', '=', 'c.id')
                        ->join('productos AS p', 'ct.producto_id', '=', 'p.id')
                        ->join('tallas AS t', 'ct.talla_id', '=', 't.id')
                        ->select('ct.id', 'p.nombre_producto', 'p.imagen', 'ct.cantidad', 't.nombre_talla', 'c.nombre_color', 'ct.total')
-                       ->where('ct.user_id', $id)
+                       ->where('ct.user_id', $user->usuario_id)
                        ->get();
             if ($carrito->isEmpty()) {
                 return http::respuesta(http::retNotFound, "No tiene productos comprados");
@@ -148,5 +149,12 @@ class ProductoController extends Controller
         } else {
             return http::respuesta(http::retUnauthorized, "debe autorizarse");
         }
+    }
+
+    public function contarProductosCarrito()
+    {
+        $user = Auth::user();
+        $productosCarrito = Carrito::where('user_id', $user->usuario_id)->count();
+        return http::respuesta(http::retOK, $productosCarrito);
     }
 }
