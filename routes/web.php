@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PagoController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\SubCategoriasController;
@@ -34,3 +35,6 @@ Route::post('/registroNewUser', [LoginController::class, 'registrarUsuario']);
 Route::get('/facturacion', function () {
     return view('facturacion');
 });
+
+//pagos
+Route::get('/obtenerIdentificacion', [PagoController::class, 'obtenerTiposIdentificacion']);

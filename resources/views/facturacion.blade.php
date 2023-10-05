@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <title>Pagos</title>
   <!-- Estilos CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
@@ -83,6 +84,56 @@
     .large-textarea {
       height: 150px;
     }
+
+    .container-carrito {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .table th {
+            background-color: #343a40;
+            color: #ffffff;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 16px;
+        }
+
+        .table th,
+        .table td {
+            border: 1px solid #dee2e6;
+            text-align: center;
+        }
+
+        img.product-image {
+            max-width: 80px;
+            height: auto;
+        }
+
+        .btn-remove {
+            background-color: #dc3545;
+            color: #ffffff;
+            border: none;
+        }
+
+        .btn-remove:hover {
+            background-color: #c82333;
+        }
+
+        #total-price {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .table-striped tbody tr:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
   </style>
 </head>
 <body>
@@ -257,9 +308,31 @@
       </div>
       <!-- Fin de Información de dirección de entrega -->
 
+      <div class="container-carrito">
+        <h3 class="mb-4">Detalles de su compra</h3>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Imagen</th>
+                    <th>Cantidad</th>
+                    <th>Talla</th>
+                    <th>Color</th>
+                    <th>Total</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody id="cart-items-list">
+                <!-- Aquí se mostrarán los productos -->
+            </tbody>
+        </table>
+        <div id="total-price">
+            Total de productos: $<span id="total-amount">0.00</span>
+        </div>
+
       <!-- Botón de envío -->
       <div class="col-12 mt-4">
-        <button class="btn btn-primary" type="submit">Enviar formulario</button>
+        <button id="submitButton" class="btn btn-primary" type="submit">Enviar formulario</button>
       </div>
     </form>
   </div>
