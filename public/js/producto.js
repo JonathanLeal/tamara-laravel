@@ -3,7 +3,6 @@ $(document).ready(function() {
     const productId = urlParams.get('id');
 
     obtenerInfoProductos(productId);
-    guardarAlCarrito(productId);
     numeroProductosEnCarrito();
 
     // Controlador de eventos para cambiar la imagen principal al colocar el puntero sobre miniaturas
@@ -363,134 +362,147 @@ function showModal() {
     modal.style.display = "block";
 }
 
-function guardarAlCarrito(id) {
-    $("#btnAgregarCarrito").on("click", function() {
-        $.ajax({
-            url: '/api/auth/infoProductoCarrito/'+id,
-            type: 'GET',
-            dataType: 'JSON',
-            headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('access_token')
-            },
-            success: function(response) {
-                // Verificar si la respuesta contiene datos válidos
-                if (response.resultado === "OK") {
-                    showModal();
-                    // Actualizar la imagen, nombre, SKU y existencia
-                    $("#productImage").attr("src", response.datos.producto[0].imagen);
-                    $("#productName").text(response.datos.producto[0].nombre_producto);
-                    $("#productSKU").text(response.datos.producto[0].sku);
-                    $("#productExistence").text(response.datos.producto[0].existencia);
-
-                    // Construir los select de colores y tallas
-                    var selectColores = '<select id="selectColores">';
-                    response.datos.colores.forEach(function(color) {
-                        selectColores += '<option value="' + color.id + '">' + color.nombre_color + '</option>';
-                    });
-                    selectColores += '</select>';
-
-                    var selectTallas = '<select id="selectTallas">';
-                    response.datos.tallas.forEach(function(talla) {
-                        selectTallas += '<option value="' + talla.id + '">' + talla.nombre_talla + '</option>';
-                    });
-                    selectTallas += '</select>';
-
-                    $("#quantity").attr('max', response.datos.producto[0].existencia);
-
-                    // Insertar los select en el modal
-                    $("#selectColoresContainer").html(selectColores);
-                    $("#selectTallasContainer").html(selectTallas);
-
-                    // Mostrar el modal
-                    $("#carritoModal").show();
-                } else {
-                    console.log("No se pudo obtener la información del producto.");
-                }
-
-            },
-            error: function(error) {
-                if (error.status === 401) {
-                    closeModal();
-                    const swalWithBootstrapButtons = Swal.mixin({
-                        customClass: {
-                          confirmButton: 'btn btn-success',
-                          cancelButton: 'btn btn-danger'
-                        },
-                        buttonsStyling: false
-                      })
-
-                      swalWithBootstrapButtons.fire({
-                        title: 'Notificaciòn',
-                        text: "Necesitamos que inicies sesiòn para que goces de todas nuestras opciones",
-                        icon: 'info',
-                        showCancelButton: true,
-                        confirmButtonText: 'Iniciar sesion',
-                        cancelButtonText: 'Registrarme',
-                        reverseButtons: true
-                      }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location.href = `/iniciar-sesion`;
-                        } else if (
-                          result.dismiss === Swal.DismissReason.cancel
-                        ) {
-                            window.location.href = `/registrarse`;
-                        }
-                      })
-                }
-            }
-        });
-    });
-}
-
-// Función para cerrar el modal del carrito
-function closeModal() {
-    $("#carritoModal").hide();
-}
-
-$("#btnAddToCart").on("click", function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const productId = urlParams.get('id');
-
-    var talla = $("#selectColores").val();
-    var color = $("#selectTallas").val();
-    var cantidad = $("#quantity").val();
-
-    var productoGuardado = {
-        producto: productId,
-        talla: talla,
-        color: color,
-        cantidad: cantidad
-    }
-
+function handleBotonAccion(id, isComprar) {
     $.ajax({
-        url: '/api/auth/añadirProductoCarrito',
-        type: 'POST',
+        url: '/api/auth/infoProductoCarrito/' + id,
+        type: 'GET',
         dataType: 'JSON',
-        data: productoGuardado,
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('access_token')
         },
         success: function (response) {
-           if (response.resultado === 'OK') {
-                closeModal();
-                Swal.fire(
-                    '¡Excelente!',
-                    'Producto agregado al carrito',
-                    'success'
-                ).then(() => {
-                    window.location.href = `/producto?id=`+productId;
-                })
-           }
+            if (response.resultado === "OK") {
+                showModal();
+                $("#productImage").attr("src", response.datos.producto[0].imagen);
+                $("#productName").text(response.datos.producto[0].nombre_producto);
+                $("#productSKU").text(response.datos.producto[0].sku);
+                $("#productExistence").text(response.datos.producto[0].existencia);
+
+                var selectColores = '<select id="selectColores">';
+                response.datos.colores.forEach(function (color) {
+                    selectColores += '<option value="' + color.id + '">' + color.nombre_color + '</option>';
+                });
+                selectColores += '</select>';
+
+                var selectTallas = '<select id="selectTallas">';
+                response.datos.tallas.forEach(function (talla) {
+                    selectTallas += '<option value="' + talla.id + '">' + talla.nombre_talla + '</option>';
+                });
+                selectTallas += '</select>';
+
+                $("#quantity").attr('max', response.datos.producto[0].existencia);
+
+                $("#selectColoresContainer").html(selectColores);
+                $("#selectTallasContainer").html(selectTallas);
+
+                $("#carritoModal").show();
+
+                if (isComprar) {
+                    // Personalizar el botón en caso de Comprar Ahora
+                    $("#modalButtons").html('<button class="action-button" id="btnComprar">Comprar</button>');
+                    $("#btnComprar").on("click", function () {
+                        // Redirigir a otra vista
+                        window.location.href = '/facturacion?id='+id;
+                    });
+                } else {
+                    // Personalizar el botón en caso de Agregar al Carrito
+                    $("#modalButtons").html('<button class="action-button" id="btnAddToCart">Agregar al Carrito</button>');
+                    $("#btnAddToCart").on("click", function () {
+                        const talla = $("#selectColores").val();
+                        const color = $("#selectTallas").val();
+                        const cantidad = $("#quantity").val();
+
+                        const productoGuardado = {
+                            producto: id,
+                            talla: talla,
+                            color: color,
+                            cantidad: cantidad
+                        };
+
+                        $.ajax({
+                            url: '/api/auth/añadirProductoCarrito',
+                            type: 'POST',
+                            dataType: 'JSON',
+                            data: productoGuardado,
+                            headers: {
+                                'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                            },
+                            success: function (response) {
+                                if (response.resultado === 'OK') {
+                                    closeModal();
+                                    Swal.fire(
+                                        '¡Excelente!',
+                                        'Producto agregado al carrito',
+                                        'success'
+                                    ).then(() => {
+                                        window.location.href = '/producto?id=' + id;
+                                    });
+                                }
+                            },
+                            error: function (error) {
+                                if (error.status === 500) {
+                                    closeModal();
+                                    Swal.fire(
+                                        '¡Oopss...!',
+                                        'Hay un error en el servidor, por favor contactese con nosotros',
+                                        'error'
+                                    );
+                                }
+                            }
+                        });
+                    });
+                }
+            } else {
+                console.log("No se pudo obtener la información del producto.");
+            }
         },
         error: function (error) {
-            if (error.status === 500) {
+            if (error.status === 401) {
                 closeModal();
-                Swal.fire(
-                    '¡Oopss...!',
-                    'Hay un error en el servidor, por favor contactese con nosotros',
-                    'error'
-                )
+                const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                        confirmButton: 'btn btn-success',
+                        cancelButton: 'btn btn-danger'
+                    },
+                    buttonsStyling: false
+                });
+
+                swalWithBootstrapButtons.fire({
+                    title: 'Notificaciòn',
+                    text: "Necesitamos que inicies sesiòn para que goces de todas nuestras opciones",
+                    icon: 'info',
+                    showCancelButton: true,
+                    confirmButtonText: 'Iniciar sesion',
+                    cancelButtonText: 'Registrarme',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '/iniciar-sesion';
+                    } else if (
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        window.location.href = '/registrarse';
+                    }
+                });
             }
         }
     });
+}
+
+// Llamada para Agregar al Carrito
+$("#btnAgregarCarrito").on("click", function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('id');
+    handleBotonAccion(productId, false);
 });
+
+// Llamada para Comprar Ahora
+$("#btnComprarAhora").on("click", function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('id');
+    handleBotonAccion(productId, true);
+});
+
+function closeModal() {
+    $("#carritoModal").hide();
+}
