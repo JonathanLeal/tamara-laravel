@@ -936,7 +936,7 @@ ul li a:hover {
                 <i class="fas fa-shopping-cart"></i>
                 <span class="cart-count">0</span>
             </div>
-            <input type="text" placeholder="Buscar..." id="search-bar">
+            <input type="text" placeholder="Producto..." id="nombre_producto">
             <button type="submit" id="search-button"><i class="fas fa-search"></i></button>
         </div>
     </nav>
@@ -1141,6 +1141,43 @@ cartIcon.click(function () {
                         window.location.href = `/registrarse`;
                     }
                   })
+            }
+        }
+    });
+});
+
+$("#search-button").on("click", function() {
+    var nombre = $("#nombre_producto").val();
+
+    var producto = {
+        nombre_producto: nombre
+    }
+
+    $.ajax({
+        url: '/buscarProducto',
+        type: 'POST',
+        dataType: 'JSON',
+        data: producto,
+        success: function(response) {
+            if (response.resultado === 'OK') {
+                window.location.href = `/producto?id=`+response.datos;
+            }
+        },
+        error: function(error){
+            if (error.status === 404) {
+                Swal.fire(
+                    'Notificacion',
+                    'Lo sentimos no tenemos el producto que buscas por el momento',
+                    'info'
+                )
+            } else {
+                if (error.status === 422) {
+                    Swal.fire(
+                        'Notificacion',
+                        'Ingresa el nombre del producto en la barra de busqueda por favor',
+                        'warning'
+                    )
+                }
             }
         }
     });

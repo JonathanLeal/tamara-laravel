@@ -25,6 +25,12 @@ Route::get('/producto', function () {
     return view('producto');
 });
 Route::get('/infoProducto/{id}', [ProductoController::class, 'obteniendoInfoProducto']);
+Route::post('/buscarProducto', [ProductoController::class, 'buscarProducto']);
 
 //registros
 Route::post('/registroNewUser', [LoginController::class, 'registrarUsuario']);
+
+//facturacion y pagos
+Route::get('/facturacion', function () {
+    return view('facturacion');
+});

@@ -159,6 +159,43 @@ function obtenerTodosProductosCategoria(cat) {
     });
 }
 
+$("#search-button").on("click", function() {
+    var nombre = $("#nombre_producto").val();
+
+    var producto = {
+        nombre_producto: nombre
+    }
+
+    $.ajax({
+        url: '/buscarProducto',
+        type: 'POST',
+        dataType: 'JSON',
+        data: producto,
+        success: function(response) {
+            if (response.resultado === 'OK') {
+                window.location.href = `/producto?id=`+response.datos;
+            }
+        },
+        error: function(error){
+            if (error.status === 404) {
+                Swal.fire(
+                    'Notificacion',
+                    'Lo sentimos no tenemos el producto que buscas por el momento',
+                    'info'
+                )
+            } else {
+                if (error.status === 422) {
+                    Swal.fire(
+                        'Notificacion',
+                        'Ingresa el nombre del producto en la barra de busqueda por favor',
+                        'warning'
+                    )
+                }
+            }
+        }
+    });
+});
+
 function obtenerInformacionUsuario() {
     $.ajax({
         url: '/api/auth/me', // Endpoint para obtener la información del usuario autenticado

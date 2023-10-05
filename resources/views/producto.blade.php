@@ -1257,7 +1257,7 @@ ul li a:hover {
                 <i class="fas fa-shopping-cart"></i>
                 <span class="cart-count">0</span>
             </div>
-            <input type="text" placeholder="Buscar..." id="search-bar">
+            <input type="text" placeholder="Producto..." id="nombre_producto">
             <button type="submit" id="search-button"><i class="fas fa-search"></i></button>
         </div>
     </nav>

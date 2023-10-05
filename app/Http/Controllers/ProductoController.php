@@ -179,4 +179,22 @@ class ProductoController extends Controller
         DB::commit();
         return http::respuesta(http::retOK, $producto->id);
     }
+
+    public function buscarProducto(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'nombre_producto' => 'required|string'
+        ]);
+
+        if ($validator->fails()) {
+            return http::respuesta(http::retUnprocessable, $validator->errors());
+        }
+
+        $producto = Producto::where('nombre_producto', $request->nombre_producto)->first();
+        if (!$producto) {
+            return http::respuesta(http::retNotFound, "no se encontro el producto");
+        }
+
+        return http::respuesta(http::retOK, $producto->id);
+    }
 }
