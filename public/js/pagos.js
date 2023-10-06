@@ -77,12 +77,23 @@ function llenarTablaCarrita() {
                     total += parseFloat(item.total);
                 });
                 $('#total-amount').text(total.toFixed(2));
-            } else {
-                alert('Hubo un problema al cargar los datos.');
             }
         },
-        error: function() {
-            alert('Error al cargar los datos.');
+        error: function(error) {
+            if (error.status === 404) {
+                $("#cart-items-list").empty();
+                $("#cart-items-list").html("<td>No tienes productos en tu carrito</td>");
+            } else {
+                if (error.status === 401) {
+                    Swal.fire(
+                        'Notificacion',
+                        'Tu session a expirado por favor vuelva iniciar sesion',
+                        'error'
+                    ).then(() => {
+                        window.location.href = '/iniciar-sesion';
+                    });
+                }
+            }
         }
     });
 }

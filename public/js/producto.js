@@ -4,6 +4,7 @@ $(document).ready(function() {
 
     obtenerInfoProductos(productId);
     numeroProductosEnCarrito();
+    menuRol();
 
     // Controlador de eventos para cambiar la imagen principal al colocar el puntero sobre miniaturas
     $(document).on("mouseover", ".product-thumbnails img", function() {
@@ -11,6 +12,47 @@ $(document).ready(function() {
         $("#imagenProducto img").attr("src", newImageSrc);
     });
 });
+
+function menuRol() {
+    $.ajax({
+        url: 'api/auth/administrar', // La URL de tu endpoint
+        type: 'GET',
+        dataType: 'json',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        },
+        success: function(data) {
+            if (data.resultado === 'OK') {
+                var userRole = data.datos;
+
+                // Construye el elemento "Administrar" en función del rol del usuario
+                var adminMenuItem = ''; // Inicializa la variable
+
+                if (userRole === 1) {
+                    adminMenuItem += '<a href="#">Administrar <i class="fas fa-chevron-down"></i></a>';
+                    adminMenuItem += '<ul class="dropdown">';
+                    adminMenuItem += '<li><a href="#">Usuarios</a></li>';
+                    adminMenuItem += '<li><a href="#">Productos</a></li>';
+                    adminMenuItem += '<li><a href="#">Ofertas</a></li>';
+                    adminMenuItem += '</ul>';
+                } else if (userRole === 2) {
+                    adminMenuItem += '<a href="#">Administrar <i class="fas fa-chevron-down"></i></a>';
+                    adminMenuItem += '<ul class="dropdown">';
+                    adminMenuItem += '<li><a href="#">Productos</a></li>';
+                    adminMenuItem += '</ul>';
+                }
+
+                // Encuentra el elemento <li> por su ID y clase, y actualiza su contenido
+                $('#menuRol.dropdown-parent').html(adminMenuItem);
+            } else {
+                console.error('Error al obtener el menú');
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error en la solicitud AJAX:', error);
+        }
+    });
+}
 
 function numeroProductosEnCarrito() {
     $.ajax({
@@ -155,6 +197,14 @@ cartIcon.click(function () {
                         window.location.href = `/registrarse`;
                     }
                   })
+            } else {
+                if (error.status === 404) {
+                    Swal.fire(
+                        'Notificacion',
+                        'Aun no tienes productos en el carrito',
+                        'warning'
+                    )
+                }
             }
         }
     });
@@ -506,3 +556,7 @@ $("#btnComprarAhora").on("click", function () {
 function closeModal() {
     $("#carritoModal").hide();
 }
+
+$("#buy-now-button").on("click", function () {
+    window.location.href = '/facturacion';
+})

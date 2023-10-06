@@ -867,7 +867,7 @@ ul li a:hover {
             </ul>
         </div>
     </header>
-    <nav>
+    <nav id="menu-container">
         <ul>
             <li><a href="{{ route('inicio') }}">Inicio</a></li>
             <li class="dropdown-parent">
@@ -929,6 +929,9 @@ ul li a:hover {
                         </ul>
                     </li>
                 </ul>
+            </li>
+            <li class="dropdown-parent" id="menuRol">
+
             </li>
         </ul>
         <div class="search-box">
@@ -1046,6 +1049,49 @@ ul li a:hover {
     </footer>
 
     <script>
+        function menuRol() {
+            $.ajax({
+                url: 'api/auth/administrar', // La URL de tu endpoint
+                type: 'GET',
+                dataType: 'json',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                },
+                success: function(data) {
+                    if (data.resultado === 'OK') {
+                        var userRole = data.datos;
+
+                        // Construye el elemento "Administrar" en función del rol del usuario
+                        var adminMenuItem = ''; // Inicializa la variable
+
+                        if (userRole === 1) {
+                            adminMenuItem += '<a href="#">Administrar <i class="fas fa-chevron-down"></i></a>';
+                            adminMenuItem += '<ul class="dropdown">';
+                            adminMenuItem += '<li><a href="#">Usuarios</a></li>';
+                            adminMenuItem += '<li><a href="#">Productos</a></li>';
+                            adminMenuItem += '<li><a href="#">Ofertas</a></li>';
+                            adminMenuItem += '</ul>';
+                        } else if (userRole === 2) {
+                            adminMenuItem += '<a href="#">Administrar <i class="fas fa-chevron-down"></i></a>';
+                            adminMenuItem += '<ul class="dropdown">';
+                            adminMenuItem += '<li><a href="#">Productos</a></li>';
+                            adminMenuItem += '</ul>';
+                        }
+
+                        // Encuentra el elemento <li> por su ID y clase, y actualiza su contenido
+                        $('#menuRol.dropdown-parent').html(adminMenuItem);
+                    } else {
+                        console.error('Error al obtener el menú');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error en la solicitud AJAX:', error);
+                }
+            });
+        }
+
+        menuRol();
+
         function numeroProductosEnCarrito() {
         $.ajax({
             url: 'api/auth/contarProductosEnCarrito',
@@ -1141,6 +1187,14 @@ cartIcon.click(function () {
                         window.location.href = `/registrarse`;
                     }
                   })
+            } else {
+                if (error.status === 404) {
+                    Swal.fire(
+                        'Notificacion',
+                        'Aun no tienes productos en el carrito',
+                        'warning'
+                    )
+                }
             }
         }
     });

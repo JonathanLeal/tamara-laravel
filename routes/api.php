@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PagoController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\WelcomeController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -25,4 +26,5 @@ Route::group([
     Route::get('/productosEnCarrito', [ProductoController::class, 'mostrarProductosEnCarrito']);
     Route::get('/contarProductosEnCarrito', [ProductoController::class, 'contarProductosCarrito']);
     Route::post('/eliminarProductoCarrito/{id}', [ProductoController::class, 'eliminarProductoCarrito']);
+    Route::get('/administrar', [WelcomeController::class, 'mostrarMenu']);
 });
