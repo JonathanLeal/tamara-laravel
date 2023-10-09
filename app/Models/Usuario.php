@@ -20,6 +20,7 @@ class Usuario extends Model
         'sexo',
         'id_rol',
         'created_at',
-        'updated_at'
+        'updated_at',
+        'estado'
     ];
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdministrarController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -27,4 +28,12 @@ Route::group([
     Route::get('/contarProductosEnCarrito', [ProductoController::class, 'contarProductosCarrito']);
     Route::post('/eliminarProductoCarrito/{id}', [ProductoController::class, 'eliminarProductoCarrito']);
     Route::get('/administrar', [WelcomeController::class, 'mostrarMenu']);
+    Route::get('/adminProductos', [AdministrarController::class, 'irVistaUsuarios'])->name('vistaUsuarios');
+    Route::get('/obtenerRoles', [AdministrarController::class, 'obtenerRoles']);
+    Route::get('/obtenerUsuarios', [AdministrarController::class, 'obtenerUsuarios']);
+    Route::get('/obtenerUsuario/{id}', [AdministrarController::class, 'obtenerUsuario']);
+    Route::post('/guardarUsuario', [AdministrarController::class, 'guardarUsuario']);
+    Route::post('/editarUsuario', [AdministrarController::class, 'editarUsuario']);
+    Route::post('/eliminarUsuario/{id}', [AdministrarController::class, 'eliminarUsuario']);
+    Route::post('/cambiarEstado', [AdministrarController::class, 'cambiarEstado']);
 });

@@ -56,12 +56,29 @@ $("#loginButton").on("click", function() {
                         $("#password").val("");
                     }
                 })
+            } else if(error.status === 400) {
+                Swal.fire(
+                    'Campos vacios',
+                    'Ingresa tanto tu email como tu contraseña por favor.',
+                    'warning'
+                )
             } else {
-                if (error.status === 400) {
+                if (error.status === 422) {
                     Swal.fire(
-                        'Campos vacios',
-                        'Ingresa tanto tu email como tu contraseña por favor.',
-                        'warning'
+                        'Notificacion',
+                        'Lo sentimos, este usuario momentaneamente no puede iniciar sesion.',
+                        'error'
+                    ).then(() => {
+                        $("#email").val("");
+                        $("#password").val("");
+                    })
+                }
+
+                if (error.status === 500) {
+                    Swal.fire(
+                        'Notificacion',
+                        'Lo sentimos, hay un error, por favor contactese con nosotros',
+                        'error'
                     )
                 }
             }

@@ -6,6 +6,7 @@ use App\Helpers\Http;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Usuario;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Request;
@@ -40,6 +41,12 @@ class AuthController extends Controller
         }
 
         $credentials = request(['email', 'password']);
+
+        $user = User::where('email', request('email'))->first();
+
+        if ($user->estado === 'INACTIVO') {
+            return http::respuesta(http::retUnprocessable, "Usuario inactivo");
+        }
 
         if (! $token = auth()->attempt($credentials)) {
             return http::respuesta(http::retUnauthorized, "Credenciales incorrectas");

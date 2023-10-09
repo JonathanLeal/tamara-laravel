@@ -60,6 +60,7 @@ class LoginController extends Controller
             $usuario->apellidos = $request->apellidos;
             $usuario->sexo      = $request->sexo;
             $usuario->id_rol    = 4;
+            $usuario->estado    = 'ACTIVO';
             $usuario->save();
 
             $user = new User();
@@ -67,6 +68,8 @@ class LoginController extends Controller
             $user->email      = $usuario->correo;
             $user->password   = $usuario->password;
             $user->usuario_id = $id;
+            $user->rol_id     = 4;
+            $user->estado     = $usuario->estado;
             $user->save();
         } catch (\Throwable $th) {
             DB::rollBack();

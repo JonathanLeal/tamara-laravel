@@ -59,7 +59,7 @@ $("#loginButton").on("click", function() {
                     text: "Nos alegra que te hallas registrado, inicia sesión para disfrutar de nuestra tienda en linea",
                     icon: 'success',
                     confirmButtonColor: '#3085d6',
-                    confirmButtonText: '¡Entrar!'
+                    confirmButtonText: '¡Iniciar Sesion!'
                   }).then((result) => {
                     if (result.isConfirmed) {
                         window.location.href = `/iniciar-sesion`;
