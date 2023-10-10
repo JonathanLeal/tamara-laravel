@@ -38,3 +38,4 @@ Route::get('/facturacion', function () {
 
 //pagos
 Route::get('/obtenerIdentificacion', [PagoController::class, 'obtenerTiposIdentificacion']);
+

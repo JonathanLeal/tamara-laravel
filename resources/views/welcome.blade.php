@@ -1064,12 +1064,13 @@ ul li a:hover {
                         // Construye el elemento "Administrar" en función del rol del usuario
                         var adminMenuItem = ''; // Inicializa la variable
                         var rutaUsuarios = '{{ route('vistaUsuarios') }}';
+                        var rutaProductos = '{{ route('vistaProductos') }}';
 
                         if (userRole === 1) {
                             adminMenuItem += '<a href="#">Administrar <i class="fas fa-chevron-down"></i></a>';
                             adminMenuItem += '<ul class="dropdown">';
                             adminMenuItem += '<li><a href="'+rutaUsuarios+'">Usuarios</a></li>';
-                            adminMenuItem += '<li><a href="#">Productos</a></li>';
+                            adminMenuItem += '<li><a href="'+rutaProductos+'">Productos</a></li>';
                             adminMenuItem += '<li><a href="#">Ofertas</a></li>';
                             adminMenuItem += '</ul>';
                         } else if (userRole === 2) {
