@@ -2,8 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.0/dist/sweetalert2.min.css">
@@ -13,6 +11,17 @@
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <style>
         /* Estilos generales para el modal */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .modal-dialog {
+                max-width: 90%;
+            }
+
+            /* Adjust any other styles as needed for smaller screens */
+        }
   .modal-content {
     border-radius: 15px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -72,6 +81,64 @@
     width: 100%;
     height: 40px;
   }
+
+  /* Estilo básico de DataTables */
+#tabla-usuarios {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#tabla-usuarios th, #tabla-usuarios td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+/* Estilo de encabezados de columna */
+#tabla-usuarios thead th {
+    background-color: #333;
+    color: #fff;
+}
+
+/* Estilo de filas alternas */
+#tabla-usuarios tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Estilo al pasar el mouse por encima de las filas */
+#tabla-usuarios tbody tr:hover {
+    background-color: #ccc;
+}
+
+/* Estilo para las celdas de "Acciones" o "Estado" (ajústalas según tus necesidades) */
+#tabla-usuarios .acciones, #tabla-usuarios .estado {
+    font-weight: bold;
+    color: #007bff;
+}
+
+.container {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.page-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Estilos para el botón */
+.btn-primary {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
     </style>
 </head>
 <body>
@@ -101,62 +168,62 @@
 <div class="container">
     <div class="tab-content" id="myTabContent">
       <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-        <h3>Lista de usuarios</h3>
-        <!-- BUTON para abri modal de sociedades -->
+        <h2>Gestión de Usuarios</h2>
+        <!-- BOTÓN para abrir el modal de usuario -->
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#privilegiosModal">
-          Nuevo usuario
+          Agregar Nuevo Usuario
         </button>
-        <!-- BUTON para abri modal de sociedades -->
+        <!-- FIN del BOTÓN para abrir el modal de usuario -->
 
-        <!-- Modal INCIO SOCIEDADES-->
-      <div class="modal fade" id="privilegiosModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">Informacion del usuario</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
+        <!-- Modal INICIO DE USUARIO -->
+        <div class="modal fade" id="privilegiosModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2 class="modal-title fs-5" id="exampleModalLabel">Información del Usuario</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
                 <div class="form-group">
-                  <label for="nombres">Nombres:</label>
-                  <input type="text" class="form-control" id="nombres">
-                </div>
-                <div class="form-group">
-                    <label for="apellidos">Apellidos:</label>
-                    <input type="text" class="form-control" id="apellidos">
+                    <label for="nombres">Nombres:</label>
+                    <input type="text" class="form-control" id="nombres">
                   </div>
                   <div class="form-group">
-                    <label for="correo">Correo:</label>
-                    <input type="email" class="form-control" id="correo">
-                  </div>
-                  <div class="form-group">
-                    <label for="pass">Contraseña:</label>
-                    <input type="text" class="form-control" id="pass">
-                  </div>
-                  <div class="form-group">
-                    <label for="nombre_privilegio">Sexo:</label>
-                    <select class="form-select" id="sexo">
-                        <option value="M">Masculino</option>
-                        <option value="F">Femenino</option>
-                        <option value="otro">Otro</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="nombre_privilegio">Rol:</label>
-                    <select class="form-select" id="rol">
+                      <label for="apellidos">Apellidos:</label>
+                      <input type="text" class="form-control" id="apellidos">
+                    </div>
+                    <div class="form-group">
+                      <label for="correo">Correo:</label>
+                      <input type="email" class="form-control" id="correo">
+                    </div>
+                    <div class="form-group">
+                      <label for="pass">Contraseña:</label>
+                      <input type="text" class="form-control" id="pass">
+                    </div>
+                    <div class="form-group">
+                      <label for="nombre_privilegio">Sexo:</label>
+                      <select class="form-select" id="sexo">
+                          <option value="M">Masculino</option>
+                          <option value="F">Femenino</option>
+                          <option value="otro">Otro</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="nombre_privilegio">Rol:</label>
+                      <select class="form-select" id="rol">
 
-                    </select>
-                  </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnCancelar">Cancelar</button>
-              <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="btnGuardar">Guardar</button>
-              <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="btnEditar" style="display: none;">Editar</button>
+                      </select>
+                    </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnCancelar">Cancelar</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="btnGuardar">Guardar</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="btnEditar" style="display: none;">Editar</button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <!-- Modal FIN SOCIEDADES-->
+        <!-- Modal FIN DE USUARIO -->
 
         <table id="tabla-usuarios" class="table table-hover">
           <thead>
