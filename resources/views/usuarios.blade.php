@@ -14,12 +14,15 @@
     <style>
         /* Estilos generales para el modal */
   .modal-content {
-    border-radius: 10px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   }
 
   .modal-header {
-    background-color: #007BFF;
+    background-color: #3498db;
     color: #fff;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
   }
 
   .modal-title {
@@ -31,26 +34,28 @@
   }
 
   .modal-footer {
-    background-color: #f5f5f5;
+    background-color: #f9f9f9;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
   }
 
   /* Estilos para los botones */
   .btn-secondary {
-    background-color: #d9534f;
+    background-color: #e74c3c;
     color: #fff;
   }
 
   .btn-secondary:hover {
-    background-color: #c9302c;
+    background-color: #c0392b;
   }
 
   .btn-success {
-    background-color: #5bc0de;
+    background-color: #2ecc71;
     color: #fff;
   }
 
   .btn-success:hover {
-    background-color: #46b8da;
+    background-color: #27ae60;
   }
 
   /* Estilos para los campos de entrada y etiquetas */
