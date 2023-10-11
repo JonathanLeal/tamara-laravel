@@ -11,6 +11,63 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <style>
+        /* Estilos generales para el modal */
+  .modal-content {
+    border-radius: 10px;
+  }
+
+  .modal-header {
+    background-color: #007BFF;
+    color: #fff;
+  }
+
+  .modal-title {
+    font-size: 24px;
+  }
+
+  .modal-body {
+    padding: 20px;
+  }
+
+  .modal-footer {
+    background-color: #f5f5f5;
+  }
+
+  /* Estilos para los botones */
+  .btn-secondary {
+    background-color: #d9534f;
+    color: #fff;
+  }
+
+  .btn-secondary:hover {
+    background-color: #c9302c;
+  }
+
+  .btn-success {
+    background-color: #5bc0de;
+    color: #fff;
+  }
+
+  .btn-success:hover {
+    background-color: #46b8da;
+  }
+
+  /* Estilos para los campos de entrada y etiquetas */
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  label {
+    font-weight: bold;
+  }
+
+  /* Estilos para los selects */
+  select.form-select {
+    width: 100%;
+    height: 40px;
+  }
+    </style>
 </head>
 <body>
 

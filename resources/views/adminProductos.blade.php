@@ -16,6 +16,77 @@
   display: flex;
   justify-content: center;
 }
+/* Estilos para el modal */
+#privilegiosModal .modal-content {
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  }
+  #privilegiosModal .modal-header {
+    background: linear-gradient(135deg, #007BFF, #3498db);
+    color: white;
+    border-radius: 20px 20px 0 0;
+  }
+  #privilegiosModal .modal-title {
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  #privilegiosModal .modal-body {
+    padding: 20px;
+  }
+  #privilegiosModal .modal-footer {
+    border-radius: 0 0 20px 20px;
+  }
+  #privilegiosModal .btn-secondary {
+    background-color: #6C757D;
+    color: white;
+    border: none;
+    transition: background-color 0.2s;
+  }
+  #privilegiosModal .btn-secondary:hover {
+    background-color: #5A6268;
+  }
+  #privilegiosModal .btn-success {
+    background-color: #28A745;
+    color: white;
+    border: none;
+    transition: background-color 0.2s;
+  }
+  #privilegiosModal .btn-success:hover {
+    background-color: #218838;
+  }
+
+  /* Estilos para los campos de entrada */
+  #privilegiosModal .form-group {
+    margin-bottom: 20px;
+  }
+  #privilegiosModal .form-label {
+    font-weight: bold;
+    font-size: 18px;
+  }
+  #privilegiosModal .form-control {
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+  }
+
+  /* Estilos para los select */
+  #privilegiosModal select.form-select {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    background-color: #f8f9fa;
+    font-size: 16px;
+  }
+
+  /* Estilos para el botón de cierre */
+  #privilegiosModal .btn-close {
+    color: white;
+  }
     </style>
 </head>
 <body>
@@ -59,77 +130,112 @@
             </div>
             <div class="modal-body">
                 <form id="formularioProducto" enctype="multipart/form-data">
-                <div class="form-group">
-                  <label for="nombre_producto">Nombre:</label>
-                  <input type="text" name="nombre_producto" class="form-control" id="nombre_producto">
-                </div>
-                <div class="form-group">
-                    <label for="existencia">Existencia:</label>
-                    <input type="number" name="existencia" class="form-control" id="existencia">
-                  </div>
-                  <div class="form-group">
-                    <label for="precio_1">Precio 1:</label>
-                    <input type="number" name="precio_1" step=".01" min="1" class="form-control" id="precio_1">
-                  </div>
-                  <div class="form-group">
-                    <label for="precio_2">Precio 2:</label>
-                    <input type="number" name="precio_2" step=".01" min="1" class="form-control" id="precio_2">
-                  </div>
-                  <div class="form-group">
-                    <label for="precio_3">Precio 3:</label>
-                    <input type="number" name="precio_3" step=".01" min="1" class="form-control" id="precio_3">
-                  </div>
-                  <div class="form-group">
-                    <label for="precio_4">Precio 4:</label>
-                    <input type="number" name="precio_4" step=".01" min="1" class="form-control" id="precio_4">
-                  </div>
-                  <div class="form-group">
-                    <label for="estilo">Estilo:</label>
-                    <input type="text" name="estilo" class="form-control" id="estilo">
-                  </div>
-                  <div class="form-group">
-                    <label for="detalles">Detalles:</label>
-                    <input type="text" name="detalles" class="form-control" id="detalles">
-                  </div>
-                  <div class="form-group">
-                    <label for="escote">Escote:</label>
-                    <input type="text" name="escote" class="form-control" id="escote">
-                  </div>
-                  <div class="form-group">
-                    <label for="longitud_manga">Longitud de Manga:</label>
-                    <input type="text" name="longitud_manga" class="form-control" id="longitud_manga">
-                  </div>
-                  <div class="form-group">
-                    <label for="tejido">Tejido:</label>
-                    <input type="text" name="tejido" class="form-control" id="tejido">
-                  </div>
-                  <div class="form-group">
-                    <label for="composicion">Composicion:</label>
-                    <input type="text" name="composicion" class="form-control" id="composicion">
-                  </div>
-                  <div class="form-group">
-                    <label for="instrucciones_cuidado">Instrucciones de cuidado:</label>
-                    <input type="text" name="instrucciones_cuidado" class="form-control" id="instrucciones_cuidado">
-                  </div>
-                  <div class="form-group">
-                    <label for="SKU">SKU:</label>
-                    <input type="text" name="SKU" class="form-control" id="SKU">
-                  </div>
-                  <div class="form-group">
-                    <label for="categoria">Categoria:</label>
-                    <select class="form-select" name="categoria" id="categoria">
+                    <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="nombre_producto">Nombre:</label>
+                            <input type="text" name="nombre_producto" class="form-control" id="nombre_producto">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="existencia">Existencia:</label>
+                            <input type="number" name="existencia" class="form-control" id="existencia">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="precio_1">Precio 1:</label>
+                              <input type="number" step=".01" name="precio_1" class="form-control" id="precio_1" min="1">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="precio_2">Precio 2:</label>
+                              <input type="number" step=".01" name="precio_2" class="form-control" id="precio_2" min="1">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="precio_3">Precio 3:</label>
+                              <input type="number" step=".01" name="precio_3" class="form-control" id="precio_3" min="1">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="precio_4">Precio 4:</label>
+                              <input type="number" step=".01" name="precio_4" class="form-control" id="precio_4" min="1">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="estilo">Estilo:</label>
+                              <input type="number" name="estilo" class="form-control" id="estilo">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="detalles">Detalles:</label>
+                              <input type="text" name="detalles" class="form-control" id="detalles">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="escote">Escote:</label>
+                              <input type="text" name="escote" class="form-control" id="escote">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="longitud_manga">Longitud de manga:</label>
+                              <input type="text" name="longitud_manga" class="form-control" id="longitud_manga">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="tejido">Tejido:</label>
+                              <input type="text" name="tejido" class="form-control" id="tejido">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="instrucciones_cuidado">Instrucciones de cuidado:</label>
+                              <input type="text" name="instrucciones_cuidado" class="form-control" id="instrucciones_cuidado">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="SKU">SKU:</label>
+                              <input type="text" name="SKU" class="form-control" id="SKU">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="composicion">Composicion:</label>
+                              <input type="text" name="composicion" class="form-control" id="composicion">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="categoria">Categoria:</label>
+                              <select class="form-select" name="categoria" id="categoria">
+                                <option value="">Seleccionar...</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="sub_categoria">Sub categoria:</label>
+                              <select class="form-select" name="sub_categoria" id="sub_categoria">
+                                <option value="">Seleccionar...</option>
+                              </select>
+                            </div>
+                          </div>
+                      </div>
 
-                    </select>
-                  </div>
                   <div class="form-group">
-                    <label for="sub_categoria">Sub categoria:</label>
-                    <select class="form-select" name="sub_categoria" id="sub_categoria">
-
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="imagen">Imagen:</label>
-                    <input type="file" name="imagen" class="form-control" id="imagen">
+                    <label for="imagen" id="labelImagen">Imagen:</label>
+                    <input type="file" name="imagen" value="" class="form-control" id="imagen">
                   </div>
                 </form>
             </div>

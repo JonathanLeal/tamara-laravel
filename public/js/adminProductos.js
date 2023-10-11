@@ -128,33 +128,34 @@ function cargarDatos() {
                 $('#tejido').val(response.datos.tejido);
                 $('#instrucciones_cuidado').val(response.datos.instrucciones_cuidado);
                 $('#SKU').val(response.datos.sku);
+                $('#composicion').val(response.datos.composicion);
                 // $('#categoria').val(response.datos.nombre_categoria);
                 // $('#sub_categoria').val(response.datos.nombre_sub_categoria);
-                $('#imagen').html('<img src="' + response.datos.imagen + '" alt="Imagen del producto" />');
+                $("#labelImagen").hide();
+                $('#imagen').hide();
 
                 var catValue = response.datos.nombre_categoria;
                 var catId = response.datos.idCat;
 
                 var SubCatValue = response.datos.nombre_sub_categoria;
-                var SubCatId = response.datos.idSubCat;
+                var SubCatId = response.datos.subCat;
 
                 $('#categoria').val(catId);
-                if ($('#categoria').val() === null) {
+                $('#sub_categoria').val(SubCatId);
+
+                if ($('#categoria option[value="' + catId + '"]').length === 0) {
                     $('#categoria').append($('<option>', {
                         value: catId,
                         text: catValue
                     }));
-                    $('#categoria').val(catValue);
                 }
 
-
-                $('#sub_categoria').val(SubCatId);
-                if ($('#sub_categoria').val() === null) {
+                // Append the option if it doesn't already exist
+                if ($('#sub_categoria option[value="' + SubCatId + '"]').length === 0) {
                     $('#sub_categoria').append($('<option>', {
                         value: SubCatId,
                         text: SubCatValue
                     }));
-                    $('#sub_categoria').val(SubCatValue);
                 }
             }
         },

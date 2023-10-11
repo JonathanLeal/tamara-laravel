@@ -188,7 +188,7 @@ class AdministrarController extends Controller
             $usuarioDos->save();
         }
 
-        return http::respuesta(http::retOK, "usuario cambiado con exito");
+        return http::respuesta(http::retOK, $usuario->estado);
     }
 
     //aministracion de productos

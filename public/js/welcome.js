@@ -53,6 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
     slider.addEventListener("mouseleave", () => {
         autoSlide();
     });
+
 });
 
 function toggleMenu() {
