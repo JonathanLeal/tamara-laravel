@@ -556,6 +556,16 @@ button:hover {
             color: #fff;
         }
 
+
+        .selected {
+            background-color: #ff6600; /* Cambia el color de fondo cuando se selecciona */
+            color: #FFF; /* Cambia el color del texto cuando se selecciona */
+        }
+
+        .deselected {
+            background-color: #ffffff; /* Color de fondo predeterminado */
+            color: #ff6600; /* Color de texto predeterminado */
+        }
         .product-availability {
             font-size: 20px;
             margin-bottom: 20px;
