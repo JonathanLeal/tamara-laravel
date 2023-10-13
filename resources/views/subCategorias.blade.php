@@ -58,7 +58,7 @@ nav {
 }
 
 .cart-count {
-    background-color: #1693D2;
+    background-color: #777;
     color: #fff;
     font-size: 14px;
     border-radius: 50%;
@@ -323,7 +323,7 @@ nav a:hover {
 
 /* Estilo del botón de usuario */
 #user-button {
-    background-color: #9F3A25;
+    background-color: #777;
     color: #fff;
     font-weight: bold;
     cursor: pointer;

@@ -113,7 +113,7 @@ nav a:hover {
 }
 
 .cart-count {
-    background-color: #1693D2;
+    background-color: #777;
     color: #fff;
     font-size: 14px;
     border-radius: 50%;
@@ -369,7 +369,7 @@ button:hover {
 }
 /* Estilo del botón de usuario */
 #user-button {
-    background-color: #9F3A25;
+    background-color: #777;
     color: #fff;
     font-weight: bold;
     cursor: pointer;
@@ -486,7 +486,7 @@ button:hover {
 
 .action-button {
     padding: 15px 30px;
-    background-color: #009688;
+    background-color: #ff6600;
     color: white;
     border: none;
     border-radius: 5px;
@@ -498,7 +498,7 @@ button:hover {
 }
 
 .action-button:hover {
-    background-color: #007272;
+    background-color: #ff4500;
     transform: scale(1.05);
 }
 
@@ -524,8 +524,8 @@ button:hover {
         .color-option {
             display: inline-block;
             margin-right: 10px;
-            width: 40px;
-            height: 40px;
+            width: 20px;
+            height: 20px;
             border: 2px solid #ccc;
             border-radius: 50%;
             cursor: pointer;
@@ -533,7 +533,7 @@ button:hover {
         }
 
         .color-option:hover {
-            border-color: #009688;
+            border-color: #ff4500;
         }
 
         .product-sizes {
@@ -541,25 +541,25 @@ button:hover {
         }
 
         .product-size {
-            font-size: 20px;
+            font-size: 15px;
             margin-right: 15px;
             padding: 8px 15px;
-            border: 2px solid #009688;
+            border: 2px solid #777;
             border-radius: 5px;
-            color: #009688;
+            color: #ff6600;
             cursor: pointer;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .product-size:hover {
-            background-color: #009688;
+            background-color: #ff6600;
             color: #fff;
         }
 
         .product-availability {
             font-size: 20px;
             margin-bottom: 20px;
-            color: #009688;
+            color: #ff4500;
         }
 
         .product-description {
@@ -600,16 +600,16 @@ button:hover {
         .quantity-input {
             font-size: 20px;
             padding: 8px 15px;
-            border: 2px solid #009688;
+            border: 2px solid #94c0bc;
             border-radius: 5px;
-            color: #009688;
+            color: #ff4500;
             width: 50px;
             text-align: center;
         }
 
         .quantity-button {
             padding: 8px 12px;
-            background-color: #009688;
+            background-color: #ff6600;
             color: #fff;
             border: none;
             border-radius: 5px;
@@ -625,7 +625,7 @@ button:hover {
         }
 
         .quantity-button:hover {
-            background-color: #007272;
+            background-color: #ff4500;
             transform: scale(1.05);
             padding: 8px 12px;
         }
@@ -640,7 +640,6 @@ button:hover {
 
         .accordion {
             margin-top: 20px;
-            border: 2px solid #009688;
             border-radius: 5px;
             overflow: hidden;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
@@ -688,7 +687,7 @@ button:hover {
 }
 
 .accordion.active .accordion-button {
-    background-color: #009688;
+    background-color: #ff6600;
     color: white;
 }
 
@@ -722,7 +721,7 @@ button:hover {
 }
 
         .accordion-button:hover {
-            background-color: #007272;
+            background-color: #ff4500;
             color: white;
         }
 
@@ -769,7 +768,7 @@ button:hover {
 }
 
 #tablaMedidas th {
-    background-color: #009688;
+    background-color: #ff6600;
     color: white;
 }
 
@@ -1272,7 +1271,7 @@ ul li a:hover {
 
 </div>
         <div class="product-details">
-            <h1 id="nombre_producto" class="product-title"></h1>
+            <h1 id="nombre_product" class="product-title"></h1>
             <p class="product-info" id="sku"></p>
             <div class="product-description">
                 <p id="descripcion"></p>
@@ -1286,12 +1285,9 @@ ul li a:hover {
                 <h4>Tallas disponibles</h4>
             </div>
             <p class="product-availability"></p>
-            {{-- <div class="quantity-container">
-                <span id="cantidad" class="quantity-label"></span>
-                <button class="quantity-button" id="decrement-button">-</button>
+            <div class="quantity-container">
                 <input class="quantity-input" type="number" id="quantity" value="1" min="1" max="5">
-                <button class="quantity-button" id="increment-button">+</button>
-            </div> --}}
+            </div>
             <div class="product-actions">
                 <button class="action-button" id="btnAgregarCarrito">Agregar al Carrito</button>
                 <button class="action-button" id="btnComprarAhora">Comprar ahora</button>

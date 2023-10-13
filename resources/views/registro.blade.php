@@ -33,7 +33,7 @@
 
         .login-container h2 {
             text-align: center;
-            color: #007BFF;
+            color: #ff6600;
         }
 
         .input-container {
@@ -60,14 +60,14 @@
         }
 
         .input-container input:focus {
-            border-color: #007BFF;
+            border-color: #ff6600;
             outline: none;
         }
 
         .login-button {
             width: 100%;
             padding: 10px;
-            background-color: #007BFF;
+            background-color: #777;
             border: none;
             border-radius: 5px;
             color: #fff;
@@ -76,7 +76,7 @@
         }
 
         .login-button:hover {
-            background-color: #0056b3;
+            background-color: #ff6600;
         }
 
         footer {

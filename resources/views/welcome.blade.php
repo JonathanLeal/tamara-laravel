@@ -2,7 +2,6 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -106,7 +105,7 @@ nav a:hover {
 }
 
 .cart-count {
-    background-color: #1693D2;
+    background-color: #777;
     color: #fff;
     font-size: 14px;
     border-radius: 50%;
@@ -398,7 +397,7 @@ button:hover {
 
 /* Estilo del botón de usuario */
 #user-button {
-    background-color: #9F3A25;
+    background-color: #777;
     color: #fff;
     font-weight: bold;
     cursor: pointer;
@@ -475,7 +474,8 @@ button:hover {
 
 .slider-container {
     position: relative;
-    max-width: 800px;
+    max-width: 75%;
+    height: 800px;
     margin: 0 auto;
     overflow: hidden;
     text-align: center;
@@ -949,8 +949,8 @@ ul li a:hover {
             <img src="{{ asset('storage/imagenes/carrusel1.jpg') }}" alt="Centralización de Operaciones" class="slider-image">
             <img src="{{ asset('storage/imagenes/carrusel2.jpg') }}" alt="Centralización de Operaciones" class="slider-image">
         </div>
-        <button id="prev-button"><i class="fa-solid fa-arrow-left"></i></button>
-        <button id="next-button"><i class="fa-solid fa-arrow-right"></i></button>
+        <button id="prev-button"><i class="fa-sharp fa-solid fa-caret-left"></i></i></button>
+        <button id="next-button"><i class="fa-sharp fa-solid fa-caret-right"></i></i></button>
     </div>
     <div>
         <h3 style="text-align: center;">Lo más buscado</h3>
@@ -1177,6 +1177,8 @@ cartIcon.click(function () {
                     text: "Necesitamos que inicies sesiòn para que goces de todas nuestras opciones",
                     icon: 'info',
                     showCancelButton: true,
+                    confirmButtonColor: '#ff6600',
+                    cancelButtonColor: '#ff6600',
                     confirmButtonText: 'Iniciar sesion',
                     cancelButtonText: 'Registrarme',
                     reverseButtons: true

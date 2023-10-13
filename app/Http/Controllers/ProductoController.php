@@ -154,7 +154,7 @@ class ProductoController extends Controller
     public function contarProductosCarrito()
     {
         $user = Auth::user();
-        $productosCarrito = Carrito::where('user_id', $user->usuario_id)->count();
+        $productosCarrito = Carrito::where('user_id', $user->usuario_id)->sum('cantidad');
         return http::respuesta(http::retOK, $productosCarrito);
     }
 

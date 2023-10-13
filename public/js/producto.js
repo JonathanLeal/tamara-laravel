@@ -157,6 +157,7 @@ cartIcon.click(function () {
                             <td>${imagen}</td>
                             <td>${talla}</td>
                             <td>${color}</td>
+                            <td>${cantidad}</td>
                             <td>$${precioTotal}</td>
                             <td><button id="eliminarCarrito" onclick="eliminarDelCarrito(${id})"><i class="fa fa-trash"></i></button></td>
                         </tr>`;
@@ -288,7 +289,7 @@ function obtenerInfoProductos(id) {
                 $("#imagenProducto").html(`<img id="main-image" src="${imagenProducto}" alt="Producto">`);
 
                 // nombre del producto
-                $("#nombre_producto").html('Nombre: '+miniDetalles[0].nombre_producto);
+                $("#nombre_product").text(miniDetalles[0].nombre_producto);
 
                 // sku del producto
                 $("#sku").text('SKU: ' + miniDetalles[0].sku);
