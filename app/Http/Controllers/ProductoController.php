@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Http;
 use App\Models\Carrito;
+use App\Models\ExistenciaProductoColor;
 use App\Models\Producto;
 use App\Models\ProductoImagenes;
 use Illuminate\Http\Request;
@@ -28,13 +29,13 @@ class ProductoController extends Controller
 
         $colores = DB::table('producto_colores AS pc')
                    ->join('colores AS c', 'pc.colores_id', '=', 'c.id')
-                   ->select('pc.id', 'c.nombre_color', 'c.color_fondo')
+                   ->select('c.id', 'c.nombre_color', 'c.color_fondo')
                    ->where('pc.producto_id', $id)
                    ->get();
 
         $tallas = DB::table('productos_tallas AS pt')
                     ->join('tallas AS t', 'pt.tallas_id', '=', 't.id')
-                    ->select('pt.id', 't.nombre_talla')
+                    ->select('t.id', 't.nombre_talla')
                     ->where('pt.producto_id', $id)
                     ->get();
 
@@ -102,8 +103,15 @@ class ProductoController extends Controller
 
         $producto = Producto::where('id', $request->producto)->first();
 
-        if ($request->cantidad > $producto->existencia) {
-            return http::respuesta(http::retBadRequest, "No puede comprar una cantidad mayor a la existencia actual del producto");
+        $existencia = DB::table('existencias_disponibles_producto AS edp')
+                      ->select('edp.id', 'edp.existencia')
+                      ->where('edp.producto_id', $producto->id)
+                      ->where('edp.talla_id', $request->talla)
+                      ->where('edp.color_id', $request->color)
+                      ->first();
+
+        if ($request->cantidad > $existencia->existencia) {
+            return http::respuesta(http::retDenyBot, "No puede comprar una cantidad mayor a la existencia actual del producto");
         }
 
         $ultimoId = Carrito::max('id');
@@ -121,8 +129,12 @@ class ProductoController extends Controller
             $carrito->user_id     = $user->usuario_id;
             $carrito->save();
 
-            $producto->existencia = $producto->existencia - $request->cantidad;
-            $producto->save();
+            $productoDisponible = ExistenciaProductoColor::where('id', $existencia->id)->first();
+            $productoDisponible->existencia = $productoDisponible->existencia - $request->cantidad;
+            $productoDisponible->save();
+
+            // $producto->existencia = $producto->existencia - $request->cantidad;
+            // $producto->save();
         } catch (\Throwable $th) {
             DB::rollBack();
             return http::respuesta(http::retError, $th->getMessage());
@@ -196,5 +208,30 @@ class ProductoController extends Controller
         }
 
         return http::respuesta(http::retOK, $producto->id);
+    }
+
+    public function cambiarProducto(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'producto' => 'required|integer',
+            'color'    => 'required|integer'
+        ]);
+
+        if ($validator->fails()) {
+            return http::respuesta(http::retUnprocessable, $validator->errors());
+        }
+
+        $cambio = DB::table('existencias_disponibles_producto AS edp')
+                  ->join('productos AS p', 'edp.producto_id', '=', 'p.id')
+                  ->select('edp.id','edp.existencia')
+                  ->where('edp.color_id', $request->color)
+                  ->where('edp.producto_id', $request->producto)
+                  ->first();
+
+        if ($cambio->existencia === 0) {
+            return http::respuesta(http::retNotFound, "agotado");
+        }
+
+        return http::respuesta(http::retOK, $cambio);
     }
 }

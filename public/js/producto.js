@@ -306,26 +306,50 @@ function obtenerInfoProductos(id) {
                 $("#existencia").text('Existencia: '+miniDetalles[0].existencia);
 
                 $.each(colores, function(index, color){
-                    var coloresHTML = `<span class="color-option" style="background-color: ${color.color_fondo};"></span>`;
+                    var coloresHTML = `<span class="color-option" style="background-color: ${color.color_fondo};" data-id="${color.id}"></span>`;
                     $("#coloresDisponibles").append(coloresHTML);
                 });
 
                 $.each(tallas, function(index, talla){
-                    var tallasHTML = `<span class="product-size">${talla.nombre_talla}</span>`;
+                    var tallasHTML = `<span class="product-size" data-id="${talla.id}">${talla.nombre_talla}</span>`;
                     $("#tallas_disponibles").append(tallasHTML);
                 });
 
                 $("#coloresDisponibles").on("click", ".color-option", function() {
                     $(".color-option").css("border-color", "#ccc");
                     $(this).css("border-color", "#ff4500");
-                    color = $(this).data('color-id'); // Assuming you have a data attribute for color id
+                    color = $(this).data('id');
+
+                    $.ajax({
+                        url: '/cambiarInfo',
+                        type: 'POST',
+                        dataType: 'JSON',
+                        data: {
+                            producto: id,
+                            color: color
+                        },
+                        success: function(response){
+                            if (response.resultado === 'OK') {
+                                $("#existencia").text('Existencia: '+response.datos.existencia);
+                            }
+                        },
+                        error: function(error){
+                            if (error.status === 404) {
+                                $("#existencia").text('Existencia: ¡Agotado!');
+                            }
+                        }
+                    });
                 });
 
-                // Control de evento de clic para tallas
                 $("#tallas_disponibles").on("click", ".product-size", function() {
                     $(".product-size").removeClass("selected").addClass("deselected");
                     $(this).removeClass("deselected").addClass("selected");
-                    talla = $(this).data('size-id'); // Assuming you have a data attribute for size id
+                    talla = $(this).data('id'); // Recupera el ID de la talla seleccionada
+                });
+
+                $("#btnAgregarCarrito").on("click", function () {
+                    var cantidad = $("#quantity").val();
+                    guardarEnCarrito(id, color, talla, cantidad);
                 });
 
                 $.each(producto, function(index, pro){
@@ -429,10 +453,9 @@ function showModal() {
 }
 
 // Llamada para Agregar al Carrito
-$("#btnAgregarCarrito").on("click", function () {
+function guardarEnCarrito(id, color, talla) {
         var cantidad = $("#quantity").val();
 
-        if (talla && color) {
             var pro = {
                 producto: id,
                 talla: talla,
@@ -460,7 +483,7 @@ $("#btnAgregarCarrito").on("click", function () {
                     }
                 },
                 error: function (error) {
-                    if (error.status === 401) {
+                    if (error.status === 400) {
                         const swalWithBootstrapButtons = Swal.mixin({
                             customClass: {
                                 confirmButton: 'btn btn-success',
@@ -486,7 +509,7 @@ $("#btnAgregarCarrito").on("click", function () {
                         })
                     }
 
-                    if (error.status === 404) {
+                    if (error.status === 403) {
                         Swal.fire(
                             'Notificación',
                             'No puedes ingresar una cantidad mayor a la existencia actual del producto',
@@ -503,14 +526,7 @@ $("#btnAgregarCarrito").on("click", function () {
                     }
                 }
             });
-        } else {
-            Swal.fire(
-                'Notificación',
-                'Debes seleccionar una talla y un color antes de agregar al carrito.',
-                'warning'
-            );
-        }
-});
+        };
 
 // Llamada para Comprar Ahora
 // $("#btnComprarAhora").on("click", function () {

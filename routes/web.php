@@ -27,6 +27,7 @@ Route::get('/producto', function () {
 });
 Route::get('/infoProducto/{id}', [ProductoController::class, 'obteniendoInfoProducto']);
 Route::post('/buscarProducto', [ProductoController::class, 'buscarProducto']);
+Route::post('/cambiarInfo', [ProductoController::class, 'cambiarProducto']);
 
 //registros
 Route::post('/registroNewUser', [LoginController::class, 'registrarUsuario']);
@@ -39,3 +40,4 @@ Route::get('/facturacion', function () {
 //pagos
 Route::get('/obtenerIdentificacion', [PagoController::class, 'obtenerTiposIdentificacion']);
 
+//wompi
