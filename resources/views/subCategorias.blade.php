@@ -43,6 +43,30 @@ nav {
     padding: 1px 0;
 }
 
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    nav ul {
+        flex-direction: column;
+    }
+
+    nav li {
+        margin: 10px 0;
+    }
+
+    .search-box {
+        margin-right: 0;
+    }
+
+    /* Estilos para el icono del carrito en pantallas más pequeñas */
+    .cart {
+        margin-right: 0;
+    }
+}
+
 .cart {
     display: flex;
     align-items: center;
