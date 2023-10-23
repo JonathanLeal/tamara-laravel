@@ -23,7 +23,7 @@
 
         .login-container {
             flex-grow: 1;
-            width: 300px;
+            width: 400px;
             margin: 20px auto;
             padding: 20px;
             background-color: #fff;
@@ -212,9 +212,15 @@
 }
 
 @media (max-width: 768px) {
-    footer {
-        text-align: center;
+    /* Estilos para pantallas con un ancho máximo de 768px (dispositivos móviles) */
+    .container {
+        flex-direction: column;
     }
+    .login-container {
+        width: 90%; /* Ajusta el ancho del contenedor de inicio de sesión */
+        margin: 10px auto;
+    }
+    /* Agrega estilos específicos para los elementos en dispositivos móviles */
 }
     </style>
 </head>

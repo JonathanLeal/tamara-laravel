@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -599,59 +600,6 @@ ul li a:hover {
     margin: 0;
 }
 
-@media (max-width: 768px) {
-    header h1 {
-        display: none;
-    }
-
-    .dropdown-parent-user {
-        display: flex;
-        align-items: center;
-        margin-right: 10px;
-    }
-}
-
-@media (max-width: 768px) {
-    nav ul {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    nav li {
-        margin: 10px 0;
-    }
-}
-
-@media (max-width: 768px) {
-    .slider-image {
-        max-width: 100%;
-    }
-}
-
-@media (max-width: 768px) {
-    .categorias {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .categoria {
-        width: 100%;
-        margin-bottom: 20px;
-    }
-
-    .categoria-imagen {
-        width: 60px;
-        height: 60px;
-        margin-right: 10px;
-    }
-}
-
-@media (max-width: 768px) {
-    footer {
-        text-align: center;
-    }
-}
-
 #carritoModal {
     display: none;
     position: fixed;
@@ -837,14 +785,56 @@ ul li a:hover {
     }
 /* Estilos para dispositivos móviles */
 @media (max-width: 768px) {
-    #carritoModal .modal-content {
-        margin: 20px auto;
-        padding: 10px;
-        width: 90%;
-        max-width: 300px;
+    header {
+        padding: 10px 0; /* Reduce el espacio en el encabezado */
     }
 
-    /* Ajusta otros estilos según sea necesario para dispositivos móviles */
+    header h1 {
+        font-size: 24px; /* Reduce el tamaño del título en el encabezado */
+    }
+
+    nav ul {
+        flex-direction: column; /* Coloca los elementos del menú uno debajo del otro */
+    }
+
+    nav li {
+        margin: 10px 0; /* Añade espacio vertical entre elementos del menú */
+    }
+
+    .search-box {
+        margin-right: 0; /* Elimina el margen derecho en la caja de búsqueda */
+    }
+
+    #search-bar {
+        width: 100%; /* Ajusta el ancho de la caja de búsqueda */
+        margin-right: 0;
+    }
+
+    #search-button {
+        margin: 10px 0; /* Añade espacio vertical al botón de búsqueda */
+    }
+
+    .slider-container {
+        height: 300px; /* Reduce la altura del slider en dispositivos móviles */
+    }
+
+    .categoria {
+        width: 100%; /* Ajusta el ancho de las categorías */
+    }
+
+    .categoria-imagen {
+        width: 30px; /* Reduce el tamaño de las imágenes de categorías */
+        height: 30px;
+    }
+
+    .social-icons a {
+        font-size: 20px; /* Reduce el tamaño de los iconos de redes sociales */
+    }
+
+    .footer-container {
+        flex-direction: column; /* Coloca las columnas del pie de página una debajo de la otra */
+        align-items: center; /* Centra el contenido en dispositivos móviles */
+    }
 }
     </style>
 </head>

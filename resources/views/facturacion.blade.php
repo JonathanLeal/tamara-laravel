@@ -252,29 +252,29 @@
         Dirección de Entrega
       </div>
       <div class="row">
+        <label class="form-label">Método de Entrega</label>
         <div class="col-md-4">
-          <label class="form-label">Método de Entrega</label>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="entrega" id="entregaDomicilio" value="domicilio" required>
-            <label class="form-check-label" for="entregaDomicilio">
-              A Domicilio
-            </label>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="entrega" id="entregaDomicilio" value="domicilio" required>
+              <label class="form-check-label" for="entregaDomicilio">
+                <i class="fas fa-truck"></i> A Domicilio
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="entrega" id="entregaPunto" value="punto_entrega" required>
+              <label class="form-check-label" for="entregaPunto">
+                <i class="fas fa-store"></i> Punto de Entrega
+              </label>
+            </div>
           </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="entrega" id="entregaPunto" value="punto_entrega" required>
-            <label class="form-check-label" for="entregaPunto">
-              Punto de Entrega
-            </label>
+          <div class="col-md-10 mt-3 mb-3">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="entregaMismaDireccion">
+              <label class="form-check-label" for="entregaMismaDireccion">
+                Entregar en la misma dirección de facturación
+              </label>
+            </div>
           </div>
-        </div>
-        <div class="col-md-4">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="entregaMismaDireccion">
-            <label class="form-check-label" for="entregaMismaDireccion">
-              Entregar en la misma dirección de facturación
-            </label>
-          </div>
-        </div>
       </div>
       <div class="row">
         <div class="col-md-2">
@@ -312,29 +312,76 @@
 
       <div class="container-carrito">
         <h3 class="mb-4">Detalles de su compra</h3>
-        <table class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>Producto</th>
-                    <th>Imagen</th>
-                    <th>Cantidad</th>
-                    <th>Talla</th>
-                    <th>Color</th>
-                    <th>Total</th>
-                    <th>Acción</th>
-                </tr>
-            </thead>
-            <tbody id="cart-items-list">
-                <!-- Aquí se mostrarán los productos -->
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Imagen</th>
+                        <th>Cantidad</th>
+                        <th>Talla</th>
+                        <th>Color</th>
+                        <th>Total</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody id="cart-items-list">
+                    <!-- Aquí se mostrarán los productos -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+        <div class="form-subheader">
+          Método de Pago
+      </div>
+      <div class="row">
+          <div class="col-md-4">
+              <label class="form-label">Selecciona el método de pago</label>
+              <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="metodoPago" id="pagoTarjeta" value="tarjeta" required>
+                  <label class="form-check-label" for="pagoTarjeta">
+                      <i class="fas fa-credit-card"></i> Pago con Tarjeta
+                  </label>
+              </div>
+              <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="metodoPago" id="pagoEfectivo" value="efectivo" required>
+                  <label class="form-check-label" for="pagoEfectivo">
+                      <i class="fas fa-money-bill"></i> Pago en Efectivo
+                  </label>
+              </div>
+          </div>
+      </div>
+
+      <!-- Detalles de Tarjeta de Crédito (visible si se selecciona Pago con Tarjeta) -->
+      <div class="row mt-4" id="tarjetaDetails">
+        <div class="col-md-4">
+            <label for="titularTarjeta" class="form-label">Titular de la Tarjeta</label>
+            <input type="text" class="form-control" id="titularTarjeta">
+        </div>
+        <div class="col-md-4">
+            <label for="numeroTarjeta" class="form-label">Número de Tarjeta</label>
+            <input type="text" class="form-control" id="numeroTarjeta">
+        </div>
+        <div class="col-md-4">
+            <label for="mesVencimiento" class="form-label">Mes de Vencimiento</label>
+            <input type="text" class="form-control" id="mesVencimiento">
+        </div>
+        <div class="col-md-4">
+            <label for="anoVencimiento" class="form-label">Año de Vencimiento</label>
+            <input type="text" class="form-control" id="anoVencimiento">
+        </div>
+        <div class="col-md-4">
+            <label for="cvc" class="form-label">CVC</label>
+            <input type="text" class="form-control" id="cvc">
+        </div>
+    </div>
         <div id="total-price">
             Total de productos: $<span id="total-amount">0.00</span>
         </div>
 
       <!-- Botón de envío -->
       <div class="col-12 mt-4">
-        <button id="submitButton" class="btn btn-primary" type="submit">Enviar formulario</button>
+        <button id="submitButton" class="btn btn-primary" type="submit"><i class="fas fa-shopping-cart"></i> Enviar formulario</button>
       </div>
     </form>
   </div>

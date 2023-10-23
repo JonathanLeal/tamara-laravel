@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -23,9 +23,9 @@
 
         .login-container {
             flex-grow: 1;
-            width: 300px;
+            width: 30%; /* Cambia el porcentaje según tus preferencias */
             margin: 20px auto;
-            padding: 20px;
+            padding: 10px;
             background-color: #fff;
             box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.2);
             border-radius: 10px;
@@ -172,6 +172,34 @@
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+    .input-container i {
+        top: 8px;
+        left: 6px;
+    }
+
+    .input-container input {
+        padding: 10px;
+        padding-left: 26px;
+        font-size: 14px;
+    }
+
+    .login-button {
+        padding: 8px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer-column {
+        margin-right: 10px;
+    }
+
+    .footer-container {
+        padding: 10px;
+    }
 }
     </style>
 </head>

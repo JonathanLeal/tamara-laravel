@@ -854,9 +854,26 @@ ul li a:hover {
         width: 90%;
         max-width: 300px;
     }
-
-    /* Ajusta otros estilos según sea necesario para dispositivos móviles */
 }
+
+@media (max-width: 768px) {
+    .product-row {
+        flex-direction: column;
+    }
+
+    .card {
+        width: 100%;
+        margin: 10px 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer-column {
+        margin-right: 0;
+    }
+}
+
+
     </style>
 </head>
 <body>

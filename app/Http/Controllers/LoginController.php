@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\Http;
 use App\Models\User;
 use App\Models\Usuario;
+use App\Models\Vitacora;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -49,6 +50,9 @@ class LoginController extends Controller
 
         DB::beginTransaction();
         try {
+            $ultimoIdVitacora = Vitacora::max('id');
+            $idVitacora = $ultimoIdVitacora + 1;
+
             $ultimoId = Usuario::max('id');
             $id = $ultimoId + 1;
 
@@ -64,13 +68,17 @@ class LoginController extends Controller
             $usuario->save();
 
             $user = new User();
-            $user->name       = $usuario->nombres . $usuario->apellidos;
+            $user->name       = $usuario->nombres + '' + $usuario->apellidos;
             $user->email      = $usuario->correo;
             $user->password   = $usuario->password;
             $user->usuario_id = $id;
             $user->rol_id     = 4;
             $user->estado     = $usuario->estado;
             $user->save();
+
+            $vitacora = new Vitacora();
+            $vitacora->id     = $idVitacora;
+            $vitacora->accion = 'Se registro un nuevo usuario: '+ $usuario->nombres + '' + $usuario->apellidos;
         } catch (\Throwable $th) {
             DB::rollBack();
             return http::respuesta(http::retError, $th->getMessage());
