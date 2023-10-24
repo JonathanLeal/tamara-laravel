@@ -83,7 +83,27 @@ class PagoController extends Controller
 
         DB::beginTransaction();
         try {
+            $data = [
+                'tarjetaCreditoDebido' => [
+                    'numeroTarjeta' => $request->numeroTarjeta,
+                    'cvv' => $request->cvc,
+                    'mesVencimiento' => $request->mesVencimiento,
+                    'anioVencimiento' => $request->anoVencimiento,
+                ],
+                'monto' => $request->monto,
+                'emailCliente' => $request->emailCliente,
+                'nombreCliente' => $request->nombreCliente,
+                'formaPago' => $request->formaPago,
+                'configuracion' => [
+                    'emailsNotificacion' => $request->emailsNotificacion,
+                    'urlWebhook' => $request->urlWebhook,
+                    'telefonosNotificacion' => $request->telefonosNotificacion,
+                    'notificarTransaccionCliente' => $request->notificarTransaccionCliente,
+                ],
+                'datosAdicionales' => [
 
+                ]
+            ];
         } catch (\Throwable $th) {
             DB::rollBack();
             return http::respuesta(http::retError, $th->getMessage());
