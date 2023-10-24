@@ -147,6 +147,12 @@ function numeroProductosEnCarrito() {
     })
 }
 
+document.querySelector('.mobile-menu-button').addEventListener('click', function() {
+    const menu = document.querySelector('nav ul');
+    this.classList.toggle('active');
+    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+});
+
 function obtenerTodosProductosCategoria(cat) {
     $.ajax({
         url: 'http://127.0.0.1:8000/productosPorCategoria/'+cat,

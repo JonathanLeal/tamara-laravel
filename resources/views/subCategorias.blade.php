@@ -897,7 +897,39 @@ ul li a:hover {
     }
 }
 
+.mobile-menu-button {
+    display: none; /* Ocultar el botón en pantallas grandes */
+    cursor: pointer;
+}
 
+.mobile-menu-button .bar {
+    width: 30px;
+    height: 3px;
+    background-color: #fff;
+    margin: 4px 0;
+    transition: 0.4s;
+}
+
+@media (max-width: 768px) {
+    nav ul {
+        display: none; /* Ocultar el menú principal en pantallas pequeñas */
+    }
+
+    .mobile-menu-button {
+        display: block; /* Mostrar el botón de hamburguesa en pantallas pequeñas */
+    }
+
+    /* Estilizar el menú desplegable */
+    .mobile-menu-button.active .bar:nth-child(1) {
+        transform: rotate(-45deg) translate(-5px, 6px);
+    }
+    .mobile-menu-button.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+    .mobile-menu-button.active .bar:nth-child(3) {
+        transform: rotate(45deg) translate(-5px, -6px);
+    }
+}
     </style>
 </head>
 <body>
@@ -920,6 +952,11 @@ ul li a:hover {
         </div>
     </header>
     <nav>
+        <div class="mobile-menu-button">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
         <ul>
             <li><a href="{{ route('inicio') }}">Inicio</a></li>
             <li class="dropdown-parent">

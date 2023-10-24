@@ -202,9 +202,9 @@
           </div>
         </div>
         <div class="col-md-2">
-          <label for="validationCustomUsername" class="form-label">Número de documento</label>
+          <label for="validationCustomUsername16" class="form-label">Número de documento</label>
           <div class="input-group has-validation">
-            <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+            <input type="text" class="form-control" id="validationCustomUsername16" aria-describedby="inputGroupPrepend" required>
             <div class="invalid-feedback">
               Ingrese su número de documento
             </div>
@@ -229,8 +229,8 @@
           </div>
         </div>
         <div class="col-md-4">
-          <label for="validationCustom04" class="form-label">Ciudad</label>
-          <input type="text" class="form-control" id="validationCustom04" required>
+          <label for="validationCustom4" class="form-label">Ciudad</label>
+          <input type="text" class="form-control" id="validationCustom4" required>
           <div class="invalid-feedback">
             Ingresa tu ciudad
           </div>
@@ -255,13 +255,13 @@
         <label class="form-label">Método de Entrega</label>
         <div class="col-md-4">
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="entrega" id="entregaDomicilio" value="domicilio" required>
+              <input class="form-check-input" type="radio" name="entregaDomicilio" id="entregaDomicilio" value="domicilio" required>
               <label class="form-check-label" for="entregaDomicilio">
                 <i class="fas fa-truck"></i> A Domicilio
               </label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="entrega" id="entregaPunto" value="punto_entrega" required>
+              <input class="form-check-input" type="radio" name="entregaPunto" id="entregaPunto" value="punto_entrega" required>
               <label class="form-check-label" for="entregaPunto">
                 <i class="fas fa-store"></i> Punto de Entrega
               </label>
@@ -278,22 +278,22 @@
       </div>
       <div class="row">
         <div class="col-md-2">
-          <label for="validationCustom05" class="form-label">País</label>
-          <input type="text" class="form-control" id="validationCustom05" required>
+          <label for="validationCustom010" class="form-label">País</label>
+          <input type="text" class="form-control" id="validationCustom010" required>
           <div class="invalid-feedback">
             Ingrese el país de entrega
           </div>
         </div>
         <div class="col-md-4">
-          <label for="validationCustom03" class="form-label">Departamento</label>
-          <input type="text" class="form-control" id="validationCustom03" required>
+          <label for="validationCustom011" class="form-label">Departamento</label>
+          <input type="text" class="form-control" id="validationCustom011" required>
           <div class="invalid-feedback">
             Ingrese el departamento de entrega
           </div>
         </div>
         <div class="col-md-4">
-          <label for="validationCustom04" class="form-label">Ciudad</label>
-          <input type="text" class="form-control" id="validationCustom04" required>
+          <label for="validationCustom012" class="form-label">Ciudad</label>
+          <input type="text" class="form-control" id="validationCustom012" required>
           <div class="invalid-feedback">
             Ingrese la ciudad de entrega
           </div>
@@ -301,8 +301,8 @@
       </div>
       <div class="row">
         <div class="col-md-12">
-          <label for="validationCustom06" class="form-label">Dirección de Entrega</label>
-          <textarea class="form-control large-textarea" id="validationCustom06" required></textarea>
+          <label for="validationCustom013" class="form-label">Dirección de Entrega</label>
+          <textarea class="form-control large-textarea" id="validationCustom013" required></textarea>
           <div class="invalid-feedback">
             Ingrese la dirección de entrega
           </div>
