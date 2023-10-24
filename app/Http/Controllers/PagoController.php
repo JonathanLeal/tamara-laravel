@@ -85,19 +85,19 @@ class PagoController extends Controller
         try {
             $data = [
                 'tarjetaCreditoDebido' => [
-                    'numeroTarjeta' => $request->numeroTarjeta,
-                    'cvv' => $request->cvc,
-                    'mesVencimiento' => $request->mesVencimiento,
-                    'anioVencimiento' => $request->anoVencimiento,
+                    'numeroTarjeta'    => $request->numeroTarjeta,
+                    'cvv'              => $request->cvc,
+                    'mesVencimiento'   => $request->mesVencimiento,
+                    'anioVencimiento'  => $request->anoVencimiento,
                 ],
-                'monto' => $request->monto,
-                'emailCliente' => $request->emailCliente,
+                'monto'         => $request->monto,
+                'emailCliente'  => $request->emailCliente,
                 'nombreCliente' => $request->nombreCliente,
-                'formaPago' => $request->formaPago,
-                'configuracion' => [
-                    'emailsNotificacion' => $request->emailsNotificacion,
-                    'urlWebhook' => $request->urlWebhook,
-                    'telefonosNotificacion' => $request->telefonosNotificacion,
+                'formaPago'     => $request->formaPago,
+                'configuracion'                   => [
+                    'emailsNotificacion'          => $request->emailsNotificacion,
+                    'urlWebhook'                  => $request->urlWebhook,
+                    'telefonosNotificacion'       => $request->telefonosNotificacion,
                     'notificarTransaccionCliente' => $request->notificarTransaccionCliente,
                 ],
                 'datosAdicionales' => [
