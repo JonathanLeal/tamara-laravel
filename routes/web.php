@@ -39,6 +39,8 @@ Route::get('/facturacion', function () {
 
 //pagos
 Route::get('/obtenerIdentificacion', [PagoController::class, 'obtenerTiposIdentificacion']);
+Route::get('/obtenerAgencias', [PagoController::class, 'obtenerAgencias']);
+Route::get('/infoAgencias/{id}', [PagoController::class, 'infoAgencias']);
 
 //wompi
 Route::post('token', [PagoController::class,'token']);

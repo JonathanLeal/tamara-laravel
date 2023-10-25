@@ -1,6 +1,48 @@
 $(document).ready(function() {
     llenarSelectIdentificacion();
     llenarTablaCarrita();
+    llenarSelectAgencias();
+    // Al cargar la página, muestra los campos de Método de Entrega seleccionado
+  showEntregaFields();
+
+  // Cuando se cambie la selección de Método de Entrega
+  $('input[name="entrega"]').change(function () {
+    showEntregaFields();
+  });
+
+  // Cuando se cambie la selección de Método de Pago
+  $('input[name="metodoPago"]').change(function () {
+    var selectedMetodoPago = $('input[name="metodoPago"]:checked').val();
+    if (selectedMetodoPago === "tarjeta") {
+      $('#tarjetaDetails').show();
+    } else {
+      $('#tarjetaDetails').hide();
+    }
+  });
+
+  // Función para mostrar los campos de Método de Entrega seleccionado
+  function showEntregaFields() {
+    var selectedEntrega = $('input[name="entrega"]:checked').val();
+
+    if (selectedEntrega === "domicilio") {
+      $('#entregaDomicilioInputs').show();
+      $('#entregaPuntoInputs').hide();
+    } else if (selectedEntrega === "punto_entrega") {
+      $('#entregaDomicilioInputs').hide();
+      $('#entregaPuntoInputs').show();
+    }
+  }
+
+  // Función para mostrar los detalles de Tarjeta de Crédito si se selecciona ese método de pago
+  function showMetodoPagoFields() {
+    var selectedMetodoPago = $('input[name="metodoPago"]:checked').val();
+
+    if (selectedMetodoPago === "tarjeta") {
+      $('#tarjetaDetails').show();
+    } else {
+      $('#tarjetaDetails').hide();
+    }
+  }
 });
 
 (() => {
@@ -27,7 +69,7 @@ function llenarSelectIdentificacion() {
         dataType: 'JSON',
         success: function(response){
             if (response.resultado === 'OK') {
-                var select = $('#validationCustom04');
+                var select = $('#tipo_doc');
 
                 select.empty();
                 select.append('<option selected disabled value="">Seleccione...</option>');
@@ -44,6 +86,60 @@ function llenarSelectIdentificacion() {
         }
     });
 }
+
+function llenarSelectAgencias() {
+    $.ajax({
+        url: '/obtenerAgencias',
+        type: 'GET',
+        dataType: 'JSON',
+        success: function(response) {
+            if (response.resultado === 'OK') {
+                var select = $('#agencias');
+                var infoAgenciaDiv = $('#info-agencia');
+
+                select.empty();
+                select.append('<option selected disabled value="">Seleccione...</option>');
+
+                $.each(response.datos, function(index, item) {
+                    select.append('<option value="' + item.id + '">' + item.nombre_agencia + '</option>');
+                });
+
+                select.on('change', function() {
+                    var selectedAgencia = select.val();
+                    if (selectedAgencia) {
+                        $.ajax({
+                            url: '/infoAgencias/' + selectedAgencia,
+                            type: 'GET',
+                            dataType: 'JSON',
+                            success: function(info) {
+                                if (info.resultado === 'OK') {
+                                    var agenciaInfo = info.datos;
+                                    infoAgenciaDiv.show();
+                                    $('#nombre_agencia').text('Nombre: ' + agenciaInfo.nombre_agencia);
+                                    $('#telefono').text('Teléfono: ' + agenciaInfo.telefono);
+                                    $('#email').text('Email: ' + agenciaInfo.email);
+                                    $('#direccion').text('Dirección: ' + agenciaInfo.direccion);
+                                    $('#ciudad').text('Ciudad: ' + agenciaInfo.ciudad);
+                                }
+                            },
+                            error: function(error) {
+                                console.log(error);
+                            }
+                        });
+                    } else {
+                        infoAgenciaDiv.hide();
+                    }
+                });
+            } else {
+                console.log('Error en la respuesta de la API');
+            }
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}
+
 
 function llenarTablaCarrita() {
     $.ajax({

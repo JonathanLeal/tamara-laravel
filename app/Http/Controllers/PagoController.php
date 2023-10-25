@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Http;
 use App\Helpers\WompiHelper;
+use App\Models\Agencia;
 use App\Models\Producto;
 use App\Models\TipoIdentificacion;
 use Illuminate\Http\Request;
@@ -51,30 +52,32 @@ class PagoController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'validationCustom01' => 'required|string',
-            'validationCustom02' => 'required|string',
-            'validationCustomUsername' => 'required|email',
-            'validationCustom07'=> 'required|string',
-            'validationCustom08' => 'required|string',
-            'validationCustom04' => 'required|string',
-            'validationCustomUsername16' => 'required|int',
-            'validationCustom05' => 'required|string',
-            'validationCustom03' => 'required|string',
-            'validationCustom4' => 'required|string',
-            'validationCustom06'=> 'required|string',
-            'entregaDomicilio' => 'required|int',
-            'entregaPunto' => 'required|int',
-            'validationCustom010'=> 'required|string',
-            'validationCustom011'=> 'required|string',
-            'validationCustom012'=> 'required|string',
-            'validationCustom013'=> 'required|string',
-            'pagoTarjeta' => 'required|int',
-            'pagoEfectivo'=> 'required|int',
-            'titularTarjeta' => 'required|string',
-            'numeroTarjeta'=> 'required|string',
-            'mesVencimiento' => 'required|string',
-            'anoVencimiento' => 'required|string',
-            'cvc' => 'required|string',
+            'nombres'               => 'required|string',
+            'apellidos'             => 'required|string',
+            'correo'                => 'required|email|unique:facturacion,correo',
+            'telefono'              => 'required|string|unique:facturacion,telefono',
+            'whatsApp'              => 'required|string|unique:facturacion,celular',
+            'tipo_doc'              => 'required|string',
+            'num_doc'               => 'required|int|unique:facturacion,num_identificacion',
+            'pais'                  => 'required|string',
+            'depa'                  => 'required|string',
+            'ciudad'                => 'required|string',
+            'direc_fac'             => 'required|string',
+            'entregaDomicilio'      => 'required|int',
+            'entregaPunto'          => 'required|int',
+            'entregaMismaDireccion' => 'required|int',
+            'pais_fac'              => 'required|string',
+            'depa_fac'              => 'required|string',
+            'ciudad_fac'            => 'required|string',
+            'direc_factura'         => 'required|string',
+            'pagoTarjeta'           => 'required|int',
+            'pagoEfectivo'          => 'required|int',
+            'titularTarjeta'        => 'required|string',
+            'numeroTarjeta'         => 'required|string',
+            'mesVencimiento'        => 'required|string',
+            'anoVencimiento'        => 'required|string',
+            'cvc'                   => 'required|string',
+            'monto'                 => 'required|numeric'
         ]);
 
         if ($validator->fails()) {
@@ -91,8 +94,8 @@ class PagoController extends Controller
                     'anioVencimiento'  => $request->anoVencimiento,
                 ],
                 'monto'         => $request->monto,
-                'emailCliente'  => $request->emailCliente,
-                'nombreCliente' => $request->nombreCliente,
+                'emailCliente'  => $request->correo,
+                'nombreCliente' => $request->nombres . '' . $request->apellidos,
                 'formaPago'     => $request->formaPago,
                 'configuracion'                   => [
                     'emailsNotificacion'          => $request->emailsNotificacion,
@@ -108,5 +111,17 @@ class PagoController extends Controller
             DB::rollBack();
             return http::respuesta(http::retError, $th->getMessage());
         }
+    }
+
+    public function obtenerAgencias()
+    {
+        $agencias = Agencia::all();
+        return http::respuesta(http::retOK, $agencias);
+    }
+
+    public function infoAgencias($id)
+    {
+        $info = Agencia::where('id', $id)->first();
+        return http::respuesta(http::retOK, $info);
     }
 }
