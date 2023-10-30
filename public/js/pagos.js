@@ -13,7 +13,7 @@ $(document).ready(function() {
   // Cuando se cambie la selección de Método de Pago
   $('input[name="metodoPago"]').change(function () {
     var selectedMetodoPago = $('input[name="metodoPago"]:checked').val();
-    if (selectedMetodoPago === "tarjeta") {
+    if (selectedMetodoPago === "PagoNormal") {
       $('#tarjetaDetails').show();
     } else {
       $('#tarjetaDetails').hide();
@@ -45,22 +45,22 @@ $(document).ready(function() {
   }
 });
 
-(() => {
-    'use strict'
+// (() => {
+//     'use strict'
 
-    const submitButton = document.getElementById('submitButton');
+//     const submitButton = document.getElementById('submitButton');
 
-    submitButton.addEventListener('click', event => {
-      event.preventDefault();
+//     submitButton.addEventListener('click', event => {
+//       event.preventDefault();
 
-      const form = submitButton.closest('form');
+//       const form = submitButton.closest('form');
 
-      if (!form.checkValidity()) {
-        event.stopPropagation();
-        form.classList.add('was-validated');
-      }
-    }, false);
-  })();
+//       if (!form.checkValidity()) {
+//         event.stopPropagation();
+//         form.classList.add('was-validated');
+//       }
+//     }, false);
+//   })();
 
 function llenarSelectIdentificacion() {
     $.ajax({
@@ -235,3 +235,70 @@ function eliminarDelCarrito(id, event) {
       }
     })
 }
+
+$("#submitButton").on("click", function(event) {
+    event.preventDefault();
+    console.log("click");
+    $.ajax({
+        url: '/token', // Endpoint para obtener el token
+        type: 'POST',
+        dataType: 'JSON',
+        success: function(response) {
+            console.log(response.datos.access_token);
+            if (response.datos.access_token) {
+                // Si se obtiene el token con éxito, lo puedes usar para realizar la compra
+                var token = response.datos.access_token;
+                var formData = {
+                    tarjetaCreditoDebido: {
+                        numeroTarjeta: $('#numeroTarjeta').val(),
+                        cvv: $('#cvc').val(),
+                        mesVencimiento: parseInt($('#mesVencimiento').val()), // Convertir a entero
+                        anioVencimiento: parseInt($('#anoVencimiento').val()), // Convertir a entero
+                    },
+                    monto: parseFloat($("#total-amount").text()), // Convertir a número decimal
+                    emailCliente: $('#correo').val(),
+                    nombreCliente: $('#nombres').val() + ' ' + $('#apellidos').val(),
+                    formaPago: $('input[name="metodoPago"]:checked').val(),
+                    configuracion: {
+                        emailsNotificacion: $("#correo").val(),
+                        urlWebhook: "https://tu-webhook-url.com",
+                        telefonosNotificacion: $("#whatsApp").val(),
+                        notificarTransaccionCliente: true
+                    },
+                    datosAdicionales: {
+                        nombreProducto: "Nombre del Producto", // Asegúrate de incluir el nombre del producto
+                        additionalProp2: "Valor 2",
+                        additionalProp3: "Valor 3"
+                    }
+                };
+
+                $.ajax({
+                    url: '/transaccionCompra', // Ruta a tu endpoint en Laravel
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: formData,
+                    headers: {
+                        'Authorization': 'Bearer ' + token // Agrega el token como encabezado de autorización
+                    },
+                    success: function(data) {
+                        console.log(formData);
+                        Swal.fire(
+                            'Notificacion',
+                            'Compra realizada con éxito',
+                            'success'
+                        )
+                    },
+                    error: function(error) {
+                        console.log(formData);
+                        console.log("Error en guardar: " + error);
+                    }
+                });
+            } else {
+                console.log("Error al obtener el token");
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log("Error en la solicitud: " + textStatus, errorThrown);
+        }
+    });
+});

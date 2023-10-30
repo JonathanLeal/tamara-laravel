@@ -43,4 +43,5 @@ Route::get('/obtenerAgencias', [PagoController::class, 'obtenerAgencias']);
 Route::get('/infoAgencias/{id}', [PagoController::class, 'infoAgencias']);
 
 //wompi
-Route::post('token', [PagoController::class,'token']);
+Route::post('/token', [PagoController::class,'token']);
+Route::post('/transaccionCompra', [PagoController::class,'realizarCompra']);

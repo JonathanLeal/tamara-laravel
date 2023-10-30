@@ -396,7 +396,7 @@
           <div class="col-md-4">
               <label class="form-label">Selecciona el método de pago</label>
               <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="metodoPago" id="pagoTarjeta" value="tarjeta" required>
+                  <input class="form-check-input" type="radio" name="metodoPago" id="pagoTarjeta" value="PagoNormal" required>
                   <label class="form-check-label" for="pagoTarjeta">
                       <i class="fas fa-credit-card"></i> Pago con Tarjeta
                   </label>
@@ -448,9 +448,9 @@
               </div>
         </div>
     </div>
-        <div id="total-price">
-            Total de productos: $<span id="total-amount">0.00</span>
-        </div>
+    <div id="total-price">
+        Total de productos: $<span id="total-amount" name="monto">0.00</span>
+    </div>
 
       <!-- Botón de envío -->
       <div class="col-12 mt-4">
