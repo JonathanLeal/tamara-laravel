@@ -33,10 +33,10 @@ class ProductoController extends Controller
                    ->where('pc.producto_id', $id)
                    ->get();
 
-        $tallas = DB::table('productos_tallas AS pt')
-                    ->join('tallas AS t', 'pt.tallas_id', '=', 't.id')
+        $tallas = DB::table('existencias_disponibles_producto AS edp')
+                    ->join('tallas AS t', 'edp.talla_id', '=', 't.id')
                     ->select('t.id', 't.nombre_talla')
-                    ->where('pt.producto_id', $id)
+                    ->where('edp.producto_id', $id)
                     ->get();
 
         $productos = DB::table('productos AS p')
