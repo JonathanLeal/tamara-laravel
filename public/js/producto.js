@@ -347,6 +347,32 @@ function obtenerInfoProductos(id) {
                                     $("#precio").hide();
                                     $("#existencia").hide();
 
+                                    $("#tallas_disponibles").on("click", ".product-size", function() {
+                                        $(".product-size").removeClass("selected").addClass("deselected");
+                                        $(this).removeClass("deselected").addClass("selected");
+                                        talla = $(this).data('id'); 
+
+                                        $.ajax({
+                                            url: '/cambiarInfoTalla',
+                                            type: 'POST',
+                                            dataType: 'JSON',
+                                            data: {
+                                                producto: id,
+                                                color: color,
+                                                talla: talla
+                                            },
+                                            success: function(data){
+                                                if (data.resultado === 'OK') {
+                                                    console.log(data)
+                                                    $("#existencia").text('Existencia: '+data.datos[0].existencia).show();
+                                                    $("#precio").text('Precio: $'+data.datos[0].precio).show();
+                                                }
+                                            },
+                                            error: function(error){
+                                                console.log(error);
+                                            }
+                                        });
+                                    });
                                 }
                             }
                         },
