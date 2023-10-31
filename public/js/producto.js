@@ -299,11 +299,11 @@ function obtenerInfoProductos(id) {
                 // descripcion del producto
                 $("#descripcion").text('Detalles: '+miniDetalles[0].detalles);
 
-                // precio producto
-                $("#precio").text('Precio: '+miniDetalles[0].precio_1);
+                // // precio producto
+                // $("#precio").text('Precio: '+miniDetalles[0].precio_1);
 
-                //existencia producto
-                $("#existencia").text('Existencia: '+miniDetalles[0].existencia);
+                // //existencia producto
+                // $("#existencia").text('Existencia: '+miniDetalles[0].existencia);
 
                 $.each(colores, function(index, color){
                     var coloresHTML = `<span class="color-option" style="background-color: ${color.color_fondo};" data-id="${color.id}"></span>`;
@@ -319,7 +319,7 @@ function obtenerInfoProductos(id) {
                     $(".color-option").css("border-color", "#ccc");
                     $(this).css("border-color", "#ff4500");
                     color = $(this).data('id');
-
+                
                     $.ajax({
                         url: '/cambiarInfo',
                         type: 'POST',
@@ -330,12 +330,31 @@ function obtenerInfoProductos(id) {
                         },
                         success: function(response){
                             if (response.resultado === 'OK') {
-                                $("#existencia").text('Existencia: '+response.datos.existencia);
+                                $("#existencia").text('Existencia: '+response.datos[0].existencia);
+
+                                $("#precio").text('Precio: $'+response.datos[0].precio);
+                                
+                                // Limpiar el contenedor de tallas antes de agregar las nuevas tallas
+                                $("#tallas_disponibles").empty();
+                
+                                // Iterar a través de las tallas y agregarlas al contenedor
+                                $.each(response.datos, function(index, talla){
+                                    var tallasHTML = `<span class="product-size" data-id="${talla.talla_id}">${talla.nombre_talla}</span>`;
+                                    $("#tallas_disponibles").append(tallasHTML);
+                                });
+                                var tallasDisponibles = response.datos.length;
+                                if (tallasDisponibles == 2) {
+                                    $("#precio").hide();
+                                    $("#existencia").hide();
+
+                                }
                             }
                         },
                         error: function(error){
                             if (error.status === 404) {
                                 $("#existencia").text('Existencia: ¡Agotado!');
+                                // Limpiar el contenedor de tallas en caso de agotado
+                                $("#tallas_disponibles").text('No hay tallas para este color');
                             }
                         }
                     });

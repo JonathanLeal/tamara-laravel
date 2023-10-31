@@ -28,6 +28,7 @@ Route::get('/producto', function () {
 Route::get('/infoProducto/{id}', [ProductoController::class, 'obteniendoInfoProducto']);
 Route::post('/buscarProducto', [ProductoController::class, 'buscarProducto']);
 Route::post('/cambiarInfo', [ProductoController::class, 'cambiarProducto']);
+Route::post('/cambiarInfoTalla', [ProductoController::class, 'cambiarProducto']);
 
 //registros
 Route::post('/registroNewUser', [LoginController::class, 'registrarUsuario']);

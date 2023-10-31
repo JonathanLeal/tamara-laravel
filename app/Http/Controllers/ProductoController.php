@@ -224,14 +224,38 @@ class ProductoController extends Controller
         $cambio = DB::table('existencias_disponibles_producto AS edp')
                 ->join('productos AS p', 'edp.producto_id', '=', 'p.id')
                 ->join('tallas AS t', 'edp.talla_id', '=', 't.id') // Agregar la unión con la tabla "tallas"
-                ->select('edp.id', 'edp.existencia', 't.id AS talla_id', 't.nombre_talla') // Seleccionar los campos de la tabla "tallas"
+                ->select('edp.id', 'edp.existencia', 't.id AS talla_id', 't.nombre_talla', 'edp.precio') // Seleccionar los campos de la tabla "tallas"
                 ->where('edp.color_id', $request->color)
                 ->where('edp.producto_id', $request->producto)
-                ->first();
+                ->get();
 
-        if ($cambio->existencia === 0) {
-            return http::respuesta(http::retNotFound, "agotado");
+        foreach ($cambio as $producto) {
+            if ($producto->existencia === 0) {
+                return http::respuesta(http::retNotFound, "agotado");
+            }
         }
+
+        return http::respuesta(http::retOK, $cambio);
+    }
+
+    public function cambiarProductoTalla(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'producto' => 'required|integer',
+            'color'    => 'required|integer',
+            'talla'    => 'required|integer'
+        ]);
+
+        if ($validator->fails()) {
+            return http::respuesta(http::retUnprocessable, $validator->errors());
+        }
+
+        $cambio = DB::table('existencias_disponibles_producto AS edp')
+                ->select('edp.id', 'edp.precio', 'edp.existencia')
+                ->where('edp.color_id', $request->color)
+                ->where('edp.producto_id', $request->producto)
+                ->where('edp.talla_id', $request->talla)
+                ->get();
 
         return http::respuesta(http::retOK, $cambio);
     }
