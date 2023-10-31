@@ -222,11 +222,12 @@ class ProductoController extends Controller
         }
 
         $cambio = DB::table('existencias_disponibles_producto AS edp')
-                  ->join('productos AS p', 'edp.producto_id', '=', 'p.id')
-                  ->select('edp.id','edp.existencia')
-                  ->where('edp.color_id', $request->color)
-                  ->where('edp.producto_id', $request->producto)
-                  ->first();
+                ->join('productos AS p', 'edp.producto_id', '=', 'p.id')
+                ->join('tallas AS t', 'edp.talla_id', '=', 't.id') // Agregar la unión con la tabla "tallas"
+                ->select('edp.id', 'edp.existencia', 't.id AS talla_id', 't.nombre_talla') // Seleccionar los campos de la tabla "tallas"
+                ->where('edp.color_id', $request->color)
+                ->where('edp.producto_id', $request->producto)
+                ->first();
 
         if ($cambio->existencia === 0) {
             return http::respuesta(http::retNotFound, "agotado");
