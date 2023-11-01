@@ -173,13 +173,15 @@ class ProductoController extends Controller
     public function eliminarProductoCarrito($id)
     {
         $productosCarrito = Carrito::find($id);
+        $talla = $productosCarrito->talla_id;
+        $color = $productosCarrito->color_id;
         if (!$productosCarrito) {
             return http::respuesta(http::retNotFound, "No se encontro el producto que desea eliminar");
         }
 
         DB::beginTransaction();
         try {
-            $producto = ExistenciaProductoColor::where('producto_id', $productosCarrito->producto_id)->first();
+            $producto = ExistenciaProductoColor::where('producto_id', $productosCarrito->producto_id)->where('color_id', $color)->where('talla_id', $talla)->first();
             $producto->existencia = $producto->existencia + $productosCarrito->cantidad;
             $producto->save();
 
@@ -223,8 +225,8 @@ class ProductoController extends Controller
 
         $cambio = DB::table('existencias_disponibles_producto AS edp')
                 ->join('productos AS p', 'edp.producto_id', '=', 'p.id')
-                ->join('tallas AS t', 'edp.talla_id', '=', 't.id') // Agregar la unión con la tabla "tallas"
-                ->select('edp.id', 'edp.existencia', 't.id AS talla_id', 't.nombre_talla', 'edp.precio') // Seleccionar los campos de la tabla "tallas"
+                ->join('tallas AS t', 'edp.talla_id', '=', 't.id') 
+                ->select('edp.id', 'edp.existencia', 't.id AS talla_id', 't.nombre_talla', 'edp.precio')
                 ->where('edp.color_id', $request->color)
                 ->where('edp.producto_id', $request->producto)
                 ->get();

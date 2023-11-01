@@ -232,9 +232,7 @@ function eliminarDelCarrito(id) {
                         'Notificacion',
                         'Producto eliminado de tu carrito con exito',
                         'success'
-                    ).then(() => {
-                        window.location.href = `/producto?id=`+response.datos;
-                    });
+                    )
                 }
             },
             error: function(error){
