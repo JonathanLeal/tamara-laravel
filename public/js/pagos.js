@@ -281,7 +281,6 @@ $("#submitButton").on("click", function(event) {
                         'Authorization': 'Bearer ' + token // Agrega el token como encabezado de autorización
                     },
                     success: function(data) {
-                        console.log(formData);
                         Swal.fire(
                             'Notificacion',
                             'Compra realizada con éxito',
