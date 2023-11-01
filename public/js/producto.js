@@ -379,8 +379,6 @@ function obtenerInfoProductos(id) {
                         error: function(error){
                             if (error.status === 404) {
                                 $("#existencia").text('Existencia: ¡Agotado!');
-                                // Limpiar el contenedor de tallas en caso de agotado
-                                $("#tallas_disponibles").text('No hay tallas para este color');
                             }
                         }
                     });

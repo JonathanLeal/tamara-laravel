@@ -104,7 +104,7 @@ class ProductoController extends Controller
         $producto = Producto::where('id', $request->producto)->first();
 
         $existencia = DB::table('existencias_disponibles_producto AS edp')
-                      ->select('edp.id', 'edp.existencia')
+                      ->select('edp.id', 'edp.existencia', 'edp.precio')
                       ->where('edp.producto_id', $producto->id)
                       ->where('edp.talla_id', $request->talla)
                       ->where('edp.color_id', $request->color)
@@ -125,7 +125,7 @@ class ProductoController extends Controller
             $carrito->talla_id    = $request->talla;
             $carrito->color_id    = $request->color;
             $carrito->cantidad    = $request->cantidad;
-            $carrito->total       = $producto->precio_1 * $request->cantidad;
+            $carrito->total       = $existencia->precio * $request->cantidad;
             $carrito->user_id     = $user->usuario_id;
             $carrito->save();
 
@@ -179,7 +179,7 @@ class ProductoController extends Controller
 
         DB::beginTransaction();
         try {
-            $producto = Producto::where('id', $productosCarrito->producto_id)->first();
+            $producto = ExistenciaProductoColor::where('producto_id', $productosCarrito->producto_id)->first();
             $producto->existencia = $producto->existencia + $productosCarrito->cantidad;
             $producto->save();
 
