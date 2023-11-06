@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\Http;
 use App\Helpers\WompiHelper;
 use App\Models\Agencia;
+use App\Models\Facturacion;
 use App\Models\Producto;
 use App\Models\TipoIdentificacion;
 use Illuminate\Http\Request;
@@ -43,6 +44,7 @@ class PagoController extends Controller
 
     public function realizarCompra(Request $request)
     {
+        $user = Auth::user();
         $token = WompiHelper::getToken();
 
         if (!$token) {
@@ -50,28 +52,51 @@ class PagoController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'tarjetaCreditoDebido' => 'required|array',
-            'tarjetaCreditoDebido.numeroTarjeta' => 'required|string',
-            'tarjetaCreditoDebido.cvv' => 'required|string',
-            'tarjetaCreditoDebido.mesVencimiento' => 'required|integer',
-            'tarjetaCreditoDebido.anioVencimiento' => 'required|integer',
-            'monto' => 'required|numeric',
-            'emailCliente' => 'required|email',
-            'nombreCliente' => 'required|string',
-            'formaPago' => 'required|string',
-            'configuracion' => 'required|array',
-            'configuracion.emailsNotificacion' => 'required|email',
-            'configuracion.urlWebhook' => 'required|url',
-            'configuracion.telefonosNotificacion' => 'required|string',
+            'tarjetaCreditoDebido'                 => 'array',
+            'tarjetaCreditoDebido.numeroTarjeta'   => 'string',
+            'tarjetaCreditoDebido.cvv'             => 'string',
+            'tarjetaCreditoDebido.mesVencimiento'  => 'integer',
+            'tarjetaCreditoDebido.anioVencimiento' => 'integer',
+            'monto'         => 'numeric',
+            'emailCliente'  => 'email',
+            'nombreCliente' => 'string',
+            'formaPago'     => 'string',
+            'configuracion' => 'array',
+            'configuracion.emailsNotificacion'    => 'email',
+            'configuracion.urlWebhook'            => 'url',
+            'configuracion.telefonosNotificacion' => 'string',
             //'configuracion.notificarTransaccionCliente' => 'required|boolean',
-            'datosAdicionales' => 'required|array',
+            'datosAdicionales' => 'array',
             //'datosAdicionales.nombreProducto' => 'required|string',
             // Agrega validaciones para otros campos adicionales si es necesario
+            'nombres'               => 'required|string',
+            'apellidos'             => 'required|string',
+            'correo'                => 'required|string',
+            'telefono'              => 'required|string',
+            'whatsApp'              => 'required|string',
+            'tipo_doc'              => 'required|integer',
+            'num_doc'               => 'required|string',
+            'pais'                  => 'required|string',
+            'depa'                  => 'required|string',
+            'ciudad'                => 'required|string',
+            'direc_fac'             => 'required|string',
+            'entrega'               => 'required|string',
+            'entregaMismaDireccion' => 'boolean',
+            'pais_fac'              => 'string',
+            'depa_fac'              => 'string',
+            'ciudad_fac'            => 'string',
+            'direc_factura'         => 'string',
+            'agencias'              => 'integer',
+            'metodo'                => 'string',
         ]);
 
         if ($validator->fails()) {
             return http::respuesta(http::retUnprocessable, $validator->errors());
         }
+
+        $carritoUsuario = DB::table('carrito')
+                        ->where('user_id', $user->usuario_id)
+                        ->get();
 
         $wompiData = $request->all();
 
@@ -81,6 +106,51 @@ class PagoController extends Controller
 
         if ($response->successful()) {
             $wompiResponse = $response->json();
+            foreach ($carritoUsuario as $car) {
+                if ($request->entregaMismaDireccion == true) {
+                    $facturacion = new Facturacion();
+                    $facturacion->nombres               = $request->nombres;
+                    $facturacion->apellidos             = $request->apellidos;
+                    $facturacion->correo                = $request->emailCliente;
+                    $facturacion->id_identificacion     = $request->tipo_doc;
+                    $facturacion->num_identificacion    = $request->num_doc;
+                    $facturacion->pais                  = $request->pais;
+                    $facturacion->departamento          = $request->depa;
+                    $facturacion->ciudad                = $request->ciudad;
+                    $facturacion->direccion_facturacion = $request->direc_fac;
+                    $facturacion->telefono              = $request->telefono;
+                    $facturacion->celular               = $request->whastApp;
+                    $facturacion->pago_id               = $request->metodo;
+                    $facturacion->pais_entrega          = $request->pais;
+                    $facturacion->departamento_entrega  = $request->depa;
+                    $facturacion->ciudad_entrega        = $request->ciudad;
+                    $facturacion->direccion_entrega     = $request->direc_fac;
+                    $facturacion->gran_total            = $request->monto;
+                    $facturacion->carrito_id            = $car->id;
+                    $facturacion->save();
+                } else {
+                    $facturacion = new Facturacion();
+                    $facturacion->nombres               = $request->nombres;
+                    $facturacion->apellidos             = $request->apellidos;
+                    $facturacion->correo                = $request->emailCliente;
+                    $facturacion->id_identificacion     = $request->tipo_doc;
+                    $facturacion->num_identificacion    = $request->num_doc;
+                    $facturacion->pais                  = $request->pais;
+                    $facturacion->departamento          = $request->depa;
+                    $facturacion->ciudad                = $request->ciudad;
+                    $facturacion->direccion_facturacion = $request->direc_fac;
+                    $facturacion->telefono              = $request->telefono;
+                    $facturacion->celular               = $request->whastApp;
+                    $facturacion->pago_id               = $request->metodo;
+                    $facturacion->pais_entrega          = $request->pais_fac;
+                    $facturacion->departamento_entrega  = $request->depa_entrega;
+                    $facturacion->ciudad_entrega        = $request->ciudad_fac;
+                    $facturacion->direccion_entrega     = $request->direc_factura;
+                    $facturacion->gran_total            = $request->monto;
+                    $facturacion->carrito_id            = $car->id;
+                    $facturacion->save();
+                }
+            }
             return http::respuesta(http::retOK, 'Enlace de pago creado con éxito', $wompiResponse);
         } else {
             return http::respuesta(http::retError, 'Error al crear el enlace de pago');

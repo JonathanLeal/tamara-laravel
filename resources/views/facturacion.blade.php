@@ -453,7 +453,12 @@
 
       <!-- Botón de envío -->
       <div class="col-12 mt-4">
-        <button id="submitButton" class="btn btn-primary" type="submit"><i class="fas fa-shopping-cart"></i> Enviar formulario</button>
+        <button id="submitButton" class="btn btn-primary" type="submit">
+          <i class="fas fa-shopping-cart"></i> Enviar formulario
+          <span id="spinner" style="display: none;">
+            <i class="fas fa-spinner fa-spin"></i>
+          </span>
+        </button>
       </div>
     </form>
   </div>

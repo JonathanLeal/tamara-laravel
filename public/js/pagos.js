@@ -45,6 +45,17 @@ $(document).ready(function() {
   }
 });
 
+const entregaMismaDireccionCheckbox = document.getElementById("entregaMismaDireccion");
+  const entregaDomicilioInputs = document.getElementById("entregaDomicilioInputs");
+
+  entregaMismaDireccionCheckbox.addEventListener("change", function () {
+    if (this.checked) {
+      entregaDomicilioInputs.style.display = "none";
+    } else {
+      entregaDomicilioInputs.style.display = "block";
+    }
+  });
+
 // (() => {
 //     'use strict'
 
@@ -238,7 +249,7 @@ function eliminarDelCarrito(id, event) {
 
 $("#submitButton").on("click", function(event) {
     event.preventDefault();
-    console.log("click");
+    $("#spinner").show();
     $.ajax({
         url: '/token', // Endpoint para obtener el token
         type: 'POST',
@@ -281,6 +292,7 @@ $("#submitButton").on("click", function(event) {
                         'Authorization': 'Bearer ' + token // Agrega el token como encabezado de autorización
                     },
                     success: function(data) {
+                        $("#spinner").hide();
                         Swal.fire(
                             'Notificacion',
                             'Compra realizada con éxito',
@@ -288,8 +300,14 @@ $("#submitButton").on("click", function(event) {
                         )
                     },
                     error: function(error) {
-                        console.log(formData);
-                        console.log("Error en guardar: " + error);
+                        if (error.status === 422) {
+                            $("#spinner").hide();
+                            Swal.fire(
+                                'Notificacion',
+                                'Debe llenar los campos necesarios correctamente segun las opciones escogidas por favor',
+                                'warning'
+                            )
+                        }
                     }
                 });
             } else {
