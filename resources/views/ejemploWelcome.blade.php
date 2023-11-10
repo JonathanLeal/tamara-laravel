@@ -125,7 +125,7 @@
       overflow: hidden;
       max-width: 100%;
       margin: 0 auto;
-      height: 400px; /* ajusta según tus necesidades */
+      height: 50vw; /* ajusta según tus necesidades */
     }
     
     .slider-container {
@@ -226,6 +226,12 @@
           width: calc(100% - 20px);
       }
   }
+
+  @media (max-width: 576px) {
+  .text-center {
+    margin-top: 10px; /* Reduce el margen en dispositivos más pequeños */
+  }
+}
     /*FIN DE TARJETAS*/
 
     /*INICIO DEL FOOTER*/
@@ -442,7 +448,7 @@
             </li>
           </ul>
           <!-- Input de búsqueda y botón con icono de lupa -->
-          <form class="d-flex mx-auto">
+          <form class="d-flex ms-auto">
             <div class="cart-container d-flex align-items-center">
               <i class="fas fa-shopping-cart" data-bs-toggle="modal" data-bs-target="#staticBackdrop"></i>
               <span class="cart-count">0</span>
@@ -460,23 +466,23 @@
     <div class="container mt-2">
       <div class="slider-wrapper">
         <div class="slider-container">
-          <!-- Agrega tus imágenes con la clase "slider-image" -->
           <div class="slider-image"><img src="{{ asset('storage/imagenes/prueba.jpg') }}" alt="Imagen 1" class="img-fluid"></div>
           <div class="slider-image"><img src="{{ asset('storage/imagenes/carrusel2.jpg') }}" alt="Imagen 2" class="img-fluid"></div>
           <div class="slider-image"><img src="{{ asset('storage/imagenes/carrusel1.jpg') }}" alt="Imagen 3" class="img-fluid"></div>
-
-          <!-- ... Agrega más imágenes si es necesario ... -->
         </div>
-        <!-- Botones de navegación del slider dentro del contenedor de imágenes -->
         <div class="slider-buttons">
-          <button id="prev-button" class="btn btn-primary">Anterior</button>
-          <button id="next-button" class="btn btn-primary">Siguiente</button>
+          <button id="prev-button" class="btn btn-outline-primary"><i class="fas fa-chevron-left"></i></button>
+          <button id="next-button" class="btn btn-outline-primary"><i class="fas fa-chevron-right"></i></button>
         </div>
       </div>
     </div>
 
+    <div class="text-center mt-4">
+      <h2>Lo mas buscado</h2>
+    </div>
+
     <!-- Sección de Tarjetas de Productos -->
-    <section class="container mt-1">
+    <section class="container">
       <div class="row">
         <!-- Tarjeta 1 -->
         <div class="categorias">

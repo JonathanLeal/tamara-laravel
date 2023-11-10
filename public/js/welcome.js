@@ -48,19 +48,3 @@ document.addEventListener("DOMContentLoaded", function () {
       autoSlide();
     });
   });
-  
-  
-
-function toggleMenu() {
-    const menu = document.querySelector('.menu');
-    const menuIcon = document.querySelector('.menu-icon');
-
-    menu.classList.toggle('active');
-    menuIcon.classList.toggle('active');
-}
-
-
-document.getElementById('menu-toggle').addEventListener('click', function() {
-    var nav = document.querySelector('nav ul');
-    nav.classList.toggle('active');
-});
