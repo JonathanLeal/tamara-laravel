@@ -12,6 +12,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/ejemplo', function () {
+    return view('ejemploWelcome');
+});
+
 //vista principal, categorias y sub categorias
 Route::get('/inicio', [WelcomeController::class, 'inicioView'])->name('inicio');
 Route::get('/subCategoriasView', [SubCategoriasController::class, 'irVistaSubCategorias'])->name('subCtegoriasView');
