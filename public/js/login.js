@@ -37,7 +37,7 @@ $("#loginButton").on("click", function() {
                     confirmButtonText: 'Entrar'
                   }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = `/`;
+                        window.location.href = `/ejemplo`;
                     }
                 })
             }

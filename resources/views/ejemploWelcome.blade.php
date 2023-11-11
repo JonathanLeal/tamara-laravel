@@ -430,20 +430,25 @@
   <body>
     <header class="header">
       <div class="logo-container">
-        <h1>Tamara</h1>
+          <h1>Tamara</h1>
       </div>
       <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fa fa-user"></i>
-        </button>
-    
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="#">Registrarse</a>
-          <a class="dropdown-item" href="#">Iniciar sesión</a>
-        </div>
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-user"></i>
+          </button>
+  
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              @auth
+                  <a class="dropdown-item" href="#">Mi Perfil</a>
+                  <a class="dropdown-item" href="#">Cerrar Sesión</a>
+              @else
+                  <a class="dropdown-item" href="{{ route('registrarse') }}">Registrarse</a>
+                  <a class="dropdown-item" href="{{ route('login') }}">Iniciar Sesión</a>
+              @endauth
+          </div>
       </div>
-    </header>
-
+  </header>
+  
     <nav class="navbar navbar-expand-lg navbar-dark">
       <div class="container d-flex justify-content-between align-items-center">
         <a class="navbar-brand d-flex align-items-center" href="#">
@@ -643,7 +648,7 @@
               type: 'GET',
               dataType: 'JSON',
               headers: {
-                  'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                'Authorization': 'Bearer ' + localStorage.getItem('access_token')
               },
               success: function (response) {
                   if (response.resultado === 'OK') {
@@ -708,13 +713,13 @@
                       }
                     })
                   } else {
-                      if (error.status === 404) {
-                          Swal.fire(
-                            'Notificacion',
-                            'Aun no tienes productos en el carrito',
-                            'warning'
-                          );
-                      }
+                    if (error.status === 404) {
+                      Swal.fire(
+                        'Notificacion',
+                        'Aun no tienes productos en el carrito',
+                        'warning'
+                      );
+                    }
                   }
               }
           });
@@ -723,8 +728,28 @@
       closeButton.click(function () {
         cartModal.modal("hide"); // Cambiado a método modal de Bootstrap
       });
+
+      numeroProductosEnCarrito();
   });
   
+  function numeroProductosEnCarrito() {
+    $.ajax({
+      url: 'api/auth/contarProductosEnCarrito',
+      type: 'GET',
+      dataType: 'JSON',
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+      },
+      success: function(response) {
+      if (response.resultado === 'OK') {
+        $(".cart-count").text(response.datos);
+      }
+      },
+      error: function(error){
+        console.log(error);
+      }
+    })
+}
   </script>
   <script src="{{ asset('js/welcome.js') }}"></script>  
 </body>
