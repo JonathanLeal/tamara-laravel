@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <title>Tamara</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
   <style>
 
@@ -492,7 +494,7 @@
           <!-- Input de búsqueda y botón con icono de lupa -->
           <form class="d-flex ms-auto">
             <div class="cart-container d-flex align-items-center">
-              <i class="fas fa-shopping-cart" data-bs-toggle="modal" data-bs-target="#staticBackdrop"></i>
+              <i class="fas fa-shopping-cart"></i>
               <span class="cart-count">0</span>
             </div>
             <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
@@ -628,6 +630,102 @@
 </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+  <script>
+    $(document).ready(function () {
+      const cartIcon = $('.fas.fa-shopping-cart'); // Cambiar el selector al nuevo icono
+      const cartModal = $('#staticBackdrop');
+      const closeButton = $('#close-button');
+  
+      // Agregar evento de clic para abrir el modal
+      cartIcon.click(function () {
+          $.ajax({
+              url: '/api/auth/productosEnCarrito',
+              type: 'GET',
+              dataType: 'JSON',
+              headers: {
+                  'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+              },
+              success: function (response) {
+                  if (response.resultado === 'OK') {
+                      const modalBody = $('#cart-items-list');
+                      modalBody.empty();
+                      let totalPrice = 0;
+  
+                      // Iterar sobre los datos y construir la tabla de productos
+                      response.datos.forEach(function (producto) {
+                          const id = producto.id;
+                          const nombreProducto = producto.nombre_producto;
+                          const precioTotal = parseFloat(producto.total).toFixed(2);
+                          const imagen = `<img src="${producto.imagen}" alt="${nombreProducto}" width="50" height="50">`;
+                          const talla = producto.nombre_talla;
+                          const color = producto.nombre_color;
+                          const row = `
+                              <tr>
+                                  <td>${nombreProducto}</td>
+                                  <td>${imagen}</td>
+                                  <td>${talla}</td>
+                                  <td>${color}</td>
+                                  <td>$${precioTotal}</td>
+                                  <td><button id="eliminarCarrito" onclick="eliminarDelCarrito(${id})"><i class="fa fa-trash"></i></button></td>
+                              </tr>`;
+                          modalBody.append(row);
+                          totalPrice += parseFloat(producto.total);
+                      });
+  
+                      // Actualizar el total de la sumatoria
+                      $('#total-amount').text(totalPrice.toFixed(2));
+  
+                      cartModal.modal("show"); // Cambiado a método modal de Bootstrap
+                  }
+              },
+              error: function (error) {
+                  if (error.status === 401) {
+                    const swalWithBootstrapButtons = Swal.mixin({
+                      customClass: {
+                        confirmButton: 'btn btn-success',
+                        cancelButton: 'btn btn-danger'
+                      },
+                      buttonsStyling: false
+                    })
+  
+                    swalWithBootstrapButtons.fire({
+                      title: 'Notificaciòn',
+                      text: "Necesitamos que inicies sesiòn para que goces de todas nuestras opciones",
+                      icon: 'info',
+                      showCancelButton: true,
+                      confirmButtonColor: '#212529',
+                      cancelButtonColor: '#2980b9',
+                      confirmButtonText: 'Iniciar sesion',
+                      cancelButtonText: 'Registrarme',
+                      reverseButtons: true
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                          window.location.href = `/iniciar-sesion`;
+                      } else if (
+                        result.dismiss === Swal.DismissReason.cancel
+                      ) {
+                          window.location.href = `/registrarse`;
+                      }
+                    })
+                  } else {
+                      if (error.status === 404) {
+                          Swal.fire(
+                            'Notificacion',
+                            'Aun no tienes productos en el carrito',
+                            'warning'
+                          );
+                      }
+                  }
+              }
+          });
+      });
+  
+      closeButton.click(function () {
+        cartModal.modal("hide"); // Cambiado a método modal de Bootstrap
+      });
+  });
+  
+  </script>
   <script src="{{ asset('js/welcome.js') }}"></script>  
 </body>
 </html>
