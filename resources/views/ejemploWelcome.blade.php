@@ -137,8 +137,7 @@
     .slider-image {
       flex: 0 0 100%;
       width: 100%;
-      height: auto;
-      object-fit: cover;
+      height: 50vw;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     }
@@ -380,6 +379,49 @@
     margin-top: 15px; /* Espaciado superior para el total */
     font-weight: bold; /* Texto en negrita para el total */
   }
+
+  .table {
+    background-color: #fff; /* Fondo blanco para la tabla */
+  }
+
+  @media (max-width: 767px) {
+    .modal-dialog {
+      width: 97%; /* Ancho del modal en dispositivos móviles */
+    }
+  
+    .modal-content {
+      border-radius: 0; /* Bordes cuadrados en dispositivos móviles */
+    }
+  
+    #total-price {
+      margin-top: 10px; /* Menos espacio para el total en dispositivos móviles */
+    }
+  }
+
+  @media (max-width: 767px) {
+    .table-responsive {
+      overflow-x: auto; /* Agregar barra de desplazamiento horizontal en dispositivos móviles si es necesario */
+    }
+  }
+
+  @media (max-width: 767px) {
+    .modal-footer button {
+      width: 100%; /* Ancho completo para los botones en dispositivos móviles */
+      margin-bottom: 10px; /* Espaciado inferior entre los botones en dispositivos móviles */
+    }
+  }
+
+  @media (max-width: 767px) {
+    .table th {
+      white-space: normal; /* Permitir el retorno de línea en el encabezado en dispositivos móviles */ 
+    }
+  }
+
+  @media (max-width: 767px) {
+    .table {
+      font-size: 14px; /* Reducir el tamaño de fuente en dispositivos móviles */
+    }
+  }
   /*modal*/
   </style>
   </head>
@@ -554,7 +596,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header" style="background: linear-gradient(to right, #007bff, #3498db);">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Tu carrito</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
