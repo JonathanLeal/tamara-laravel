@@ -465,9 +465,14 @@
                 Hombre
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                <li><a class="dropdown-item" href="#">Camisas</a></li>
-                <li><a class="dropdown-item" href="#">Camisetas</a></li>
-                <li><a class="dropdown-item" href="#">Pantalones</a></li>
+                <li class="dropdown-header">Camisas</li>
+                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=2&subCat=1">Camisas Polo</a></li>
+                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=2&subCat=2">Camiseta Casual</a></li>
+                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=2&subCat=3">Camiseta</a></li>
+                <li class="dropdown-header">Pantalones</li>
+                <!-- Aquí puedes añadir opciones para pantalones -->
+                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=2&subCat=4">Pantalón Deportivo</a></li>
+                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=2&subCat=5">Pantalón Formal</a></li>
               </ul>
             </li>
     
@@ -476,9 +481,14 @@
                 Mujer
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
-                <li><a class="dropdown-item" href="#">Camisas</a></li>
-                <li><a class="dropdown-item" href="#">Camisetas</a></li>
-                <li><a class="dropdown-item" href="#">Pantalones</a></li>
+                <li class="dropdown-header">Camisas</li>
+                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=1&subCat=1">Camisas Polo</a></li>
+                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=1&subCat=2">Camiseta Casual</a></li>
+                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=1&subCat=3">Camiseta</a></li>
+                <li class="dropdown-header">Pantalones</li>
+                <!-- Aquí puedes añadir opciones para pantalones -->
+                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=1&subCat=4">Pantalón Deportivo</a></li>
+                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=1&subCat=5">Pantalón Formal</a></li>
               </ul>
             </li>
     
@@ -487,9 +497,14 @@
                 Niños
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown3">
-                <li><a class="dropdown-item" href="#">Camisas</a></li>
-                <li><a class="dropdown-item" href="#">Camisetas</a></li>
-                <li><a class="dropdown-item" href="#">Pantalones</a></li>
+                <li class="dropdown-header">Camisas</li>
+                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=3&subCat=1">Camisas Polo</a></li>
+                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=3&subCat=2">Camiseta Casual</a></li>
+                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=3&subCat=3">Camiseta</a></li>
+                <li class="dropdown-header">Pantalones</li>
+                <!-- Aquí puedes añadir opciones para pantalones -->
+                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=3&subCat=4">Pantalón Deportivo</a></li>
+                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=3&subCat=5">Pantalón Formal</a></li>
               </ul>
             </li>
           </ul>
@@ -499,8 +514,8 @@
               <i class="fas fa-shopping-cart"></i>
               <span class="cart-count">0</span>
             </div>
-            <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">
+            <input class="form-control me-2" id="nombre_producto" type="search" placeholder="Buscar" aria-label="Search">
+            <button class="btn btn-outline-success" id="search-button" type="submit">
               <i class="fas fa-search"></i>
             </button>
           </form>
@@ -794,6 +809,43 @@ function obtenerInformacionUsuario() {
 }
 
 obtenerInformacionUsuario();
+
+$("#search-button").on("click", function() {
+  var nombre = $("#nombre_producto").val();
+
+  var producto = {
+    nombre_producto: nombre
+  }
+
+  $.ajax({
+      url: '/buscarProducto',
+      type: 'POST',
+      dataType: 'JSON',
+      data: producto,
+      success: function(response) {
+          if (response.resultado === 'OK') {
+            window.location.href = `/producto?id=`+response.datos;
+          }
+      },
+      error: function(error){
+          if (error.status === 404) {
+              Swal.fire(
+                  'Notificacion',
+                  'Lo sentimos no tenemos el producto que buscas por el momento',
+                  'info'
+              )
+          } else {
+              if (error.status === 422) {
+                  Swal.fire(
+                      'Notificacion',
+                      'Ingresa el nombre del producto en la barra de busqueda por favor',
+                      'warning'
+                  )
+              }
+          }
+      }
+  });
+});
   </script>
   <script src="{{ asset('js/welcome.js') }}"></script>  
 </body>
