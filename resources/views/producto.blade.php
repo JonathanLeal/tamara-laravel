@@ -1399,22 +1399,17 @@ ul li a:hover {
             <div class="footer-container">
                 <div class="footer-column">
                     <h3>Acerca de nosotros</h3>
-                    <p>Quienes somos.</p>
+                    <p>Somos Tienda Tamara, tu destino para encontrar la moda más elegante y exclusiva para todas las ocasiones. Nuestra pasión es proporcionarte la mejor selección de ropa y accesorios para que te veas y te sientas increíble en cualquier momento.</p>
                 </div>
                 <div class="footer-column">
-                    <h3>Servicio al cliente</h3>
+                    <h3>Enlaces rápidos</h3>
                     <ul>
-                        <li><a href="#">Contáctanos</a></li>
-                        <li><a href="#">Politica de devolución</a></li>
-                        <li><a href="#">Quines somos</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Ayuda</h3>
-                    <ul>
-                        <li><a href="#">Términos y condiciones</a></li>
-                        <li><a href="#">Guía de tallas</a></li>
-                        <li><a href="#">Cómo realizar el pedido</a></li>
+                        <li><a href="#">Inicio</a></li>
+                        <li><a href="#">Productos</a></li>
+                        <li><a href="#">Categorías</a></li>
+                        <li><a href="#">Hombres</a></li>
+                        <li><a href="#">Mujeres</a></li>
+                        <li><a href="#">Deportes</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
