@@ -430,21 +430,18 @@
   <body>
     <header class="header">
       <div class="logo-container">
-          <h1>Tamara</h1>
+        <h1>Tamara</h1>
       </div>
       <div class="dropdown">
           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fa fa-user"></i>
+            <i class="fa fa-user"></i>
           </button>
   
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              @auth
-                  <a class="dropdown-item" href="#">Mi Perfil</a>
-                  <a class="dropdown-item" href="#">Cerrar Sesión</a>
-              @else
-                  <a class="dropdown-item" href="{{ route('registrarse') }}">Registrarse</a>
-                  <a class="dropdown-item" href="{{ route('login') }}">Iniciar Sesión</a>
-              @endauth
+            <a id="registrarse" class="dropdown-item" href="{{ route('registrarse') }}">Registrarse</a>
+            <a id="iniciarSesion" class="dropdown-item" href="{{ route('login') }}">Iniciar Sesión</a>
+            <a id="perfil" class="dropdown-item" href="#" style="display: none;">Perfil</a>
+            <a id="cerrarSesion" class="dropdown-item" href="#" style="display: none;">Cerrar sesion</a>
           </div>
       </div>
   </header>
@@ -705,11 +702,11 @@
                       reverseButtons: true
                     }).then((result) => {
                       if (result.isConfirmed) {
-                          window.location.href = `/iniciar-sesion`;
+                        window.location.href = `/iniciar-sesion`;
                       } else if (
                         result.dismiss === Swal.DismissReason.cancel
                       ) {
-                          window.location.href = `/registrarse`;
+                        window.location.href = `/registrarse`;
                       }
                     })
                   } else {
@@ -743,6 +740,10 @@
       success: function(response) {
       if (response.resultado === 'OK') {
         $(".cart-count").text(response.datos);
+        $("#cerrarSesion").show();
+        $("#perfil").show();
+        $("#iniciarSesion").hide();
+        $("#registrarse").hide();
       }
       },
       error: function(error){
@@ -750,6 +751,49 @@
       }
     })
 }
+
+function obtenerInformacionUsuario() {
+  $.ajax({
+      url: '/api/auth/me', // Endpoint para obtener la información del usuario autenticado
+      type: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+      },
+      success: function (response) {
+          // Adjunta el evento click al botón "Cerrar Sesión" después de crearlo
+          $("#cerrarSesion").on("click", function () {
+              $.ajax({
+                  url: '/api/auth/logout',
+                  type: 'POST',
+                  headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                  },
+                  success: function(response){
+                    Swal.fire(
+                      'Notificacion',
+                      'Session cerrada, vuelve pronto',
+                      'success'
+                    ).then(() => {
+                      window.location.href = `/iniciar-sesion`;
+                    })
+                  },
+                  error: function(error){
+                      Swal.fire(
+                        '¡Oopss...!',
+                        'Hay un error en tu cierre de sesión, por favor intenta mas tarde.',
+                        'error'
+                      )
+                  }
+              });
+          });
+      },
+      error: function (error) {
+        console.log(error);
+      }
+  });
+}
+
+obtenerInformacionUsuario();
   </script>
   <script src="{{ asset('js/welcome.js') }}"></script>  
 </body>
