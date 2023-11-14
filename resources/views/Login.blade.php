@@ -175,6 +175,10 @@
 }
 
 @media (max-width: 768px) {
+    .login-container{
+        width: 250px;
+    }
+
     .input-container i {
         top: 8px;
         left: 6px;
