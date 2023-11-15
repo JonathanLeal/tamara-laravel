@@ -810,7 +810,9 @@ function obtenerInformacionUsuario() {
 
 obtenerInformacionUsuario();
 
-$("#search-button").on("click", function() {
+$("#search-button").on("click", function(event) {
+  event.preventDefault();
+
   var nombre = $("#nombre_producto").val();
 
   var producto = {
@@ -828,22 +830,22 @@ $("#search-button").on("click", function() {
           }
       },
       error: function(error){
-          if (error.status === 404) {
-              Swal.fire(
-                  'Notificacion',
-                  'Lo sentimos no tenemos el producto que buscas por el momento',
-                  'info'
-              )
-          } else {
-              if (error.status === 422) {
-                  Swal.fire(
-                      'Notificacion',
-                      'Ingresa el nombre del producto en la barra de busqueda por favor',
-                      'warning'
-                  )
-              }
+        if (error.status === 404) {
+          Swal.fire(
+            'Notificacion',
+            'Lo sentimos no tenemos el producto que buscas por el momento',
+            'warning'
+          )
+        } else {
+          if (error.status === 422) {
+            Swal.fire(
+              'Notificacion',
+              'Ingresa el nombre del producto en la barra de busqueda por favor',
+              'warning'
+            )
           }
       }
+    }
   });
 });
   </script>
