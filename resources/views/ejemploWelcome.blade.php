@@ -440,7 +440,6 @@
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <a id="registrarse" class="dropdown-item" href="{{ route('registrarse') }}">Registrarse</a>
             <a id="iniciarSesion" class="dropdown-item" href="{{ route('login') }}">Iniciar Sesión</a>
-            <a id="perfil" class="dropdown-item" href="#" style="display: none;">Perfil</a>
             <a id="cerrarSesion" class="dropdown-item" href="#" style="display: none;">Cerrar sesion</a>
           </div>
       </div>
@@ -491,6 +490,10 @@
                 <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=3&subCat=2">Camisetas</a></li>
                 <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=3&subCat=3">Pantalone</a></li>
               </ul>
+            </li>
+
+            <li id="menuRol" class="nav-item dropdown">
+
             </li>
           </ul>
           <!-- Input de búsqueda y botón con icono de lupa -->
@@ -624,8 +627,8 @@
       </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary">Comprar Ahora</button>
+        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-outline-primary">Comprar Ahora</button>
       </div>
     </div>
   </div>
@@ -668,7 +671,7 @@
                                   <td>${talla}</td>
                                   <td>${color}</td>
                                   <td>$${precioTotal}</td>
-                                  <td><button id="eliminarCarrito" onclick="eliminarDelCarrito(${id})"><i class="fa fa-trash"></i></button></td>
+                                  <td><button id="eliminarCarrito" class="btn btn-outline-danger" onclick="eliminarDelCarrito(${id})"><i class="fa fa-trash"></i></button></td>
                               </tr>`;
                           modalBody.append(row);
                           totalPrice += parseFloat(producto.total);
@@ -741,7 +744,6 @@
       if (response.resultado === 'OK') {
         $(".cart-count").text(response.datos);
         $("#cerrarSesion").show();
-        $("#perfil").show();
         $("#iniciarSesion").hide();
         $("#registrarse").hide();
       }
@@ -833,6 +835,92 @@ $("#search-button").on("click", function(event) {
     }
   });
 });
+
+function menuRol() {
+  $.ajax({
+      url: 'api/auth/administrar', // La URL de tu endpoint
+      type: 'GET',
+      dataType: 'json',
+      headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+      },
+      success: function(data) {
+          if (data.resultado === 'OK') {
+              var userRole = data.datos;
+
+              // Construye el elemento "Administrar" en función del rol del usuario
+              var adminMenuItem = ''; // Inicializa la variable
+              var rutaUsuarios = '{{ route('vistaUsuarios') }}';
+              var rutaProductos = '{{ route('vistaProductos') }}';
+
+              if (userRole === 1) {
+                  adminMenuItem += '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">Administrar</a>';
+                  adminMenuItem += '<ul class="dropdown-menu" aria-labelledby="navbarDropdown4">';
+                  adminMenuItem += '<li><a class="dropdown-item" href="'+rutaUsuarios+'">Usuarios</a></li>';
+                  adminMenuItem += '<li><a class="dropdown-item" href="'+rutaProductos+'">Productos</a></li>';
+                  adminMenuItem += '<li><a class="dropdown-item" href="#">Ofertas</a></li>';
+                  adminMenuItem += '</ul>';
+              } else if (userRole === 2) {
+                  adminMenuItem += '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="#">Administrar</a>';
+                  adminMenuItem += '<ul class="dropdown-menu" aria-labelledby="navbarDropdown4">';
+                  adminMenuItem += '<li><a class="dropdown-item" href=" '+rutaProductos+'">Productos</a></li>';
+                  adminMenuItem += '</ul>';
+              }
+
+              // Encuentra el elemento <li> por su ID y clase, y actualiza su contenido
+              $('#menuRol').html(adminMenuItem);
+          } else {
+              console.error('Error al obtener el menú');
+          }
+      },
+      error: function(xhr, status, error) {
+          console.error('Error en la solicitud AJAX:', error);
+      }
+  });
+}
+
+menuRol();
+
+function eliminarDelCarrito(id) {
+  Swal.fire({
+      title: 'Advertencia',
+      text: "¿Estas seguro de eliminar este producto de tu carrito de compras?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          url:'api/auth/eliminarProductoCarrito/'+id,
+          type: 'POST',
+          dataType: 'JSON',
+          success: function (response){
+              if (response.resultado === 'OK') {
+                  Swal.fire(
+                      'Notificacion',
+                      'Producto eliminado de tu carrito con exito',
+                      'success'
+                  ).then(() => {
+                      window.location.href = `/`;
+                  });
+              }
+          },
+          error: function(error){
+              if (error.status === 500) {
+                  Swal.fire(
+                      'Notificacion',
+                      'Ocurrio un error por favor contactese con nosotros',
+                      'error'
+                  )
+              }
+          }
+      });
+    }
+  })
+}
   </script>
   <script src="{{ asset('js/welcome.js') }}"></script>  
 </body>
