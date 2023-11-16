@@ -38,7 +38,7 @@
     }
     
     .dropdown-item:hover {
-      background-color: #61dafb;
+      background-color: #ff6600;
       color: #fff;
     }
     /* FIN DEL ENCABEZADO*/
@@ -64,7 +64,7 @@
     }
 
     .navbar-dark .navbar-toggler-icon {
-      background-color: #61dafb; /* Color del icono del botón de alternar */
+      background-color: #ff6600; /* Color del icono del botón de alternar */
     }
 
     .navbar-toggler:focus {
@@ -81,7 +81,7 @@
     }
 
     .navbar-nav .nav-link:hover {
-      color: #61dafb; /* Cambio de color al pasar el ratón */
+      color: #ff6600; /* Cambio de color al pasar el ratón */
     }
 
     .navbar-nav .dropdown-menu {
@@ -97,7 +97,7 @@
     }
 
     .navbar-nav .dropdown-menu .dropdown-item:hover {
-      background-color: #61dafb; /* Cambio de color al pasar el ratón */
+      background-color: #ff6600; /* Cambio de color al pasar el ratón */
       color: #fff; /* Cambio de color del texto al pasar el ratón */
     }
 
@@ -110,13 +110,13 @@
 
     .btn-outline-success {
       border-radius: 20px; /* Bordes redondeados para el botón de búsqueda */
-      color: #61dafb; /* Color del texto en el botón de búsqueda */
-      border-color: #61dafb; /* Color del borde del botón de búsqueda */
+      color: #ff6600; /* Color del texto en el botón de búsqueda */
+      border-color: #ff6600; /* Color del borde del botón de búsqueda */
       transition: all 0.3s ease; /* Transición suave */
     }
 
     .btn-outline-success:hover {
-      background-color: #61dafb; /* Cambio de color al pasar el ratón */
+      background-color: #ff6600; /* Cambio de color al pasar el ratón */
       color: #fff; /* Cambio de color del texto al pasar el ratón */
     }
     /*FIN del nav */
@@ -156,7 +156,7 @@
     
     #prev-button,
     #next-button {
-      background-color: #3498db;
+      background-color: #ff6600;
       color: #fff;
       border: none;
       padding: 10px;
@@ -167,7 +167,7 @@
     
     #prev-button:hover,
     #next-button:hover {
-      background-color: #2980b9;
+      background-color: #ff6600;
     }
     /* FIN DEL SLIDER */
     
@@ -181,7 +181,7 @@
   }
   
   .categoria {
-      border: 2px solid #3498db; /* Cambiado el color del borde */
+      border: 2px solid #ff6600; /* Cambiado el color del borde */
       padding: 10px;
       text-align: center;
       width: calc(33.33% - 20px);
