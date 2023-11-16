@@ -464,7 +464,7 @@
                 Hombre
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=2&subCat=1">Camisas</a></li>
+                <li><a class="dropdown-item" href="{{ route('subCtegoriasEjem') }}?cat=2&subCat=1">Camisas</a></li>
                 <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=2&subCat=2">Camisetas</a></li>
                 <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=2&subCat=3">Pantalones</a></li>
               </ul>

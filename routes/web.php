@@ -16,6 +16,12 @@ Route::get('/ejemplo', function () {
     return view('ejemploWelcome');
 });
 
+Route::get('/ejemploSub', function () {
+    return view('ejemploSubCategorias');
+});
+
+Route::get('/subCategoriasEjem', [SubCategoriasController::class, 'irVistaSubCategorias'])->name('subCtegoriasEjem');
+
 //vista principal, categorias y sub categorias
 Route::get('/inicio', [WelcomeController::class, 'inicioView'])->name('inicio');
 Route::get('/subCategoriasView', [SubCategoriasController::class, 'irVistaSubCategorias'])->name('subCtegoriasView');

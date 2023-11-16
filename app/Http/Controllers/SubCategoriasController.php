@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 class SubCategoriasController extends Controller
 {
     public function irVistaSubCategorias(){
-        return view('subCategorias');
+        return view('EjemploSubCategorias');
     }
 
     public function mostrarProductoSubCategoria($categoria, $sub_categoria){
