@@ -465,14 +465,9 @@
                 Hombre
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                <li class="dropdown-header">Camisas</li>
-                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=2&subCat=1">Camisas Polo</a></li>
-                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=2&subCat=2">Camiseta Casual</a></li>
-                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=2&subCat=3">Camiseta</a></li>
-                <li class="dropdown-header">Pantalones</li>
-                <!-- Aquí puedes añadir opciones para pantalones -->
-                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=2&subCat=4">Pantalón Deportivo</a></li>
-                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=2&subCat=5">Pantalón Formal</a></li>
+                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=2&subCat=1">Camisas</a></li>
+                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=2&subCat=2">Camisetas</a></li>
+                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=2&subCat=3">Pantalones</a></li>
               </ul>
             </li>
     
@@ -481,14 +476,9 @@
                 Mujer
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
-                <li class="dropdown-header">Camisas</li>
-                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=1&subCat=1">Camisas Polo</a></li>
-                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=1&subCat=2">Camiseta Casual</a></li>
-                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=1&subCat=3">Camiseta</a></li>
-                <li class="dropdown-header">Pantalones</li>
-                <!-- Aquí puedes añadir opciones para pantalones -->
-                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=1&subCat=4">Pantalón Deportivo</a></li>
-                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=1&subCat=5">Pantalón Formal</a></li>
+                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=1&subCat=1">Camisas</a></li>
+                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=1&subCat=2">Camisetas</a></li>
+                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=1&subCat=3">Pantalones</a></li>
               </ul>
             </li>
     
@@ -497,14 +487,9 @@
                 Niños
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown3">
-                <li class="dropdown-header">Camisas</li>
-                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=3&subCat=1">Camisas Polo</a></li>
-                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=3&subCat=2">Camiseta Casual</a></li>
-                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=3&subCat=3">Camiseta</a></li>
-                <li class="dropdown-header">Pantalones</li>
-                <!-- Aquí puedes añadir opciones para pantalones -->
-                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=3&subCat=4">Pantalón Deportivo</a></li>
-                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=3&subCat=5">Pantalón Formal</a></li>
+                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=3&subCat=1">Camisas</a></li>
+                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=3&subCat=2">Camisetas</a></li>
+                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=3&subCat=3">Pantalone</a></li>
               </ul>
             </li>
           </ul>
