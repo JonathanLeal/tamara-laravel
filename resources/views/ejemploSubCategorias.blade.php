@@ -291,6 +291,10 @@
     .table-responsive {
       overflow-x: auto; /* Agregar barra de desplazamiento horizontal en dispositivos móviles si es necesario */
     }
+
+    .footer-column {
+      margin: 0 10px 20px 10px;
+  }
   }
 
   @media (max-width: 767px) {
@@ -543,41 +547,6 @@
         <div class="product-row" id="productos"></div>
     </div>
 
-    <footer>
-      <div class="footer-container">
-          <div class="footer-column">
-              <h3>Acerca de nosotros</h3>
-              <p>Quienes somos.</p>
-          </div>
-          <div class="footer-column">
-              <h3>Servicio al cliente</h3>
-              <ul>
-                  <li><a href="#">Contáctanos</a></li>
-                  <li><a href="#">Politica de devolución</a></li>
-                  <li><a href="#">Quines somos</a></li>
-              </ul>
-          </div>
-          <div class="footer-column">
-              <h3>Ayuda</h3>
-              <ul>
-                  <li><a href="#">Términos y condiciones</a></li>
-                  <li><a href="#">Guía de tallas</a></li>
-                  <li><a href="#">Cómo realizar el pedido</a></li>
-              </ul>
-          </div>
-          <div class="footer-column">
-              <h3>Síguenos</h3>
-              <div class="social-icons">
-                  <a href="#" class="facebook-icon"><i class="fab fa-facebook"></i></a>
-                  <a href="#" class="instagram-icon"><i class="fab fa-instagram"></i></a>
-              </div>
-          </div>
-      </div>
-      <div class="footer-bottom">
-          <p>&copy; 2023 Tienda Tamara</p>
-      </div>
-  </footer>
-
 <!-- Modal -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -613,6 +582,36 @@
     </div>
   </div>
 </div>
+
+<footer>
+  <div class="footer-container">
+      <div class="footer-column">
+          <h3>Acerca de nosotros</h3>
+          <p>Somos Tienda Tamara, tu destino para encontrar la moda más elegante y exclusiva para todas las ocasiones. Nuestra pasión es proporcionarte la mejor selección de ropa y accesorios para que te veas y te sientas increíble en cualquier momento.</p>
+      </div>
+      <div class="footer-column">
+          <h3>Enlaces rápidos</h3>
+          <ul>
+              <li><a href="#">Inicio</a></li>
+              <li><a href="#">Productos</a></li>
+              <li><a href="#">Categorías</a></li>
+              <li><a href="#">Hombres</a></li>
+              <li><a href="#">Mujeres</a></li>
+              <li><a href="#">Deportes</a></li>
+          </ul>
+      </div>
+      <div class="footer-column">
+          <h3>Síguenos</h3>
+          <div class="social-icons">
+              <a href="#" class="facebook-icon"><i class="fab fa-facebook"></i></a>
+              <a href="#" class="instagram-icon"><i class="fab fa-instagram"></i></a>
+          </div>
+      </div>
+  </div>
+  <div class="footer-bottom">
+      <p>&copy; 2023 Tienda Tamara</p>
+  </div>
+</footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>  
   <script src="{{ asset('js/subCategorias.js') }}"></script>
