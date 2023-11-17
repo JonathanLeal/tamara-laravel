@@ -312,7 +312,11 @@
     }
   }
 
-  .product-row {
+  .product-container {
+    flex-grow: 1;
+}
+
+.product-row {
     display: flex;
 }
 
@@ -324,8 +328,9 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    overflow: hidden;
-    margin: 20px;
+    overflow: hidden; 
+    margin-bottom: 25px;
+    margin-top: 25px;
 }
 
 .card:hover {
@@ -336,8 +341,10 @@
 .card img {
     width: 160px;
     height: 160px; /* Ajustar la altura automáticamente */
+    object-fit: cover;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
+    margin-left: 20px;
 }
 
 .card-body {
@@ -436,8 +443,12 @@
     }
 
     .card {
-        width: 100%;
-        margin: 10px 0;
+        width: calc(100% - 20px); /* Utiliza el ancho completo con un margen inferior */
+        margin: 10px auto; /* Margen superior e inferior, centrando las tarjetas */
+    }
+
+    .card img{
+        margin-left: 110px;
     }
 }
 

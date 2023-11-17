@@ -476,7 +476,7 @@
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
                 <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=1&subCat=1">Camisas</a></li>
-                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=1&subCat=2">Camisetas</a></li>
+                <li><a class="dropdown-item" href="{{ route('subCtegoriasEjem') }}?cat=1&subCat=2">Camisetas</a></li>
                 <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=1&subCat=3">Pantalones</a></li>
               </ul>
             </li>
