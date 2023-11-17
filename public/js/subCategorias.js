@@ -155,7 +155,7 @@ document.querySelector('.mobile-menu-button').addEventListener('click', function
 
 function obtenerTodosProductosCategoria(cat) {
     $.ajax({
-        url: 'http://127.0.0.1:8000/productosPorCategoria/'+cat,
+        url: '/productosPorCategoria/'+cat,
         type: 'GET',
         dataType: 'JSON',
         success: function(response){
