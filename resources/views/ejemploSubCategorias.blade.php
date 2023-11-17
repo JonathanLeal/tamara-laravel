@@ -477,71 +477,71 @@
       </div>
   </header>
   
-    <nav class="navbar navbar-expand-lg navbar-dark">
-      <div class="container d-flex justify-content-between align-items-center">
-        <a class="navbar-brand d-flex align-items-center" href="#">
-          <img src="{{ asset('storage/imagenes/palmera.png') }}" alt="Logo" class="img-fluid" style="max-width: 30px; height: 50px;">
-        </a>
-    
-        <!-- Botón para mostrar el menú en dispositivos pequeños -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-    
-        <!-- Menú desplegable -->
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Hombre
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=2&subCat=1">Camisas</a></li>
-                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=2&subCat=2">Camisetas</a></li>
-                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=2&subCat=3">Pantalones</a></li>
-              </ul>
-            </li>
-    
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Mujer
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
-                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=1&subCat=1">Camisas</a></li>
-                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=1&subCat=2">Camisetas</a></li>
-                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=1&subCat=3">Pantalones</a></li>
-              </ul>
-            </li>
-    
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Niños
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown3">
-                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=3&subCat=1">Camisas</a></li>
-                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=3&subCat=2">Camisetas</a></li>
-                <li><a class="dropdown-item" href="{{ route('subCtegoriasView') }}?cat=3&subCat=3">Pantalone</a></li>
-              </ul>
-            </li>
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container d-flex justify-content-between align-items-center">
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <img src="{{ asset('storage/imagenes/palmera.png') }}" alt="Logo" class="img-fluid" style="max-width: 30px; height: 50px;">
+      </a>
+  
+      <!-- Botón para mostrar el menú en dispositivos pequeños -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <!-- Menú desplegable -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Hombre
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
+              <li><a class="dropdown-item" href="#" data-cat="2" data-subcat="1">Camisas</a></li>
+              <li><a class="dropdown-item" href="#" data-cat="2" data-subcat="2">Camisetas</a></li>
+              <li><a class="dropdown-item" href="#" data-cat="2" data-subcat="3">Pantalones</a></li>
+            </ul>
+          </li>
+  
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Mujer
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
+              <li><a class="dropdown-item" href="#" data-cat="1" data-subcat="1">Camisas</a></li>
+              <li><a class="dropdown-item" href="#" data-cat="1" data-subcat="2">Camisetas</a></li>
+              <li><a class="dropdown-item" href="#" data-cat="1" data-subcat="3">Pantalones</a></li>
+            </ul>
+          </li>
+  
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Niños
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown3">
+              <li><a class="dropdown-item" href="#" data-cat="3" data-subcat="1">Camisas</a></li>
+              <li><a class="dropdown-item" href="#" data-cat="3" data-subcat="2">Camisetas</a></li>
+              <li><a class="dropdown-item" href="#" data-cat="3" data-subcat="3">Pantalone</a></li>
+            </ul>
+          </li>
 
-            <li id="menuRol" class="nav-item dropdown">
+          <li id="menuRol" class="nav-item dropdown">
 
-            </li>
-          </ul>
-          <!-- Input de búsqueda y botón con icono de lupa -->
-          <form class="d-flex ms-auto">
-            <div class="cart-container d-flex align-items-center">
-              <i class="fas fa-shopping-cart"></i>
-              <span class="cart-count">0</span>
-            </div>
-            <input class="form-control me-2" id="nombre_producto" type="search" placeholder="Buscar" aria-label="Search">
-            <button class="btn btn-outline-success" id="search-button" type="submit">
-              <i class="fas fa-search"></i>
-            </button>
-          </form>
-        </div>
+          </li>
+        </ul>
+        <!-- Input de búsqueda y botón con icono de lupa -->
+        <form class="d-flex ms-auto">
+          <div class="cart-container d-flex align-items-center">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count">0</span>
+          </div>
+          <input class="form-control me-2" id="nombre_producto" type="search" placeholder="Buscar" aria-label="Search">
+          <button class="btn btn-outline-success" id="search-button" type="submit">
+            <i class="fas fa-search"></i>
+          </button>
+        </form>
       </div>
-    </nav>
+    </div>
+  </nav>
 
     <div class="product-container">
         <div class="product-row" id="productos"></div>

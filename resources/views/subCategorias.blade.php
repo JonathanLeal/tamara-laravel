@@ -1096,6 +1096,5 @@ ul li a:hover {
             <p>&copy; 2023 Tienda Tamara</p>
         </div>
     </footer>
-    <script src="{{ asset('js/subCategorias.js') }}"></script>
 </body>
 </html>
