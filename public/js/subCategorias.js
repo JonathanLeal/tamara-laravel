@@ -16,7 +16,7 @@ $(document).ready(function () {
     });
 
     // Manejar el evento de clic en los enlaces de la categoría
-    $(".dropdown a").on("click", function () {
+    $(".dropdown-menu a").on("click", function () {
         cat = $(this).data("cat");
         subCat = $(this).data("subcat");
 
@@ -187,7 +187,7 @@ function obtenerTodosProductosCategoria(cat) {
                     confirmButtonText: 'Regresar'
                   }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = '/';
+                        window.location.href = '/ejemplo';
                     }
                   })
             }
