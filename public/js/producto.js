@@ -4,13 +4,105 @@ $(document).ready(function() {
 
     obtenerInfoProductos(productId);
     numeroProductosEnCarrito();
-    menuRol();
 
     // Controlador de eventos para cambiar la imagen principal al colocar el puntero sobre miniaturas
     $(document).on("mouseover", ".product-thumbnails img", function() {
         var newImageSrc = $(this).attr("src");
         $("#imagenProducto img").attr("src", newImageSrc);
     });
+
+      const cartIcon = $('.fas.fa-shopping-cart'); // Cambiar el selector al nuevo icono
+      const cartModal = $('#staticBackdrop');
+      const closeButton = $('#close-button');
+  
+      // Agregar evento de clic para abrir el modal
+      cartIcon.click(function () {
+          $.ajax({
+              url: '/api/auth/productosEnCarrito',
+              type: 'GET',
+              dataType: 'JSON',
+              headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+              },
+              success: function (response) {
+                console.log(response);
+                  if (response.resultado === 'OK') {
+                      const modalBody = $('#cart-items-list');
+                      modalBody.empty();
+                      let totalPrice = 0;
+  
+                      // Iterar sobre los datos y construir la tabla de productos
+                      response.datos.forEach(function (producto) {
+                          const id = producto.id;
+                          const nombreProducto = producto.nombre_producto;
+                          const precioTotal = parseFloat(producto.total).toFixed(2);
+                          const imagen = `<img src="${producto.imagen}" alt="${nombreProducto}" width="50" height="50">`;
+                          const talla = producto.nombre_talla;
+                          const color = producto.nombre_color;
+                          const row = `
+                              <tr>
+                                  <td>${nombreProducto}</td>
+                                  <td>${imagen}</td>
+                                  <td>${talla}</td>
+                                  <td>${color}</td>
+                                  <td>$${precioTotal}</td>
+                                  <td><button id="eliminarCarrito" class="btn btn-outline-danger" onclick="eliminarDelCarrito(${id})"><i class="fa fa-trash"></i></button></td>
+                              </tr>`;
+                          modalBody.append(row);
+                          totalPrice += parseFloat(producto.total);
+                      });
+  
+                      // Actualizar el total de la sumatoria
+                      $('#total-amount').text(totalPrice.toFixed(2));
+  
+                      cartModal.modal("show"); // Cambiado a método modal de Bootstrap
+                  }
+              },
+              error: function (error) {
+                  if (error.status === 401) {
+                    const swalWithBootstrapButtons = Swal.mixin({
+                      customClass: {
+                        confirmButton: 'btn btn-success',
+                        cancelButton: 'btn btn-danger'
+                      },
+                      buttonsStyling: false
+                    })
+  
+                    swalWithBootstrapButtons.fire({
+                      title: 'Notificaciòn',
+                      text: "Necesitamos que inicies sesiòn para que goces de todas nuestras opciones",
+                      icon: 'info',
+                      showCancelButton: true,
+                      confirmButtonColor: '#212529',
+                      cancelButtonColor: '#2980b9',
+                      confirmButtonText: 'Iniciar sesion',
+                      cancelButtonText: 'Registrarme',
+                      reverseButtons: true
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        window.location.href = `/iniciar-sesion`;
+                      } else if (
+                        result.dismiss === Swal.DismissReason.cancel
+                      ) {
+                        window.location.href = `/registrarse`;
+                      }
+                    })
+                  } else {
+                    if (error.status === 404) {
+                      Swal.fire(
+                        'Notificacion',
+                        'Aun no tienes productos en el carrito',
+                        'warning'
+                      );
+                    }
+                  }
+              }
+          });
+      });
+  
+      closeButton.click(function () {
+        cartModal.modal("hide"); // Cambiado a método modal de Bootstrap
+      });
 });
 
 function menuRol() {
@@ -24,26 +116,28 @@ function menuRol() {
         success: function(data) {
             if (data.resultado === 'OK') {
                 var userRole = data.datos;
-
+  
                 // Construye el elemento "Administrar" en función del rol del usuario
                 var adminMenuItem = ''; // Inicializa la variable
-
+                var rutaUsuarios ="";
+                var rutaProductos = "";
+  
                 if (userRole === 1) {
-                    adminMenuItem += '<a href="#">Administrar <i class="fas fa-chevron-down"></i></a>';
-                    adminMenuItem += '<ul class="dropdown">';
-                    adminMenuItem += '<li><a href="#">Usuarios</a></li>';
-                    adminMenuItem += '<li><a href="#">Productos</a></li>';
-                    adminMenuItem += '<li><a href="#">Ofertas</a></li>';
+                    adminMenuItem += '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">Administrar</a>';
+                    adminMenuItem += '<ul class="dropdown-menu" aria-labelledby="navbarDropdown4">';
+                    adminMenuItem += '<li><a class="dropdown-item" href="'+rutaUsuarios+'">Usuarios</a></li>';
+                    adminMenuItem += '<li><a class="dropdown-item" href="'+rutaProductos+'">Productos</a></li>';
+                    adminMenuItem += '<li><a class="dropdown-item" href="#">Ofertas</a></li>';
                     adminMenuItem += '</ul>';
                 } else if (userRole === 2) {
-                    adminMenuItem += '<a href="#">Administrar <i class="fas fa-chevron-down"></i></a>';
-                    adminMenuItem += '<ul class="dropdown">';
-                    adminMenuItem += '<li><a href="#">Productos</a></li>';
+                    adminMenuItem += '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="#">Administrar</a>';
+                    adminMenuItem += '<ul class="dropdown-menu" aria-labelledby="navbarDropdown4">';
+                    adminMenuItem += '<li><a class="dropdown-item" href=" '+rutaProductos+'">Productos</a></li>';
                     adminMenuItem += '</ul>';
                 }
-
+  
                 // Encuentra el elemento <li> por su ID y clase, y actualiza su contenido
-                $('#menuRol.dropdown-parent').html(adminMenuItem);
+                $('#menuRol').html(adminMenuItem);
             } else {
                 console.error('Error al obtener el menú');
             }
@@ -52,34 +146,41 @@ function menuRol() {
             console.error('Error en la solicitud AJAX:', error);
         }
     });
-}
+  }
+
+  menuRol();
 
 function numeroProductosEnCarrito() {
     $.ajax({
-        url: 'api/auth/contarProductosEnCarrito',
-        type: 'GET',
-        dataType: 'JSON',
-        headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
-        },
-        success: function(response) {
-            if (response.resultado === 'OK') {
-                $("#cart-icon .cart-count").text(response.datos);
-            }
-        },
-        error: function(error){
-            console.log(error);
-        }
+      url: 'api/auth/contarProductosEnCarrito',
+      type: 'GET',
+      dataType: 'JSON',
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+      },
+      success: function(response) {
+      if (response.resultado === 'OK') {
+        $(".cart-count").text(response.datos);
+        $("#cerrarSesion").show();
+        $("#iniciarSesion").hide();
+        $("#registrarse").hide();
+      }
+      },
+      error: function(error){
+        console.log(error);
+      }
     })
 }
 
-$("#search-button").on("click", function() {
+$("#search-button").on("click", function(event) {
+    event.preventDefault();
+  
     var nombre = $("#nombre_producto").val();
-
+  
     var producto = {
-        nombre_producto: nombre
+      nombre_producto: nombre
     }
-
+  
     $.ajax({
         url: '/buscarProducto',
         type: 'POST',
@@ -87,28 +188,28 @@ $("#search-button").on("click", function() {
         data: producto,
         success: function(response) {
             if (response.resultado === 'OK') {
-                window.location.href = `/producto?id=`+response.datos;
+              window.location.href = `/producto?id=`+response.datos;
             }
         },
         error: function(error){
-            if (error.status === 404) {
-                Swal.fire(
-                    'Notificacion',
-                    'Lo sentimos no tenemos el producto que buscas por el momento',
-                    'info'
-                )
-            } else {
-                if (error.status === 422) {
-                    Swal.fire(
-                        'Notificacion',
-                        'Ingresa el nombre del producto en la barra de busqueda por favor',
-                        'warning'
-                    )
-                }
+          if (error.status === 404) {
+            Swal.fire(
+              'Notificacion',
+              'Lo sentimos no tenemos el producto que buscas por el momento',
+              'warning'
+            )
+          } else {
+            if (error.status === 422) {
+              Swal.fire(
+                'Notificacion',
+                'Ingresa el nombre del producto en la barra de busqueda por favor',
+                'warning'
+              )
             }
         }
+      }
     });
-});
+  });
 
 
 // Función para manejar el click en el botón del acordeón
@@ -120,93 +221,6 @@ function toggleAccordion(index) {
 $('.accordion-button').each(function (index) {
     $(this).click(function () {
         toggleAccordion(index);
-    });
-});
-
-const cartIcon = $('#cart-icon');
-const cartModal = $('#cart-modal');
-const closeCartModal = $('#close-cart-modal');
-const closeButton = $('#close-button');
-
-// Agregar evento de clic para abrir el modal
-cartIcon.click(function () {
-    $.ajax({
-        url: '/api/auth/productosEnCarrito',
-        type: 'GET',
-        dataType: 'JSON',
-        headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
-        },
-        success: function(response){
-            if (response.resultado === 'OK') {
-                const modalBody = $('#cart-items-list');
-                modalBody.empty();
-                let totalPrice = 0;
-
-                // Iterar sobre los datos y construir la tabla de productos
-                response.datos.forEach(function (producto) {
-                    const id = producto.id;
-                    const nombreProducto = producto.nombre_producto;
-                    const precioTotal = parseFloat(producto.total).toFixed(2);
-                    const imagen = `<img src="${producto.imagen}" alt="${nombreProducto}" width="50" height="50">`;
-                    const talla = producto.nombre_talla;
-                    const color = producto.nombre_color;
-                    const row = `
-                        <tr>
-                            <td>${nombreProducto}</td>
-                            <td>${imagen}</td>
-                            <td>${talla}</td>
-                            <td>${color}</td>
-                            <td>$${precioTotal}</td>
-                            <td><button id="eliminarCarrito" onclick="eliminarDelCarrito(${id})"><i class="fa fa-trash"></i></button></td>
-                        </tr>`;
-                    modalBody.append(row);
-                    totalPrice += parseFloat(producto.total);
-                });
-
-                // Actualizar el total de la sumatoria
-                $('#total-amount').text(totalPrice.toFixed(2));
-
-                cartModal.addClass("show-modal");
-            }
-        },
-        error: function(error){
-            if (error.status === 401) {
-                const swalWithBootstrapButtons = Swal.mixin({
-                    customClass: {
-                      confirmButton: 'btn btn-success',
-                      cancelButton: 'btn btn-danger'
-                    },
-                    buttonsStyling: false
-                  })
-
-                  swalWithBootstrapButtons.fire({
-                    title: 'Notificaciòn',
-                    text: "Necesitamos que inicies sesiòn para que goces de todas nuestras opciones",
-                    icon: 'info',
-                    showCancelButton: true,
-                    confirmButtonText: 'Iniciar sesion',
-                    cancelButtonText: 'Registrarme',
-                    reverseButtons: true
-                  }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = `/iniciar-sesion`;
-                    } else if (
-                      result.dismiss === Swal.DismissReason.cancel
-                    ) {
-                        window.location.href = `/registrarse`;
-                    }
-                  })
-            } else {
-                if (error.status === 404) {
-                    Swal.fire(
-                        'Notificacion',
-                        'Aun no tienes productos en el carrito',
-                        'warning'
-                    )
-                }
-            }
-        }
     });
 });
 
@@ -248,16 +262,6 @@ function eliminarDelCarrito(id) {
       }
     })
 }
-
-// Agregar evento de clic para cerrar el modal (botón "Cerrar")
-closeButton.click(function () {
-    cartModal.removeClass("show-modal");
-});
-
-// Agregar evento de clic para cerrar el modal (botón "X")
-closeCartModal.click(function () {
-    cartModal.removeClass("show-modal");
-});
 
 function obtenerInfoProductos(id) {
     $.ajax({
@@ -488,11 +492,6 @@ function obtenerInformacionUsuario() {
 
 obtenerInformacionUsuario();
 
-function showModal() {
-    var modal = document.getElementById("carritoModal");
-    modal.style.display = "block";
-}
-
 // Llamada para Agregar al Carrito
 function guardarEnCarrito(id, color, talla) {
         var cantidad = $("#quantity").val();
@@ -575,10 +574,6 @@ function guardarEnCarrito(id, color, talla) {
 //     const productId = urlParams.get('id');
 //     handleBotonAccion(productId, true);
 // });
-
-function closeModal() {
-    $("#carritoModal").hide();
-}
 
 $("#buy-now-button").on("click", function () {
     window.location.href = '/facturacion';
