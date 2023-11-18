@@ -218,8 +218,8 @@ function cargarProductos(cat, subCat) {
                                 <div class="card-body">
                                     <h4 class="card-title">${producto.nombre_producto}</h4>
                                     <p class="card-text">${producto.detalles}</p>
-                                    <p class="card-text">Existencia: ${producto.existencia}</p>
-                                    <p class="product-price">Precio 1: $${producto.precio_1}</p>
+                                    <p class="card-text">Estilo: ${producto.estilo}</p>
+                                    <p class="product-price">SKU: ${producto.sku}</p>
                                     <button class="add-to-cart-button add-to-cart-button-hidden" data-product-id="${producto.id}">Agregar al carrito</button>
                                 </div>
                             </div>
