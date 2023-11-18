@@ -207,26 +207,44 @@ function cargarProductos(cat, subCat) {
         type: 'GET',
         dataType: 'json',
         success: function (response) {
-            if (response.resultado == 'OK') {
-                var productos = response.datos;
-                var html = '';
-                $.each(productos, function (index, producto) {
-                    var cardHtml = `
-                        <div class="col-md-4">
-                            <div class="card">
-                                <img class="card-img-top" src="${producto.imagen}" alt="${producto.nombre_producto}">
-                                <div class="card-body">
-                                    <h4 class="card-title">${producto.nombre_producto}</h4>
-                                    <p class="card-text">${producto.detalles}</p>
-                                    <p class="card-text">Estilo: ${producto.estilo}</p>
-                                    <p class="product-price">SKU: ${producto.sku}</p>
-                                    <button class="add-to-cart-button add-to-cart-button-hidden" data-product-id="${producto.id}">Agregar al carrito</button>
+          if (response.resultado == 'OK') {
+            var productos = response.datos.producto;
+            var colores = response.datos.colores;
+
+            $.each(productos, function (index, producto) {
+                var cardHtml = `
+                    <div class="col-md-4">
+                        <div class="card">
+                            <img class="card-img-top" src="${producto.imagen}" alt="${producto.nombre_producto}">
+                            <div class="card-body">
+                                <h4 class="card-title">${producto.nombre_producto}</h4>
+                                <p class="card-text">${producto.detalles}</p>
+                                <p class="card-text">Estilo: ${producto.estilo}</p>
+                                <p class="product-price">SKU: ${producto.sku}</p>
+                                <div class="color-balls">
                                 </div>
+                                <button class="add-to-cart-button add-to-cart-button-hidden" data-product-id="${producto.id}">Agregar al carrito</button>
                             </div>
                         </div>
-                    `;
-                    $('#productos').append(cardHtml);
+                    </div>
+                `;
+
+                $('#productos').append(cardHtml);
+
+                // Obtener los colores del producto actual
+                var coloresProducto = colores.filter(color => color.nombre_producto === producto.nombre_producto);
+
+                // Mostrar los colores como bolitas pequeñas
+                var colorBallsContainer = $(`#productos .card-body .color-balls`).last();
+                coloresProducto.slice(0, 3).forEach(color => {
+                    var colorBall = `<span class="color-ball" style="background-color: ${color.color_fondo}"></span>`;
+                    colorBallsContainer.append(colorBall);
                 });
+
+                if (coloresProducto.length > 3) {
+                    colorBallsContainer.append(`<span class="color-text">+${coloresProducto.length - 3} más</span>`);
+                }
+            });
 
                 // Agrega eventos de mouseenter y mouseleave para mostrar y ocultar el botón al pasar el cursor
                 $('.card').on('mouseenter', function () {

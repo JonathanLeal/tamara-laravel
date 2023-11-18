@@ -429,6 +429,28 @@
     display: none;
 }
 
+.color-balls {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.color-ball {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  margin-right: 5px;
+  display: inline-block;
+}
+
+.color-text {
+  font-size: 0.9rem;
+  color: #666;
+  margin-left: 5px;
+  display: inline-block;
+  line-height: 15px; /* Ajusta la alineación vertical */
+}
+
 @keyframes scale {
   0% {
     transform: scale(1);
