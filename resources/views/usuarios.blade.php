@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.0/dist/sweetalert2.min.css">
@@ -12,16 +13,44 @@
     <style>
         /* Estilos generales para el modal */
         @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
+          .container {
+              padding: 10px;
+          }
 
-            .modal-dialog {
-                max-width: 90%;
-            }
+          .navbar-nav {
+              margin-top: 10px;
+              text-align: center;
+          }
 
-            /* Adjust any other styles as needed for smaller screens */
+          .nav-item {
+              display: block;
+              margin-bottom: 10px;
+          }
+
+          .navbar-toggler {
+              margin: 10px 0;
+          }
+
+          /* Ajustes para otras secciones específicas */
+          /* ... Otros estilos específicos para dispositivos móviles ... */
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 10px;
+          margin-top: 10px; /* Reducir el margen superior */
         }
+      
+        .modal-title {
+          font-size: 20px; /* Reducir el tamaño del título del modal */
+        }
+      
+        .form-group {
+          margin-bottom: 10px; /* Reducir el espacio entre grupos de formulario */
+        }
+      }
+
+      
   .modal-content {
     border-radius: 15px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -56,6 +85,7 @@
 
   .btn-secondary:hover {
     background-color: #c0392b;
+    transition: background-color 0.3s ease;
   }
 
   .btn-success {
@@ -131,9 +161,9 @@
 
 /* Estilos para el botón */
 .btn-primary {
-    background-color: #007BFF;
-    color: #fff;
-    border: none;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
 }
 
 .btn-primary:hover {
@@ -225,21 +255,23 @@
         </div>
         <!-- Modal FIN DE USUARIO -->
 
-        <table id="tabla-usuarios" class="table table-hover">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nombres</th>
-              <th>Apellidos</th>
-              <th>Correo</th>
-              <th>Sexo</th>
-              <th>Rol</th>
-              <th>Acciones</th>
-              <th>Estado</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
+        <div class="table-responsive">
+          <table id="tabla-usuarios" class="table table-hover">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Correo</th>
+                <th>Sexo</th>
+                <th>Rol</th>
+                <th>Acciones</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
