@@ -270,25 +270,6 @@
             font-size: 18px;
             line-height: 1.6;
         }
-
-        button {
-            padding: 15px 30px;
-            background-color: white;
-            color: #009688;
-            border: 2px solid #009688;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            width: 48%;
-            font-size: 20px;
-        }
-
-        button:hover {
-            background-color: #009688;
-            color: white;
-            transform: scale(1.05);
-        }
-
         .quantity-container {
             display: flex;
             align-items: center;
@@ -778,6 +759,10 @@ ul li a:hover {
       font-size: 14px; /* Reducir el tamaño de fuente en dispositivos móviles */
     }
   }
+
+  /* [INICIO]arreglo de botones */
+
+  /* [FIN]arreglo de botones */
     </style>
 </head>
 <body>
