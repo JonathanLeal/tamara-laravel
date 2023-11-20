@@ -249,23 +249,14 @@
       </div>
       <!-- Modal FIN SOCIEDADES-->
 
-        <div class="container">
-            <div class="table-container">
+        <div class="table-responsive">
                 <table id="tabla-productos" class="table table-hover">
                     <thead>
                       <tr>
                         <th>ID</th>
                         <th>imagen</th>
                         <th>Producto</th>
-                        <th>Existencia</th>
-                        <th>Precio 1</th>
                         <th>Estilo</th>
-                        <th>Detalles</th>
-                        <th>Escote</th>
-                        <th>Longitud de manga</th>
-                        <th>Tejido</th>
-                        <th>Composición</th>
-                        <th>Instrucciones</th>
                         <th>SKU</th>
                         <th>Categoria</th>
                         <th>Sub categoria</th>
@@ -274,7 +265,6 @@
                     </thead>
                     <tbody></tbody>
                   </table>
-            </div>
         </div>
 
 <!--FIN DE tabla-->

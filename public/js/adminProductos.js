@@ -69,17 +69,9 @@ function cargarDatos() {
         $.each(response.datos, function(index, producto) {
             var fila = '<tr>' +
                 '<td>' + producto.id + '</td>' +
-                '<td><img src="' + producto.imagen + '" alt="imagen-producto" width="100" height="100"></td>' + // Corregir "image" a "imagen"
+                '<td><img src="' + producto.imagen + '" alt="imagen-producto" width="100" height="100"></td>' +
                 '<td>' + producto.nombre_producto + '</td>' +
-                '<td>' + producto.existencia + '</td>' +
-                '<td> $' + producto.precio_1 + '</td>' +
                 '<td>' + producto.estilo + '</td>' +
-                '<td>' + producto.detalles + '</td>' +
-                '<td>' + producto.escote + '</td>' +
-                '<td>' + producto.longitud_manga + '</td>' +
-                '<td>' + producto.tejido + '</td>' +
-                '<td>' + producto.composicion + '</td>' +
-                '<td>' + producto.instrucciones_cuidado + '</td>' +
                 '<td>' + producto.sku + '</td>' +
                 '<td>' + producto.categoria + '</td>' +
                 '<td>' + producto.sub_categoria + '</td>' +
