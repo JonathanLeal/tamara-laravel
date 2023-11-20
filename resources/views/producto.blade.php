@@ -350,21 +350,26 @@
         }
 
 .accordion-button {
-    background-color: #f5f5f5;
-    color: #333;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 18px;
-    width: 100%;
-    text-align: left;
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease;
-    margin-bottom: 10px;
-    position: relative;
+  background-color: #f5f5f5;
+  color: #333;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  width: 100%;
+  text-align: left;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.accordion-button.btn {
+  /* Estilos de fondo y color de texto */
+  background-color: #f5f5f5;
+  color: #333;
+  /* Otros estilos necesarios */
 }
 
 .accordion-content {
@@ -461,8 +466,12 @@
 }
 
 #tablaMedidas {
-    width: 100%;
-    border-collapse: collapse;
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
 }
 
 #tablaMedidas th, #tablaMedidas td {
@@ -884,13 +893,13 @@ ul li a:hover {
                 <button class="action-button" id="btnComprarAhora">Comprar ahora</button>
             </div>
             <div class="accordion">
-                <button class="accordion-button" data-index="0">Detalles</button>
+                <button class="accordion-button btn btn-light" data-index="0">Detalles</button>
                 <div id="acordeon_producto" class="accordion-content">
 
                 </div>
             </div>
             <div class="accordion">
-                <button class="accordion-button" data-index="1">Tallas y Dimensiones</button>
+                <button class="accordion-button btn btn-light" data-index="1">Tallas y Dimensiones</button>
                 <div id="acordeon_dimensiones" class="accordion-content">
                     <table id="tablaMedidas" border="1">
                         <thead>
