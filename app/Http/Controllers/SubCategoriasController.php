@@ -45,7 +45,7 @@ class SubCategoriasController extends Controller
                               ->join('categorias AS c', 'p.categoria_id', '=', 'c.id')
                               ->join('sub_categorias AS sc', 'p.sub_categoria_id', '=', 'sc.id')
                               ->where('p.categoria_id', $categoria)
-                              ->select('p.id', 'p.nombre_producto', 'p.imagen', 'p.existencia', 'p.precio_1', 'c.nombre_categoria', 'sc.nombre_sub_categoria')
+                              ->select('p.id', 'p.nombre_producto', 'p.imagen', 'p.existencia', 'p.precio_1', 'c.nombre_categoria', 'sc.nombre_sub_categoria', 'p.sku', 'p.estilo')
                               ->get();
         if ($productosCategoria->isEmpty()) {
             return http::respuesta(http::retNotFound, "No se encontraron productos con esa categoria");

@@ -148,7 +148,8 @@ function obtenerTodosProductosCategoria(cat) {
         dataType: 'JSON',
         success: function(response){
             if (response.resultado == 'OK') {
-                var productos = response.datos;
+                var productos = response.datos.productosCat;
+                var colores = response.datos.colores;
                 var html = '';
                 $.each(productos, function (index, producto) {
                     var cardHtml = `
@@ -159,14 +160,30 @@ function obtenerTodosProductosCategoria(cat) {
                                     <h4 class="card-title">${producto.nombre_producto}</h4>
                                     <p class="card-text">Categoria: ${producto.nombre_categoria}</p>
                                     <p class="card-text">Sub categoria: ${producto.nombre_sub_categoria}</p>
-                                    <p class="card-text">Existencia: ${producto.existencia}</p>
-                                    <p class="product-price">Precio 1: $${producto.precio_1}</p>
+                                    <p class="card-text">Estilo: ${producto.estilo}</p>
+                                    <p class="product-price">SKU: ${producto.sku}</p>
+                                    <div class="color-balls">
+                                    </div>
                                     <button class="add-to-cart-button add-to-cart-button-hidden" data-product-id="${producto.id}">Agregar al carrito</button>
                                 </div>
                             </div>
                         </div>
                     `;
                     $('#productos').append(cardHtml);
+
+                    // Obtener los colores del producto actual
+                    var coloresProducto = colores.filter(color => color.nombre_producto === producto.nombre_producto);
+
+                    // Mostrar los colores como bolitas pequeñas
+                    var colorBallsContainer = $(`#productos .card-body .color-balls`).last();
+                    coloresProducto.slice(0, 3).forEach(color => {
+                      var colorBall = `<span class="color-ball" style="background-color: ${color.color_fondo}"></span>`;
+                      colorBallsContainer.append(colorBall);
+                    });
+
+                    if (coloresProducto.length > 3) {
+                      colorBallsContainer.append(`<span class="color-text">+${coloresProducto.length - 3} más</span>`);
+                    }
                 });
 
                 // Agrega eventos de mouseenter y mouseleave para mostrar y ocultar el botón al pasar el cursor
