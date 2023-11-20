@@ -877,7 +877,7 @@ ul li a:hover {
                 <p id="descripcion"></p>
             </div>
             <p id="precio" class="product-price"></p>
-            <p class="product-info" id="existencia"></p>
+            <!-- <p class="product-info" id="existencia"></p> -->
             <div id="coloresDisponibles" class="color-options">
                 <h4>Colores disponibles</h4>
             </div>
