@@ -441,6 +441,7 @@
   border-radius: 50%;
   margin-right: 5px;
   display: inline-block;
+  border: 1px solid black; /* Cambia el borde a negro */
 }
 
 .color-text {
