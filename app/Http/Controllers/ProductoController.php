@@ -89,6 +89,9 @@ class ProductoController extends Controller
     public function agregarAlCarrito(Request $request)
     {
         $user = Auth::user();
+        if (!$user) {
+            return http::respuesta(http::retUnauthorized,"Debe autorizarse");
+        }
 
         $validator = Validator::make($request->all(), [
             'producto' => 'required|int',

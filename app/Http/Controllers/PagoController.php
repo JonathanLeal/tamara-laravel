@@ -171,6 +171,12 @@ class PagoController extends Controller
 
     public function obtenerComprarAhora(Request $request)
     {
+        $user = Auth::user();
+
+        if (!$user) {
+            return http::respuesta(http::retUnauthorized, "Debe autorizarse");
+        }
+
         $validator = Validator::make($request->all(), [
             'talla'    => 'required|integer',
             'color'    => 'required|integer',

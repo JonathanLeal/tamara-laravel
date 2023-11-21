@@ -25,7 +25,6 @@ $(document).ready(function() {
                 'Authorization': 'Bearer ' + localStorage.getItem('access_token')
               },
               success: function (response) {
-                console.log(response);
                   if (response.resultado === 'OK') {
                       const modalBody = $('#cart-items-list');
                       modalBody.empty();
@@ -367,7 +366,6 @@ function obtenerInfoProductos(id) {
                                             },
                                             success: function(data){
                                                 if (data.resultado === 'OK') {
-                                                    console.log(data)
                                                     $("#existencia").text('Existencia: '+data.datos[0].existencia).show();
                                                     $("#precio").text('Precio: $'+data.datos[0].precio).show();
                                                 }
@@ -397,6 +395,11 @@ function obtenerInfoProductos(id) {
                 $("#btnAgregarCarrito").on("click", function () {
                     var cantidad = $("#quantity").val();
                     guardarEnCarrito(id, color, talla, cantidad);
+                });
+
+                $("#btnComprarAhora").on("click", function () {
+                    var cantidad = $("#quantity").val();
+                    comprarAhora(color, cantidad, talla);
                 });
 
                 $.each(producto, function(index, pro){
@@ -508,7 +511,7 @@ function guardarEnCarrito(id, color, talla) {
                     }
                 },
                 error: function (error) {
-                    if (error.status === 400) {
+                    if (error.status === 401) {
                         const swalWithBootstrapButtons = Swal.mixin({
                             customClass: {
                                 confirmButton: 'btn btn-success',
@@ -553,8 +556,88 @@ function guardarEnCarrito(id, color, talla) {
             });
         };
 
-function comprarAhora() {
-    
+function comprarAhora(color, cantidad, talla) {
+    var comprado = {
+        talla: talla,
+        color: color,
+        cantidad: cantidad
+    }
+
+    $.ajax({
+        url: '/api/auth/comprarAhora',
+        type: 'POST',
+        dataType: 'JSON',
+        data: comprado,
+        success: function(response){
+            if (response.resultado === 'OK') {
+                Swal.fire({
+                    title: "¡Notificación!",
+                    text: "¿Estas seguro que has seleccionado todo a tu gusto?",
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Si, continuar",
+                    cancelButtonText: "No, regresar"
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = `/registrarse?producto=`+response.datos.id;
+                    }
+                });
+            }
+        },
+        error: function(error){
+            if (error.status === 422) {
+                Swal.fire({
+                    title: "¡Notificación!",
+                    text: "Recuerda seleccionar talla y color para el producto por favor",
+                    icon: "warning"
+                });
+            }
+
+            if (error.status === 500) {
+                Swal.fire({
+                    title: "¡Notificación!",
+                    text: "Opsss a ocurrido un error desconocido, regresa más tarde por favor",
+                    icon: "error"
+                });
+            }
+
+            if (error.status === 401) {
+                const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                        confirmButton: 'btn btn-success',
+                        cancelButton: 'btn btn-danger'
+                    },
+                    buttonsStyling: false
+                })
+
+                swalWithBootstrapButtons.fire({
+                    title: 'Notificación',
+                    text: "Necesitamos que inicies sesión para que disfrutes de todas nuestras opciones",
+                    icon: 'info',
+                    showCancelButton: true,
+                    confirmButtonText: 'Iniciar sesión',
+                    cancelButtonText: 'Registrarme',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = `/iniciar-sesion`;
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        window.location.href = `/registrarse`;
+                    }
+                })
+            }
+
+            if (error.status === 403) {
+                Swal.fire(
+                    'Notificación',
+                    'No puedes ingresar una cantidad mayor a la existencia actual del producto',
+                    'warning'
+                )
+            }
+        }
+    });
 }
 
 //botones de cantidad
