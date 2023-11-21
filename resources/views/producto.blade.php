@@ -287,7 +287,7 @@
             border: 2px solid #94c0bc;
             border-radius: 5px;
             color: #ff4500;
-            width: 50px;
+            width: 70px;
             text-align: center;
         }
 
@@ -870,9 +870,11 @@ ul li a:hover {
                 <h4>Tallas disponibles</h4>
             </div>
             <p class="product-availability"></p>
-            <div class="quantity-container">
-                <input class="quantity-input" type="number" id="quantity" value="1" min="1" max="5">
-            </div>
+            <div class="input-group quantity-container">
+              <button class="btn btn-outline-secondary" id="decrease-btn">-</button>
+              <input type="number" class="quantity-input" id="quantity" min="1" value="1">
+              <button class="btn btn-outline-secondary" id="increase-btn">+</button>
+          </div>
             <div class="product-actions">
                 <button class="action-button" id="btnAgregarCarrito">Agregar al Carrito</button>
                 <button class="action-button" id="btnComprarAhora">Comprar ahora</button>

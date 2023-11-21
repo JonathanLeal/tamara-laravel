@@ -551,13 +551,25 @@ function guardarEnCarrito(id, color, talla) {
             });
         };
 
-// Llamada para Comprar Ahora
-// $("#btnComprarAhora").on("click", function () {
-//     const urlParams = new URLSearchParams(window.location.search);
-//     const productId = urlParams.get('id');
-//     handleBotonAccion(productId, true);
-// });
+function comprarAhora() {
+    
+}
 
-$("#buy-now-button").on("click", function () {
-    window.location.href = '/facturacion';
-})
+//botones de cantidad
+const decreaseBtn = document.getElementById('decrease-btn');
+const increaseBtn = document.getElementById('increase-btn');
+const quantityInput = document.getElementById('quantity');
+
+// Función para reducir la cantidad
+decreaseBtn.addEventListener('click', function() {
+  let currentValue = parseInt(quantityInput.value);
+  if (currentValue > 1) {
+    quantityInput.value = currentValue - 1;
+  }
+});
+
+// Función para incrementar la cantidad
+increaseBtn.addEventListener('click', function() {
+  let currentValue = parseInt(quantityInput.value);
+  quantityInput.value = currentValue + 1;
+});

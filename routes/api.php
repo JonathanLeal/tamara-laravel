@@ -43,7 +43,7 @@ Route::group([
     Route::post('/editarUsuario', [AdministrarController::class, 'editarUsuario']);
     Route::post('/eliminarUsuario/{id}', [AdministrarController::class, 'eliminarUsuario']);
     Route::post('/cambiarEstado', [AdministrarController::class, 'cambiarEstado']);
-    //inicio de rutas de administracion de usuarios
+    //FIN de rutas de administracion de usuarios
 
     //inicio de rutas de administracion de productos
     Route::get('/adminProductos', [AdministrarController::class, 'irVistaProductos'])->name('vistaProductos');
@@ -54,4 +54,8 @@ Route::group([
     Route::post('/guardarProducto', [AdministrarController::class, 'guardarProducto']);
     Route::post('/eliminarProducto/{id}', [AdministrarController::class, 'eliminarProducto']);
     //fin de rutas de administracion de productos
+
+    //Inicio de rutas de pago
+    Route::post('/comprarAhora', [PagoController::class,'obtenerComprarAhora']);
+    //Fin de rutas de pago
 });

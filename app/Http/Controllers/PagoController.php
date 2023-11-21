@@ -168,4 +168,34 @@ class PagoController extends Controller
         $info = Agencia::where('id', $id)->first();
         return http::respuesta(http::retOK, $info);
     }
+
+    public function obtenerComprarAhora(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'talla'    => 'required|integer',
+            'color'    => 'required|integer',
+            'cantidad' => 'required|integer',
+        ]);
+
+        if ($validator->fails()) {
+            return http::respuesta(http::retUnprocessable, $validator->errors());
+        }
+
+        $producto = DB::table('existencias_disponibles_producto AS edp')
+                    ->join('productos AS p', 'edp.producto_id', '=', 'p.id')
+                    ->join('tallas AS t', 'edp.talla_id', '=', 't.id')
+                    ->join('colores AS c', 'edp.color_id', '=', 'c.id')
+                    ->where('edp.talla_id', $request->talla)
+                    ->where('edp.color_id', $request->color)
+                    ->select('edp.id', 'p.nombre_producto', 'p.imagen', 't.nombre_talla', 'c.nombre_color', 'edp.existencia')
+                    ->get();
+
+        foreach ($producto as $pro) {
+            if ($request->cantidad > $pro->existencia) {
+                return http::respuesta(http::retBadRequest, "cantidad mayor a la existencia");
+            }
+        }
+        
+        return http::respuesta(http::retOK, $producto);
+    }
 }
