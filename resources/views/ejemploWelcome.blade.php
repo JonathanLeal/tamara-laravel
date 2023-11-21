@@ -208,6 +208,7 @@
       height: 40px;
       margin-right: 15px;
       border-radius: 50%;
+      margin-left: 115px;
   }
   
   .categoria:hover {
@@ -218,7 +219,11 @@
   
   @media (max-width: 768px) {
       .categoria {
-          width: calc(50% - 20px);
+        width: calc(50% - 20px);
+      }
+
+      .categoria-imagen{
+        margin-left: 60px;
       }
   }
   
