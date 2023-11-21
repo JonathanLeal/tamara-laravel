@@ -246,7 +246,9 @@ function eliminarDelCarrito(id) {
                         'Notificacion',
                         'Producto eliminado de tu carrito con exito',
                         'success'
-                    )
+                    ).then(() => {
+                        window.location.href = `/iniciar-sesion`;
+                    })
                 }
             },
             error: function(error){

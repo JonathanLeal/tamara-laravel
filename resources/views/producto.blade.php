@@ -874,7 +874,7 @@ ul li a:hover {
               <button class="btn btn-outline-secondary" id="decrease-btn">-</button>
               <input type="number" class="quantity-input" id="quantity" min="1" value="1">
               <button class="btn btn-outline-secondary" id="increase-btn">+</button>
-          </div>
+            </div>
             <div class="product-actions">
                 <button class="action-button" id="btnAgregarCarrito">Agregar al Carrito</button>
                 <button class="action-button" id="btnComprarAhora">Comprar ahora</button>
