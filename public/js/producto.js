@@ -246,7 +246,7 @@ function eliminarDelCarrito(id) {
                         'Producto eliminado de tu carrito con exito',
                         'success'
                     ).then(() => {
-                        window.location.href = `/iniciar-sesion`;
+                        window.location.href = `/ejemplo`;
                     })
                 }
             },
@@ -568,6 +568,9 @@ function comprarAhora(color, cantidad, talla) {
         type: 'POST',
         dataType: 'JSON',
         data: comprado,
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        },
         success: function(response){
             if (response.resultado === 'OK') {
                 Swal.fire({
@@ -581,7 +584,7 @@ function comprarAhora(color, cantidad, talla) {
                     cancelButtonText: "No, regresar"
                   }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = `/registrarse?producto=`+response.datos.id;
+                        window.location.href = `/facturacion?producto=`+response.datos[0].id;
                     }
                 });
             }
