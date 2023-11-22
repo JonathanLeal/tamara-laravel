@@ -723,7 +723,7 @@ ul li a:hover {
 
   @media (max-width: 767px) {
     .modal-dialog {
-      width: 97%; /* Ancho del modal en dispositivos móviles */
+      width: 98%; /* Ancho del modal en dispositivos móviles */
     }
   
     .modal-content {
@@ -756,7 +756,7 @@ ul li a:hover {
 
   @media (max-width: 767px) {
     .table {
-      font-size: 14px; /* Reducir el tamaño de fuente en dispositivos móviles */
+      font-size: 11px; /* Reducir el tamaño de fuente en dispositivos móviles */
     }
   }
 

@@ -393,7 +393,7 @@
 
   @media (max-width: 767px) {
     .modal-dialog {
-      width: 97%; /* Ancho del modal en dispositivos móviles */
+      width: 100%; /* Ancho del modal en dispositivos móviles */
     }
   
     .modal-content {
@@ -405,11 +405,6 @@
     }
   }
 
-  @media (max-width: 767px) {
-    .table-responsive {
-      overflow-x: auto; /* Agregar barra de desplazamiento horizontal en dispositivos móviles si es necesario */
-    }
-  }
 
   @media (max-width: 767px) {
     .modal-footer button {
@@ -426,7 +421,7 @@
 
   @media (max-width: 767px) {
     .table {
-      font-size: 14px; /* Reducir el tamaño de fuente en dispositivos móviles */
+      font-size: 11px; /* Reducir el tamaño de fuente en dispositivos móviles */
     }
   }
   /*modal*/
