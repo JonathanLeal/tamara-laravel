@@ -204,4 +204,27 @@ class PagoController extends Controller
         
         return http::respuesta(http::retOK, $producto);
     }
+
+    public function listarUnSoloProducto($id)
+    {
+        $user = Auth::user();
+        if (!$user) {
+            return http::respuesta(http::retUnauthorized,"debe autorizarse");
+        }
+
+        $pro = DB::table("existencias_disponibles_producto AS edp")
+            ->where("edp.id", $id)
+            ->first();
+
+        $producto = DB::table('existencias_disponibles_producto AS edp')
+                    ->join('productos AS p', 'edp.producto_id', '=', 'p.id')
+                    ->join('tallas AS t', 'edp.talla_id', '=', 't.id')
+                    ->join('colores AS c', 'edp.color_id', '=', 'c.id')
+                    ->where('edp.talla_id', $pro->talla_id)
+                    ->where('edp.color_id', $pro->color_id)
+                    ->select('edp.id', 'p.nombre_producto', 'p.imagen', 't.nombre_talla', 'c.nombre_color', 'edp.existencia', 'edp.precio')
+                    ->get();
+
+        return http::respuesta(http::retOK, $producto);
+    }
 }

@@ -57,5 +57,6 @@ Route::group([
 
     //Inicio de rutas de pago
     Route::post('/comprarAhora', [PagoController::class,'obtenerComprarAhora']);
+    Route::get('/unProducto/{id}', [PagoController::class,'listarUnSoloProducto']);
     //Fin de rutas de pago
 });

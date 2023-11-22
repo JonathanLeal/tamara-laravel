@@ -1,6 +1,18 @@
 $(document).ready(function() {
     llenarSelectIdentificacion();
-    llenarTablaCarrita();
+
+    const productoId = obtenerParametroUrl('producto');
+    
+    if (productoId) {
+        $("#variosProductos").hide();
+        $("#total-price").hide();
+        $("#unProducto").show();
+        $("#total-price-uno").show();
+        cargarProducto(productoId);
+    } else {
+        llenarTablaCarrita();
+    }
+
     llenarSelectAgencias();
     // Al cargar la página, muestra los campos de Método de Entrega seleccionado
   showEntregaFields();
@@ -319,3 +331,52 @@ $("#submitButton").on("click", function(event) {
         }
     });
 });
+
+function obtenerParametroUrl(parametro){
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(parametro);
+}
+
+function cargarProducto(productoId) {
+    $.ajax({
+        url: '/api/auth/unProducto/'+productoId,
+        type: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        },
+        success: function(response){
+            if (response.resultado === 'OK') {
+                var items = response.datos;
+
+                $("#cart-item-list").empty();
+
+                $.each(items, function(index, item) {
+                    var newRow = '<tr>' +
+                        '<td>' + item.nombre_producto + '</td>' +
+                        '<td><img src="' + item.imagen + '" alt="' + item.nombre_producto + '" class="product-image"></td>' +
+                        '<td>' + item.nombre_talla + '</td>' +
+                        '<td>' + item.nombre_color + '</td>' +
+                        '<td>$' + item.precio + '</td>' +
+                        '<td><button onclick="eliminarDelCarrito('+item.id+', event)" class="btn btn-remove"><i class="fa fa-trash"></i></button></td>' +
+                        '</tr>';
+                        $('#cart-item-list').append(newRow);
+                    });
+
+                var total = 0;
+                $.each(items, function(index, item) {
+                    total += parseFloat(item.total);
+                });
+                $('#total-amount-uno').text(total.toFixed(2));
+            }
+        },
+        error: function(error){
+            if (error.status === 500) {
+                Swal.fire(
+                    'Notificacion',
+                    'A ocurrido un error desconocido',
+                    'error'
+                )
+            }
+        }
+    });
+}

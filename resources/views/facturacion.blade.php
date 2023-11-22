@@ -370,7 +370,7 @@
       <div class="container-carrito">
         <h3 class="mb-4">Detalles de su compra</h3>
         <div class="table-responsive">
-            <table class="table table-bordered table-striped">
+            <table id="variosProductos" class="table table-bordered table-striped">
                 <thead>
                     <tr>
                         <th>Producto</th>
@@ -386,6 +386,22 @@
                     <!-- Aquí se mostrarán los productos -->
                 </tbody>
             </table>
+
+            <table id="unProducto" style="display: none" class="table table-bordered table-striped">
+              <thead>
+                  <tr>
+                      <th>Producto</th>
+                      <th>Imagen</th>
+                      <th>Talla</th>
+                      <th>Color</th>
+                      <th>Precio</th>
+                      <th>Acción</th>
+                  </tr>
+              </thead>
+              <tbody id="cart-item-list">
+                  <!-- Aquí se mostrará el producto -->
+              </tbody>
+          </table>
         </div>
     </div>
         <div class="form-subheader">
@@ -449,6 +465,10 @@
     </div>
     <div id="total-price">
         Total de productos: $<span id="total-amount" name="monto">0.00</span>
+    </div>
+
+    <div id="total-price-uno" style="display: none">
+      Total de productos: $<span id="total-amount-uno" name="monto">0.00</span>
     </div>
 
       <!-- Botón de envío -->
