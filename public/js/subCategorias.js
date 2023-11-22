@@ -204,7 +204,7 @@ function obtenerTodosProductosCategoria(cat) {
                     confirmButtonText: 'Regresar'
                   }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = '/ejemplo';
+                        window.location.href = '/';
                     }
                   })
             }
