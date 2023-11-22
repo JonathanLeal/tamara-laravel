@@ -475,7 +475,7 @@
     }
 
     .card img{
-        margin-left: 90px;
+        margin-left: 80px;
     }
 }
 
